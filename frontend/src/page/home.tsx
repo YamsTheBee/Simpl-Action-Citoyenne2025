@@ -1,3 +1,5 @@
+//  Projet : Simpl-Action-Citoyenne
+//  * Auteur : Mariama Diaw
 // --- 9. COMPOSANT HOME (Assemblage des composants) ---
 
 import HeroSlider from "../components/HeroSlider";
