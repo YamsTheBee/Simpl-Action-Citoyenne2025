@@ -1,29 +1,58 @@
 import type React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import NavBar from "./components/navbar";
 import { Footer } from "./components/Footer";
+
+// Pages
 import Home from "./page/home";
+import ActionsPage from "./page/Actions";
+import ActionDetailPage from "./page/ActionDetailPage";
+import Impact from "./page/Impact";
+import ContactUs from "./page/ContactUs";
+import AboutPage from "./page/About"; // ✔ Correction du nom
 
 const App: React.FC = () => {
 	return (
-		<div className="min-h-screen font-sans antialiased text-gray-800">
-			<style>{`
-        @keyframes fadeInDown {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in-down {
-          animation: fadeInDown 0.3s ease-out forwards;
-        }
-      `}</style>
+		<Router>
+			<div className="min-h-screen font-sans antialiased text-gray-800">
+				<NavBar />
 
-			<NavBar />
+				<main>
+					<Routes>
+						{/* Accueil */}
+						<Route path="/" element={<Home />} />
 
-			<main className="pt-0">
-				<Home />
-			</main>
+						{/* À propos */}
+						<Route path="/about" element={<AboutPage />} />
 
-			<Footer />
-		</div>
+						{/* Impact */}
+						<Route path="/impact" element={<Impact />} />
+
+						{/* Contact */}
+						<Route path="/contact" element={<ContactUs />} />
+
+						{/* Actions */}
+						<Route path="/actions" element={<ActionsPage />} />
+
+						{/* Détail d’une action */}
+						<Route
+							path="/actions/:id"
+							element={
+								<ActionDetailPage
+									actionId={""}
+									navigate={(view: string): void => {
+										throw new Error("Function not implemented.");
+									}}
+								/>
+							}
+						/>
+					</Routes>
+				</main>
+
+				<Footer />
+			</div>
+		</Router>
 	);
 };
 
