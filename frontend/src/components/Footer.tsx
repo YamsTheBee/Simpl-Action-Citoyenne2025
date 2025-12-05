@@ -1,6 +1,7 @@
-// --- 8. Footer.tsx ---
+// --- Footer.tsx ---
 import type React from "react";
 import { Mail, Map as MapIcon, Link as LinkIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // Même interface que dans NavBar
 interface NavItem {
@@ -9,17 +10,17 @@ interface NavItem {
 	cta?: boolean;
 }
 
-// On réécrit navItems ici pour éviter l’erreur “introuvable”
+// Navigation compatible React Router
 const navItems: NavItem[] = [
-	{ label: "Accueil", href: "#home" },
-	{ label: "Nos Actions", href: "#actions" },
-	{ label: "Impact", href: "#mission" },
-	{ label: "S'engager", href: "#volunteers" },
-	{ label: "Contact", href: "#footer" },
-	{ label: "Faire un Don", href: "#donate", cta: true },
+	{ label: "Accueil", href: "/" },
+	{ label: "À Propos", href: "/about" },
+	{ label: "Nos Actions", href: "/actions" },
+	{ label: "Impact", href: "/impact" },
+	{ label: "Contact", href: "/contact" },
+	{ label: "Faire un Don", href: "/donate", cta: true }, // si page créée plus tard
 ];
 
-export const Footer: React.FC = () => {
+const Footer: React.FC = () => {
 	return (
 		<footer id="footer" className="bg-gray-900 text-white">
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
@@ -44,12 +45,12 @@ export const Footer: React.FC = () => {
 						<ul className="space-y-2 text-gray-400">
 							{navItems.map((item: NavItem) => (
 								<li key={item.label}>
-									<a
-										href={item.href}
+									<Link
+										to={item.href}
 										className="hover:text-green-400 transition duration-200"
 									>
 										{item.label}
-									</a>
+									</Link>
 								</li>
 							))}
 						</ul>
@@ -62,34 +63,22 @@ export const Footer: React.FC = () => {
 						</h5>
 						<ul className="space-y-2 text-gray-400">
 							<li>
-								<a
-									href="#charte"
-									className="hover:text-green-400 transition duration-200"
-								>
+								<a href="#" className="hover:text-green-400">
 									Charte Éthique
 								</a>
 							</li>
 							<li>
-								<a
-									href="#temoignages"
-									className="hover:text-green-400 transition duration-200"
-								>
+								<a href="#" className="hover:text-green-400">
 									Témoignages
 								</a>
 							</li>
 							<li>
-								<a
-									href="#presse"
-									className="hover:text-green-400 transition duration-200"
-								>
+								<a href="#" className="hover:text-green-400">
 									Presse
 								</a>
 							</li>
 							<li>
-								<a
-									href="#mentions-legales"
-									className="hover:text-green-400 transition duration-200"
-								>
+								<a href="#" className="hover:text-green-400">
 									Mentions Légales
 								</a>
 							</li>
@@ -101,8 +90,8 @@ export const Footer: React.FC = () => {
 						<h5 className="text-lg font-semibold mb-4 uppercase tracking-wider">
 							Contact & Réseaux
 						</h5>
+
 						<ul className="space-y-3 text-gray-400">
-							{/* EMAIL */}
 							<li className="flex items-center">
 								<Mail className="w-5 h-5 mr-3 text-green-400" />
 								<a
@@ -113,13 +102,11 @@ export const Footer: React.FC = () => {
 								</a>
 							</li>
 
-							{/* LOCALISATION */}
 							<li className="flex items-center">
 								<MapIcon className="w-5 h-5 mr-3 text-green-400" />
-								Paris, France
+								Dakar, Sénégal
 							</li>
 
-							{/* RESEAUX */}
 							<li className="flex items-center">
 								<LinkIcon className="w-5 h-5 mr-3 text-green-400" />
 								<a
@@ -138,9 +125,14 @@ export const Footer: React.FC = () => {
 					<p>
 						&copy; {new Date().getFullYear()} Simple Action Citoyenne. Tous
 						droits réservés.
+						<br />
+						<span className="text-xs text-gray-400">
+							Développé avec 💚 par YamsTheBee.
+						</span>
 					</p>
 				</div>
 			</div>
 		</footer>
 	);
 };
+export default Footer;
