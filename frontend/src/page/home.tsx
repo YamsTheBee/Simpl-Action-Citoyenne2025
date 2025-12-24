@@ -1,12 +1,10 @@
-//  Projet : Simpl-Action-Citoyenne
-//  * Auteur : Mariama Diaw
-// --- 9. COMPOSANT HOME (Assemblage des composants) ---
+// Page d'accueil – Simple Action Citoyenne
 
 import HeroSlider from "../components/HeroSlider";
 import { MissionSection } from "../components/MissionSection";
-import "../components/GalerieImpact";
-import { FaitesUnDon } from "../components/FaitesUnDon";
 import GalerieImpact from "../components/GalerieImpact";
+import DrMbeteChatbot from "../components/DrMbeteChatbot";
+
 const Home: React.FC = () => {
 	return (
 		<div className="home-page">
@@ -22,9 +20,8 @@ const Home: React.FC = () => {
 				<GalerieImpact />
 			</section>
 
-			<section className="FaitesUnDon-section">
-				<FaitesUnDon />
-			</section>
+			{/* 💬 Chatbot flottant en bas à droite */}
+			<DrMbeteChatbot />
 		</div>
 	);
 };
