@@ -1,11 +1,11 @@
 // Page d'accueil – Simple Action Citoyenne
 
+import DrMbeteChatbot from "../components/DrMbeteChatbot";
+import GalerieImpact from "../components/GalerieImpact";
 import HeroSlider from "../components/HeroSlider";
 import { MissionSection } from "../components/MissionSection";
-import GalerieImpact from "../components/GalerieImpact";
-import DrMbeteChatbot from "../components/DrMbeteChatbot";
 
-const Home: React.FC = () => {
+const Home = () => {
 	return (
 		<div className="home-page">
 			<section className="hero-section">
