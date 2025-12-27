@@ -1,6 +1,6 @@
 // DrMbeteChatbot.tsx
-import { useEffect, useRef, useState, type FormEvent } from "react";
 import { MessageSquare, Send, X, Zap } from "lucide-react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 
 const API_URL = `${import.meta.env.VITE_API_URL}/api/chatbot/message`;
 
