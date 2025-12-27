@@ -36,6 +36,17 @@ build/
 .cache/
 
 # ---------------------------
+# Lockfiles (optionnel)
+# Versionner généralement pour cohérence des dépendances
+# ---------------------------
+# npm
+# package-lock.json
+# yarn
+# yarn.lock
+# pnpm
+# pnpm-lock.yaml
+
+# ---------------------------
 # Editor settings
 # ---------------------------
 .vscode/*
