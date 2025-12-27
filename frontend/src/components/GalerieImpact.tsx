@@ -1,16 +1,18 @@
-import React, { useState, useMemo, useCallback } from "react";
 import {
-	Heart,
-	Map as MapIcon,
 	Calendar,
-	ChevronRight,
-	ChevronLeft,
 	ChevronDown,
-	Leaf,
-	Sparkles,
+	ChevronLeft,
+	ChevronRight,
+	Hammer,
+	Heart,
 	Hourglass,
+	Leaf,
+	Map as MapIcon,
+	Sparkles,
 	Zap,
 } from "lucide-react";
+import React, { useState, useMemo, useCallback } from "react";
+import puitImage from "../assets/Niinth.puit1.jpg";
 
 /* ----------------------------- 1. COULEURS & CONSTANTES ----------------------------- */
 interface Action {
@@ -30,23 +32,22 @@ const SAC_GREEN = "#28a745";
 const mockActions: Action[] = [
 	{
 		id: "1",
-		title: "Épopée ",
+		title: "Village l'Épopée ",
 		description:
-			"Un programme ambitieux de reforestation et de sensibilisation environnementale à travers les écoles du Sénégal, visant à léguer un héritage durable aux générations futures.",
+			"Le projet Village l’Épopée est une initiative majeure de la Simple Action Citoyenne visant à promouvoir l’inclusion sociale et la valorisation des talents en réunissant entreprises, écoles, associations et citoyens dans un même espace collaboratif.",
 		image:
 			"https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop",
-		location: "Zones scolaires rurales",
+		location: "Sénégal",
 		date: "Annuel (Saison des pluies)",
 		isCoupDeCoeur: true,
-		impact: "500 citoyens formés par an.",
+		impact: "Chaque geste compte pour l'avenir de notre cité.",
 	},
 	{
 		id: "2",
-		title: "Inclusion Numérique",
+		title: "Forage & Eau Potable",
 		description:
-			"Aide à l'inclusion numérique des personnes âgées dans les quartiers connectés.",
-		image:
-			"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000&auto=format&fit=crop",
+			"Installation de systèmes de pompage d'eau pour les villages isolés.",
+		image: puitImage,
 		location: "Dakar",
 		date: "15/10/2025",
 		isCoupDeCoeur: false,
@@ -184,7 +185,8 @@ export default function App() {
 
 							<div className="order-2 lg:order-1 relative z-10">
 								<h3 className="text-5xl md:text-5xl font-black text-slate-900 mb-8 tracking-tighter leading-[0.9] flex items-center gap-4">
-									<span className="text-[#28a745]">Épopée </span>
+									<Hammer className="w-10 h-10 text-amber-500 animate-pulse" />
+									<span className="text-[#28a745]">Village l'Épopée </span>
 									<Hourglass className="w-10 h-10 text-amber-500 animate-pulse" />
 								</h3>
 								<p className="text-xl text-slate-600 mb-12 leading-relaxed font-medium">
