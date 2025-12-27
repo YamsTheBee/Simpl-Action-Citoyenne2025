@@ -1,5 +1,5 @@
 // --- Footer.tsx ---
-import { Mail, MapPin, Link as LinkIcon, Github } from "lucide-react";
+import { Github, Link as LinkIcon, Mail, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface NavItem {
