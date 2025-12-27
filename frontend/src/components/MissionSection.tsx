@@ -1,6 +1,6 @@
-// --- 5. MissionSection.tsx ---
+// --- . MissionSection.tsx ---
+import { Heart, Users, Zap } from "lucide-react";
 import type React from "react";
-import { Zap, Heart, Users } from "lucide-react";
 
 // Définition du type TS
 interface StatItem {
