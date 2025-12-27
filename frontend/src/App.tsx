@@ -1,22 +1,25 @@
 import type React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import Footer from "./components/Footer";
 import NavBar from "./components/navbar";
-import { Footer } from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 
-// Pages
 import Home from "./page/home";
-import ActionsPage from "./page/Actions";
-import ActionDetailPage from "./page/ActionDetailPage";
+import AboutPage from "./page/About";
 import Impact from "./page/Impact";
 import ContactUs from "./page/ContactUs";
-import AboutPage from "./page/About"; // ✔ Correction du nom
+import ActionsPage from "./page/Actions";
+import EpopeePage from "./page/EpopeePage";
 
 const App: React.FC = () => {
 	return (
 		<Router>
 			<div className="min-h-screen font-sans antialiased text-gray-800">
 				<NavBar />
+
+				{/* ScrollToTop doit être juste après le Router */}
+				<ScrollToTop />
 
 				<main>
 					<Routes>
@@ -35,18 +38,8 @@ const App: React.FC = () => {
 						{/* Actions */}
 						<Route path="/actions" element={<ActionsPage />} />
 
-						{/* Détail d’une action */}
-						<Route
-							path="/actions/:id"
-							element={
-								<ActionDetailPage
-									actionId={""}
-									navigate={(view: string): void => {
-										throw new Error("Function not implemented.");
-									}}
-								/>
-							}
-						/>
+						{/* Page Épopée */}
+						<Route path="/epopee" element={<EpopeePage />} />
 					</Routes>
 				</main>
 
