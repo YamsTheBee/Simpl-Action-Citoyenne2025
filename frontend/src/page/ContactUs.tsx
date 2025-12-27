@@ -1,10 +1,7 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
-import { Mail, User, Send, MapPin, Phone, Clock } from "lucide-react";
+//  COMPOSANT DE CONTACT
 
-/**
- * COMPOSANT DE CONTACT - Simple Action Citoyenne
- * Version LIGHT - Typage TS corrigé - Bouton Centré
- */
+import { Clock, Mail, MapPin, Phone, Send, User } from "lucide-react";
+import { type ChangeEvent, type FormEvent, useState } from "react";
 
 const SAC_GREEN = "#28a745";
 
@@ -167,15 +164,14 @@ const ContactUs = () => {
 								</div>
 
 								{/* CONTENEUR DU BOUTON CENTRÉ */}
-								{/* <div className="flex justify-center pt-2"> */}
-									<button
-										type="submit"
-										className="w-fit px-10 py-4 rounded-2xl shadow-lg shadow-green-500/10 hover:shadow-green-500/30 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-3 font-bold text-white text-lg"
-										style={{ backgroundColor: SAC_GREEN }}
-									>
-										Envoyer le message <Send size={20} />
-									</button>
-								{/* </div> */}
+
+								<button
+									type="submit"
+									className="w-fit px-10 py-4 rounded-2xl shadow-lg shadow-green-500/10 hover:shadow-green-500/30 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-3 font-bold text-white text-lg"
+									style={{ backgroundColor: SAC_GREEN }}
+								>
+									Envoyer le message <Send size={20} />
+								</button>
 							</form>
 						)}
 					</div>
