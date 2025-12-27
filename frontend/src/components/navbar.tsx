@@ -1,7 +1,7 @@
 // --- 3. COMPOSANT NAVBAR ---
+import { Home, Menu, X } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { Menu, X, Hammer } from "lucide-react";
 
 // --- 1. INTERFACES TYPESCRIPT ---
 interface NavItem {
@@ -15,11 +15,16 @@ interface NavItem {
 const navItems: NavItem[] = [
 	{ label: "Accueil", href: "/" },
 	{ label: "À propos", href: "/about" },
-	{ label: "Nos Actions", href: "/actions" },
-	{ label: "Impact", href: "/impact" },
+	{ label: "Notre Impact", href: "/impact" },
+	{ label: "Galerie", href: "/actions" },
 	{ label: "Contact", href: "/contact" },
-	// { label: "Faire un Don", href: "#donate", cta: true }, En attente trouver emplacement idéal ...
-	{ label: "Épopée", href: "/epopee", cta: true, icon: <Hammer size={18} /> },
+
+	{
+		label: " Épopée",
+		href: "/epopee",
+		cta: true,
+		icon: <Home size={18} className="text-amber-500" />,
+	},
 ];
 
 const NavBar: React.FC = () => {
@@ -49,7 +54,7 @@ const NavBar: React.FC = () => {
 										: "text-gray-700 hover:text-green-600"
 								}`}
 							>
-								{item.cta && <Hammer className="w-4 h-4 mr-2" />}
+								{item.cta && <Home className="w-4 h-4 mr-2" />}
 								{item.label}
 							</a>
 						))}
