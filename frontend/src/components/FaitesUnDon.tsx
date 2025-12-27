@@ -1,8 +1,8 @@
 // --- 7. FaitesUnDon.tsx ---
 
+import { DollarSign, Gift, Lock, Repeat2 } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { DollarSign, Gift, Repeat2, Lock } from "lucide-react";
 
 // --- DONNÉES ---
 const suggestedDonationAmounts = [25, 50, 100, 200];
