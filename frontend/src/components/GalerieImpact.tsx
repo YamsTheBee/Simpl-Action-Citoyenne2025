@@ -1,25 +1,20 @@
-/**
- * Composant : GalerieImpact + Carrousel des actions citoyennes
- * Projet : Simpl-Action-Citoyenne
- * Auteur : Mariama Diaw
- * Description :
- *  - Affiche les actions phares (3 premières)
- *  - Propose un carrousel horizontal pour les actions restantes
- *  - Responsive : grille sur desktop, scroll horizontal sur mobile
- */
-
-import React, { useState, useMemo, useCallback } from "react";
 import {
-	Heart,
-	Map as MapIcon,
 	Calendar,
-	ChevronRight,
-	ChevronLeft,
 	ChevronDown,
+	ChevronLeft,
+	ChevronRight,
+	Hammer,
+	Heart,
+	Hourglass,
+	Leaf,
+	Map as MapIcon,
+	Sparkles,
+	Zap,
 } from "lucide-react";
+import React, { useState, useMemo, useCallback } from "react";
+import puitImage from "../assets/Niinth.puit1.jpg";
 
-/* ----------------------------- 1. INTERFACES ----------------------------- */
-
+/* ----------------------------- 1. COULEURS & CONSTANTES ----------------------------- */
 interface Action {
 	id: string;
 	title: string;
@@ -28,286 +23,272 @@ interface Action {
 	location: string;
 	date: string;
 	isCoupDeCoeur: boolean;
-	href: string;
+	impact?: string;
 }
 
-/* ------------------------------ 2. DONNÉES ------------------------------- */
+const SAC_GREEN = "#28a745";
 
+/* ------------------------------ 2. DONNÉES ------------------------------- */
 const mockActions: Action[] = [
 	{
 		id: "1",
-		title: "Épopée Verte",
+		title: "Village l'Épopée ",
 		description:
-			"Collecte de déchets et sensibilisation écologique en centre-ville.",
-		image: "https://placehold.co/400x250/34D399/ffffff?text=Action+1",
-		location: "Paris",
-		date: "20/09/2025",
-		isCoupDeCoeur: false,
-		href: "/actions/1",
+			"Le projet Village l’Épopée est une initiative majeure de la Simple Action Citoyenne visant à promouvoir l’inclusion sociale et la valorisation des talents en réunissant entreprises, écoles, associations et citoyens dans un même espace collaboratif.",
+		image:
+			"https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop",
+		location: "Sénégal",
+		date: "Annuel (Saison des pluies)",
+		isCoupDeCoeur: true,
+		impact: "Chaque geste compte pour la cité.",
 	},
 	{
 		id: "2",
-		title: "Inclusion Numérique",
+		title: "Forage & Eau Potable",
 		description:
-			"Aide à l'inclusion numérique des personnes âgées dans les maisons de retraite.",
-		image: "https://placehold.co/400x250/FBBF24/ffffff?text=Action+2",
-		location: "Lyon",
+			"Installation de systèmes de pompage d'eau pour les villages isolés.",
+		image: puitImage,
+		location: "Dakar",
 		date: "15/10/2025",
-		isCoupDeCoeur: true,
-		href: "/actions/2",
+		isCoupDeCoeur: false,
 	},
 	{
 		id: "3",
 		title: "Potagers Solidaires",
 		description:
-			"Création et entretien de potagers collectifs pour l'autonomie alimentaire.",
-		image: "https://placehold.co/400x250/60A5FA/ffffff?text=Action+3",
-		location: "Marseille",
+			"Création et entretien de potagers collectifs pour l'autonomie alimentaire locale.",
+		image:
+			"https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=1000&auto=format&fit=crop",
+		location: "Dakar",
 		date: "01/11/2025",
 		isCoupDeCoeur: false,
-		href: "/actions/3",
-	},
-	{
-		id: "4",
-		title: "Rénov'Écoles",
-		description:
-			"Rénovation d'écoles primaires dans les quartiers défavorisés.",
-		image: "https://placehold.co/400x250/8B5CF6/ffffff?text=Action+4",
-		location: "Lille",
-		date: "10/12/2025",
-		isCoupDeCoeur: false,
-		href: "/actions/4",
-	},
-	{
-		id: "5",
-		title: "Bibliothèque Mobile",
-		description:
-			"Bibliothèque itinérante pour favoriser l'accès à la lecture en zones rurales.",
-		image: "https://placehold.co/400x250/EC4899/ffffff?text=Action+5",
-		location: "Toulouse",
-		date: "05/01/2026",
-		isCoupDeCoeur: true,
-		href: "/actions/5",
-	},
-	{
-		id: "6",
-		title: "Parrainage Étudiant",
-		description:
-			"Programme de mentorat pour étudiants de première année issus de milieux modestes.",
-		image: "https://placehold.co/400x250/374151/ffffff?text=Action+6",
-		location: "Bordeaux",
-		date: "15/02/2026",
-		isCoupDeCoeur: false,
-		href: "/actions/6",
-	},
-	{
-		id: "7",
-		title: "Ateliers Cuisine Solidaire",
-		description:
-			"Ateliers anti-gaspillage + distribution de repas aux plus démunis.",
-		image: "https://placehold.co/400x250/6D28D9/ffffff?text=Action+7",
-		location: "Nantes",
-		date: "01/03/2026",
-		isCoupDeCoeur: true,
-		href: "/actions/7",
-	},
-	{
-		id: "8",
-		title: "Hackathon Citoyen",
-		description: "Événement de 48h pour des solutions numériques citoyennes.",
-		image: "https://placehold.co/400x250/06B6D4/ffffff?text=Action+8",
-		location: "Strasbourg",
-		date: "15/04/2026",
-		isCoupDeCoeur: false,
-		href: "/actions/8",
 	},
 ];
 
-/* ------------------ 3. Composant de carte réutilisable ------------------- */
+const epopeeVerte = mockActions[0];
+const carouselActions = mockActions.slice(1);
 
-const GalerieImpact: React.FC<{ action: Action }> = React.memo(({ action }) => (
-	<div
-		className="bg-white rounded-xl shadow-lg overflow-hidden group transition duration-500 hover:shadow-xl hover:scale-[1.02] relative
-               min-w-[320px] w-full sm:min-w-[45%] lg:min-w-[calc(33.333%-20px)] snap-center"
-	>
-		{/* Badge Coup de Cœur */}
-		{action.isCoupDeCoeur && (
-			<div className="absolute top-4 right-4 z-10 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-xl flex items-center animate-fade-in-down">
-				<Heart className="w-4 h-4 mr-1 fill-white" />
-				Coup de Cœur
-			</div>
-		)}
+/* ------------------ 3. Composant de carte ------------------- */
+const ActionCard: React.FC<{ action: Action; onClick: () => void }> =
+	React.memo(({ action, onClick }) => (
+		<div
+			className="bg-white rounded-[2rem] shadow-lg overflow-hidden group transition duration-500 hover:shadow-2xl hover:scale-[1.02] relative
+          min-w-[300px] w-full sm:min-w-[45%] lg:min-w-[calc(33.333%-20px)] snap-center border border-slate-100"
+		>
+			{action.isCoupDeCoeur && (
+				<div className="absolute top-4 right-4 z-10 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-xl flex items-center">
+					<Heart className="w-4 h-4 mr-1 fill-white" />
+					Coup de Cœur
+				</div>
+			)}
 
-		<img
-			src={action.image}
-			alt={action.title}
-			className="w-full h-56 object-cover transition duration-500 group-hover:opacity-85"
-			onError={(e) => {
-				e.currentTarget.src =
-					"https://placehold.co/400x250/6B7280/ffffff?text=Image+Introuvable";
-			}}
-		/>
+			<img
+				src={action.image}
+				alt={action.title}
+				className="w-full h-56 object-cover transition duration-500 group-hover:opacity-85"
+			/>
 
-		<div className="p-6 flex flex-col justify-between h-[calc(100%-14rem)]">
-			<div>
-				<h3 className="text-2xl font-bold text-gray-900 mb-2">
-					{action.title}
-				</h3>
-
-				<p className="text-gray-600 mb-4 line-clamp-3">{action.description}</p>
-			</div>
-
-			<div>
-				<div className="space-y-2 text-sm text-gray-500 mb-6 border-t pt-4 border-gray-100">
-					<p className="flex items-center">
-						<MapIcon className="w-4 h-4 mr-2 text-green-600" />
-						{action.location}
-					</p>
-
-					<p className="flex items-center">
-						<Calendar className="w-4 h-4 mr-2 text-green-600" />
-						{action.date}
+			<div className="p-8 flex flex-col justify-between h-[calc(100%-14rem)]">
+				<div>
+					<h3 className="text-2xl font-black text-slate-900 mb-3">
+						{action.title}
+					</h3>
+					<p className="text-slate-600 mb-6 line-clamp-2 font-medium">
+						{action.description}
 					</p>
 				</div>
 
-				<a
-					href={action.href}
-					className="text-green-600 font-bold flex items-center hover:text-green-800 transition duration-200"
-				>
-					Découvrir le projet <ChevronRight className="w-5 h-5 ml-1" />
-				</a>
+				<div>
+					<div className="space-y-2 text-sm text-slate-500 mb-6 border-t pt-4 border-slate-50">
+						<p className="flex items-center font-semibold">
+							<MapIcon className="w-4 h-4 mr-2" style={{ color: SAC_GREEN }} />
+							{action.location}
+						</p>
+						<p className="flex items-center font-semibold">
+							<Calendar className="w-4 h-4 mr-2" style={{ color: SAC_GREEN }} />
+							{action.date}
+						</p>
+					</div>
+
+					<button
+						type="button"
+						onClick={onClick}
+						className="text-[#28a745] font-black flex items-center hover:translate-x-2 transition-transform"
+					>
+						Découvrir <ChevronRight className="w-5 h-5 ml-1" />
+					</button>
+				</div>
 			</div>
 		</div>
-	</div>
-));
+	));
 
-/* -------------------- 4. Composant principal (Carrousel) -------------------- */
-
+/* -------------------- 4. Composant principal -------------------- */
 export default function App() {
+	const [page, setPage] = useState("home");
 	const [currentIndex, setCurrentIndex] = useState(0);
-
-	const totalItems = mockActions.length;
 	const itemsPerView = 3;
-
-	const primaryActions = mockActions.slice(0, itemsPerView);
-	const carouselActions = mockActions.slice(itemsPerView);
 	const totalCarouselItems = carouselActions.length;
+	const maxIndex = useMemo(
+		() => Math.max(0, totalCarouselItems - itemsPerView),
+		[totalCarouselItems],
+	);
 
-	const maxIndex = useMemo(() => {
-		return totalCarouselItems > itemsPerView
-			? totalCarouselItems - itemsPerView
-			: 0;
-	}, [totalCarouselItems]);
+	const handleNext = useCallback(
+		() => setCurrentIndex((prev) => Math.min(prev + 1, maxIndex)),
+		[maxIndex],
+	);
+	const handlePrev = useCallback(
+		() => setCurrentIndex((prev) => Math.max(prev - 1, 0)),
+		[],
+	);
 
-	const handleNext = useCallback(() => {
-		setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
-	}, [maxIndex]);
-
-	const handlePrev = useCallback(() => {
-		setCurrentIndex((prev) => Math.max(prev - 1, 0));
-	}, []);
-
-	const translateX = `-${currentIndex * (100 / itemsPerView)}%`;
-	const carouselWidth = `${totalCarouselItems * (100 / itemsPerView)}%`;
-
-	const isCarouselNeeded = totalItems > itemsPerView;
+	// Simuler la navigation sans router
+	if (page !== "home") {
+		return (
+			<div className="min-h-screen flex flex-col items-center justify-center p-10 text-center">
+				<h1 className="text-4xl font-black mb-6">Page: {page}</h1>
+				<p className="text-slate-600 mb-8">
+					Contenu en cours de construction pour la démonstration.
+				</p>
+				<button
+					type="button"
+					onClick={() => setPage("home")}
+					className="px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold"
+				>
+					Retour à l'accueil
+				</button>
+			</div>
+		);
+	}
 
 	return (
-		<section id="actions" className="py-20 md:py-32 bg-gray-50">
-			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-				{/* Titre / Header */}
-				<div className="text-center mb-16">
-					<span className="text-sm font-semibold uppercase tracking-wider text-green-600 bg-green-100 px-3 py-1 rounded-full">
-						Notre Engagement
-					</span>
-
-					<h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mt-4">
-						Découvrez nos projets phares.
-					</h2>
-
-					<p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-						De la préservation de l'environnement à l'aide sociale,
-						Simpl-Action-Citoyenne transforme l'engagement en impact réel.
-					</p>
-				</div>
-
-				{/* 3 projets phares */}
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-					{primaryActions.map((action) => (
-						<GalerieImpact key={action.id} action={action} />
-					))}
-				</div>
-
-				{/* Carrousel */}
-				{isCarouselNeeded && (
-					<div className="mt-20 pt-10 border-t border-gray-200">
-						<div className="flex justify-between items-center mb-12 md:mb-16">
-							<h3 className="text-3xl font-bold text-gray-900">
-								Explorer d'autres initiatives
-							</h3>
-
-							{totalCarouselItems > itemsPerView && (
-								<div className="hidden lg:flex space-x-4">
-									<button
-										type="button"
-										onClick={handlePrev}
-										disabled={currentIndex === 0}
-										className="p-3 rounded-full ..."
-									>
-										<ChevronLeft className="w-6 h-6" />
-									</button>
-
-									<button
-										type="button"
-										onClick={handleNext}
-										disabled={currentIndex >= maxIndex}
-										className="p-3 rounded-full ..."
-									>
-										<ChevronRight className="w-6 h-6" />
-									</button>
-								</div>
-							)}
+		<div className="min-h-screen bg-white">
+			<section id="actions" className="py-24 md:py-40 bg-[#f8fafc]">
+				<div className="container mx-auto px-6 max-w-7xl">
+					<div className="text-center mb-24">
+						<div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full border border-green-100 mb-6">
+							<Sparkles size={16} className="text-[#28a745]" />
+							<span className="text-xs font-black tracking-[0.2em] uppercase text-[#28a745]">
+								Notre Engagement
+							</span>
 						</div>
+						<h2 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[0.9]">
+							Découvrez nos projets
+							<span className="text-[#28a745]"> phares.</span>
+						</h2>
+					</div>
 
-						<div className="relative">
-							<div className="flex overflow-x-scroll lg:overflow-hidden gap-6 pb-6 snap-x snap-mandatory scroll-smooth">
-								<div
-									className="flex gap-6 transition-transform duration-500 ease-in-out"
-									style={
-										isCarouselNeeded
-											? {
-													transform: `translateX(${translateX})`,
-													width: carouselWidth,
-												}
-											: {}
-									}
-								>
-									{carouselActions.map((action) => (
-										<GalerieImpact key={action.id} action={action} />
-									))}
+					{/* SECTION PROJET PHARE */}
+					<div className="mt-12 mb-40">
+						<div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center bg-white p-10 md:p-20 rounded-[4rem] shadow-2xl border border-slate-100 relative overflow-hidden">
+							<div className="absolute top-0 right-0 w-64 h-64 bg-green-50 rounded-full blur-3xl -mr-32 -mt-32 opacity-50" />
+
+							<div className="order-2 lg:order-1 relative z-10">
+								<h3 className="text-5xl md:text-5xl font-black text-slate-900 mb-8 tracking-tighter leading-[0.9] flex items-center gap-4">
+									<Hammer className="w-10 h-10 text-amber-500 animate-pulse" />
+									<span className="text-[#28a745]">Village l'Épopée </span>
+									<Hourglass className="w-10 h-10 text-amber-500 animate-pulse" />
+								</h3>
+								<p className="text-xl text-slate-600 mb-12 leading-relaxed font-medium">
+									{epopeeVerte.description}
+								</p>
+
+								<div className="space-y-6 mb-12 border-l-4 border-[#28a745] pl-8">
+									<div className="flex items-center text-lg text-slate-800">
+										<Zap className="w-6 h-6 mr-4 text-[#28a745]" />
+										<span className="font-black mr-2">Impact :</span>{" "}
+										<span className="text-slate-600">{epopeeVerte.impact}</span>
+									</div>
+									<div className="flex items-center text-lg text-slate-800">
+										<MapIcon className="w-6 h-6 mr-4 text-[#28a745]" />
+										<span className="font-black mr-2">Zone :</span>{" "}
+										<span className="text-slate-600">
+											{epopeeVerte.location}
+										</span>
+									</div>
 								</div>
+
+								<button
+									type="button"
+									onClick={() => setPage("epopee")}
+									className="group inline-flex items-center px-6 py-6 bg-slate-700 text-white text-l font-black rounded-3xl shadow-xl transition-all hover:bg-[#28a745] duration-500"
+								>
+									En savoir plus
+									<Leaf className="ml-3 w-6 h-6" />
+								</button>
 							</div>
 
-							<p className="lg:hidden text-center text-sm text-gray-500 mt-4 flex items-center justify-center">
-								<ChevronLeft className="w-4 h-4 mr-1" />
-								Faites glisser pour voir plus
-								<ChevronRight className="w-4 h-4 ml-1" />
-							</p>
+							<div className="order-1 lg:order-2 self-stretch flex items-center justify-center relative group">
+								<div className="absolute -inset-4 bg-green-50 rounded-[4rem] -rotate-2 group-hover:rotate-0 transition-all duration-700" />
+								<img
+									src={epopeeVerte.image}
+									alt={epopeeVerte.title}
+									className="relative w-full lg:h-full lg:max-h-[550px] object-cover rounded-[3.5rem] shadow-2xl transition duration-700 group-hover:scale-[1.02]"
+								/>
+							</div>
 						</div>
 					</div>
-				)}
 
-				{/* Bouton final */}
-				<div className="text-center mt-20">
-					<a
-						href="/actions"
-						className="inline-flex items-center px-8 py-3 border border-transparent text-lg font-bold rounded-full shadow-xl text-white bg-green-600 hover:bg-green-700 ring-4 ring-green-200 transition duration-300 transform hover:scale-105"
-					>
-						Voir la liste complète des projets ({totalItems})
-						<ChevronDown className="ml-2 w-5 h-5" />
-					</a>
+					{/* CARROUSEL */}
+					<div className="mt-32">
+						<div className="flex justify-between items-end mb-16">
+							<div>
+								<h3 className="text-4xl font-black text-slate-900 tracking-tight">
+									Explorer d'autres initiatives
+								</h3>
+								<div className="w-20 h-2 bg-[#28a745] mt-4 rounded-full" />
+							</div>
+
+							<div className="hidden lg:flex space-x-4">
+								<button
+									type="button"
+									onClick={handlePrev}
+									disabled={currentIndex === 0}
+									className="p-5 rounded-2xl bg-white border border-slate-100 shadow-lg text-slate-900 hover:bg-slate-900 hover:text-white transition-all disabled:opacity-30"
+								>
+									<ChevronLeft className="w-6 h-6" />
+								</button>
+								<button
+									type="button"
+									onClick={handleNext}
+									disabled={currentIndex >= maxIndex}
+									className="p-5 rounded-2xl bg-white border border-slate-100 shadow-lg text-slate-900 hover:bg-slate-900 hover:text-white transition-all disabled:opacity-30"
+								>
+									<ChevronRight className="w-6 h-6" />
+								</button>
+							</div>
+						</div>
+
+						<div className="relative overflow-hidden">
+							<div
+								className="flex gap-8 transition-transform duration-700 ease-out"
+								style={{
+									transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
+								}}
+							>
+								{carouselActions.map((action) => (
+									<ActionCard
+										key={action.id}
+										action={action}
+										onClick={() => setPage(action.title)}
+									/>
+								))}
+							</div>
+						</div>
+					</div>
+
+					<div className="text-center mt-32">
+						<button
+							type="button"
+							onClick={() => setPage("tous-les-projets")}
+							className="inline-flex items-center px-12 py-6 bg-slate-700 text-white text-lg font-black rounded-[2rem] shadow-2xl transition-all duration-500 hover:bg-[#28a745] hover:scale-105"
+						>
+							Voir tous les projets
+							<ChevronDown className="ml-3 w-5 h-5" />
+						</button>
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+		</div>
 	);
 }

@@ -1,23 +1,30 @@
 // --- 3. COMPOSANT NAVBAR ---
+import { Home, Menu, X } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
-import { Menu, X, DollarSign } from "lucide-react";
 
 // --- 1. INTERFACES TYPESCRIPT ---
 interface NavItem {
 	label: string;
 	href: string;
 	cta?: boolean;
+	icon?: React.ReactNode;
 }
 
-// --- 2. DONNÉES DE DÉMONSTRATION ---
+// --- 2. DONNÉES NAVBAR ---
 const navItems: NavItem[] = [
-	{ label: "Accueil", href: "#home" },
-	{ label: "Nos Actions", href: "#actions" },
-	{ label: "Impact", href: "#mission" },
-	{ label: "S'engager", href: "#volunteers" },
-	{ label: "Contact", href: "#footer" },
-	{ label: "Faire un Don", href: "#donate", cta: true },
+	{ label: "Accueil", href: "/" },
+	{ label: "À propos", href: "/about" },
+	{ label: "Notre Impact", href: "/impact" },
+	{ label: "Galerie", href: "/actions" },
+	{ label: "Contact", href: "/contact" },
+
+	{
+		label: " Épopée",
+		href: "/epopee",
+		cta: true,
+		icon: <Home size={18} className="text-amber-500" />,
+	},
 ];
 
 const NavBar: React.FC = () => {
@@ -27,10 +34,9 @@ const NavBar: React.FC = () => {
 		<header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-sm shadow-md transition-all duration-300">
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex justify-between items-center h-20">
-					
 					{/* LOGO */}
 					<a
-						href="#home"
+						href="/"
 						className="text-2xl font-extrabold tracking-tight text-gray-900 transition duration-300 hover:text-green-600"
 					>
 						Simple Action Citoyenne
@@ -48,7 +54,7 @@ const NavBar: React.FC = () => {
 										: "text-gray-700 hover:text-green-600"
 								}`}
 							>
-								{item.cta && <DollarSign className="w-4 h-4 mr-2" />}
+								{item.cta && <Home className="w-4 h-4 mr-2" />}
 								{item.label}
 							</a>
 						))}
@@ -57,12 +63,16 @@ const NavBar: React.FC = () => {
 					{/* BURGER MENU MOBILE */}
 					<div className="md:hidden">
 						<button
+							type="button"
 							onClick={() => setIsOpen(!isOpen)}
 							aria-label="Toggle navigation"
-							type="button"
 							className="p-2 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-150"
 						>
-							{isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+							{isOpen ? (
+								<X className="w-6 h-6" />
+							) : (
+								<Menu className="w-6 h-6" />
+							)}
 						</button>
 					</div>
 				</div>
@@ -83,7 +93,6 @@ const NavBar: React.FC = () => {
 										: "text-gray-700 hover:bg-gray-50 hover:text-green-600"
 								}`}
 							>
-								{item.cta && <DollarSign className="w-4 h-4 mr-3" />}
 								{item.label}
 							</a>
 						))}

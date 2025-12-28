@@ -8,6 +8,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+*.tmp
 
 # ---------------------------
 # Node modules
@@ -34,6 +35,17 @@ build/
 # ---------------------------
 .vite/
 .cache/
+
+# ---------------------------
+# Lockfiles (optionnel)
+# Versionner généralement pour cohérence des dépendances
+# ---------------------------
+# npm
+# package-lock.json
+# yarn
+# yarn.lock
+# pnpm
+# pnpm-lock.yaml
 
 # ---------------------------
 # Editor settings
