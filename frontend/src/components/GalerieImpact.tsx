@@ -40,7 +40,7 @@ const mockActions: Action[] = [
 		location: "Sénégal",
 		date: "Annuel (Saison des pluies)",
 		isCoupDeCoeur: true,
-		impact: "Chaque geste compte pour l'avenir de notre cité.",
+		impact: "Chaque geste compte pour la cité.",
 	},
 	{
 		id: "2",
