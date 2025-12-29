@@ -32,15 +32,15 @@ const SAC_GREEN = "#28a745";
 const mockActions: Action[] = [
 	{
 		id: "1",
-		title: "Village l'Épopée ",
+		title: "Village l'Épopée",
 		description:
-			"Le projet Village l’Épopée est une initiative majeure de la Simple Action Citoyenne visant à promouvoir l’inclusion sociale et la valorisation des talents en réunissant entreprises, écoles, associations et citoyens dans un même espace collaboratif.",
+			"Le projet Village l’Épopée, porté et coordonné par l’Association Simple Action Citoyenne avec le soutien financier de [Nom de l’organisme], est une initiative phare visant à promouvoirl’inclusion sociale, à valoriser les talents des jeunes et à créer un écosystème éducatif et économique en réunissant entreprises, écoles, associations et citoyens dans un espace collaboratif.",
 		image:
 			"https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop",
-		location: "Sénégal",
-		date: "Annuel (Saison des pluies)",
+		location: "Dakar et zones rurales ciblées du Sénégal.",
+		date: "Phase initiale de 5 ans",
 		isCoupDeCoeur: true,
-		impact: "Chaque geste compte pour la cité.",
+		impact: "Renforcer l’employabilité des jeunes.",
 	},
 	{
 		id: "2",
