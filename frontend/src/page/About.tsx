@@ -85,7 +85,7 @@ const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 				<div className="flex justify-between items-center mb-8 relative z-10">
 					<div>
 						<h2 className="text-3xl font-black text-slate-900 leading-tight">
-							M. Mamadou DIAKHATE
+							M. Mamadou Diakhaté
 						</h2>
 						<p className="text-[#28a745] font-bold uppercase tracking-widest text-sm">
 							Le mot du fondateur
@@ -102,13 +102,40 @@ const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 				<div className="text-slate-600 space-y-5 relative z-10 leading-relaxed text-lg italic">
 					<p>
 						"Fondateur et président de Simple Action Citoyenne, M. Mamadou
-						DIAKHATE est un enseignant sénégalais animé par une conviction
+						Diakhaté est un enseignant sénégalais animé par une conviction
 						profonde."
 					</p>
 					<p>
 						"Son engagement est né du constat des difficultés rencontrées par
 						les populations des zones reculées, notamment l'accès limité à l'eau
 						potable."
+					</p>
+
+					<p>
+						"Très tôt confronté aux réalités du terrain, il fonde l’association
+						Simple Action Citoyenne avec la volonté d’apporter des réponses
+						concrètes et durables aux besoins essentiels des communautés locales
+						partout au Sénégal."
+					</p>
+					<p>
+						"Depuis 2023, son engagement s’est traduit par des réalisations
+						majeures, notamment la construction de puits et de forages, la
+						réalisation de salles de classe ainsi que la réhabilitation
+						d’infrastructures scolaires dans plusieurs localités, dont Bakao,
+						Fass Tiékène et d’autres zones rurales."
+					</p>
+					<p>
+						"À travers une démarche inclusive et participative, il a su
+						mobiliser les communautés bénéficiaires ainsi que des centaines de
+						volontaires autour d’un même idéal : améliorer durablement les
+						conditions de vie, favoriser l’accès à l’éducation et à l’eau
+						potable, et renforcer la résilience des territoires."
+					</p>
+					<p>
+						"Son action a également permis de créer des écosystèmes locaux
+						productifs, en favorisant le maraîchage et l’élevage, contribuant
+						ainsi au développement social et économique des communautés
+						accompagnées."
 					</p>
 				</div>
 			</div>
@@ -210,7 +237,8 @@ const AboutPage = () => {
 						<div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 flex items-center justify-center">
 							<div className="text-center text-white p-8">
 								<h1 className="text-2xl light-black italic">
-									"Partagez un sourire, soutenez l'espoir"
+									"construire pour l’avenir, creuser pour l’espoir, façonner des
+									vies"
 								</h1>
 							</div>
 						</div>
@@ -243,17 +271,18 @@ const AboutPage = () => {
 								M. Mamadou <span className="text-[#28a745]">DIAKHATE</span>
 							</h3>
 							<p className="text-lg text-slate-600 mb-8 leading-relaxed">
-								Enseignant de profession et fondateur de l'association{" "}
-								<strong>Simple Action Citoyenne (SAC)</strong>, Mamadou, alias
-								Junior (@Niintche), consacre sa vie à servir les communautés
-								rurales et à lutter contre les inégalités. Grâce à une approche
-								axée sur <strong>l'action concrète</strong>, il transforme
-								durablement les villages les plus isolés du Sénégal.{" "}
-								<strong>Avec son équipe</strong>, ils relèvent sans relâche de
-								nouveaux défis pour susciter des changements significatifs,
-								portés par une générosité sans faille et une détermination
-								inébranlable.{" "}
-								<strong>#TeamNiintche #Deurkiss #CommunityService</strong>
+								Fondateur et président de l’association{" "}
+								<strong>Simple Action Citoyenne (SAC)</strong>, Mamadou
+								Diakhaté, dit
+								<strong> « NIINTCHE »</strong>, s’engage depuis plusieurs années
+								à susciter des changements significatifs au sein des communautés
+								locales partout au Sénégal. À travers une démarche fondée sur{" "}
+								<strong>l’action concrète et l’engagement citoyen</strong>, il
+								œuvre activement pour améliorer les conditions de vie, notamment
+								par l’accès à l’eau potable et à l’éducation. Avec le soutien
+								des communautés bénéficiaires et de centaines de volontaires, il
+								a contribué à la réalisation de nombreux projets structurants,
+								favorisant un développement durable et inclusif.
 							</p>
 
 							<button
@@ -280,22 +309,23 @@ const AboutPage = () => {
 						<PillarCard
 							icon={BookOpen}
 							title="Éducation"
-							desc="Remplacer les abris provisoires par des écoles en dur."
+							desc="Construction et rénovation d’écoles pour offrir un environnement scolaire sûr et adapté, ainsi que la distribution de kits scolaires."
 						/>
 						<PillarCard
 							icon={Droplets}
-							title="Eau Potable"
-							desc="Forer des puits pour offrir la vie aux zones reculées."
+							title="Accès à l’eau potable"
+							desc="Construction de puits et de forages pour garantir l’accès à l’eau potable et améliorer durablement la santé des communautés."
+						/>
+
+						<PillarCard
+							icon={Heart}
+							title="Solidarité"
+							desc="Un engagement citoyen et bénévole fondé sur la solidarité, la participation et le développement communautaire."
 						/>
 						<PillarCard
 							icon={Target}
 							title="Impact"
-							desc="Mesurer chaque action par le sourire des bénéficiaires."
-						/>
-						<PillarCard
-							icon={Heart}
-							title="Solidarité"
-							desc="Un engagement bénévole total pour le développement."
+							desc="Des actions concrètes mesurées par l’amélioration durable des conditions de vie des communautés bénéficiaires."
 						/>
 					</div>
 				</section>
@@ -350,21 +380,30 @@ const AboutPage = () => {
 							<span className="text-[#28a745]">patrie</span>
 						</h2>
 						<p className="text-lg text-slate-600 mb-10 leading-relaxed">
-							Nous ne changeons pas le monde d'un coup, mais un village à la
-							fois. Chaque puits, chaque école est une pierre à l'édifice d'un
-							Sénégal plus juste.
+							Notre mission est de susciter des changements significatifs au
+							sein des communautés locales, en mettant résolument l’accent sur
+							le bien-être des individus. Par le biais d’initiatives concrètes,
+							notre objectif premier est d’améliorer les conditions de vie en
+							garantissant un accès constant à l’eau potable. En construisant
+							des puits, des écoles, des daaras et des maternités, nous nous
+							efforçons d’éliminer les obstacles qui entravent le développement
+							des communautés et leur épanouissement général. Nous œuvrons
+							également à la construction d’installations sanitaires adéquates.
+							Ces efforts visent à créer des communautés saines et résilientes
+							et à intervenir dans des domaines essentiels tels que l’éducation
+							et la santé.
 						</p>
 						<div className="flex gap-10">
 							<div>
-								<p className="text-4xl font-black text-[#28a745]">15+</p>
+								<p className="text-4xl font-black text-[#28a745]">100+</p>
 								<p className="text-xs font-bold text-slate-400 uppercase">
 									Puits
 								</p>
 							</div>
 							<div>
-								<p className="text-4xl font-black text-[#28a745]">2.5k</p>
+								<p className="text-4xl font-black text-[#28a745]">2.5k ???</p>
 								<p className="text-xs font-bold text-slate-400 uppercase">
-									Élèves
+									Écoles
 								</p>
 							</div>
 						</div>
