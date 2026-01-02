@@ -1,5 +1,5 @@
 import type React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
 	BookOpen,
 	Target,
@@ -12,9 +12,11 @@ import {
 	Droplets,
 	Star,
 	type LucideProps,
+	ChevronRight,
+	ChevronLeft,
 } from "lucide-react";
 
-// Images de remplacement pour l'aperçu des logos partenaires, pr et hero
+// Images pour l'aperçu des logos partenaires, pr et hero
 import logoBOA from "../assets/Logo-BOA.png";
 import logoFondationSonatel from "../assets/logo-fondation-Sonatel.png";
 import logoRecuplast from "../assets/logo-recuplast.png";
@@ -24,7 +26,8 @@ import parallaxBackground from "../assets/Child_smile_img1.png";
 import maimounaImage from "../assets/Maïmouna_pp.jpg";
 import alyImage from "../assets/Profil.Aly.Mbegte.png";
 import mariamaImage from "../assets/PortraitYams.jpg";
-import oumarImage from "../assets/Pic1.Aly.Mbegte.jpg";
+import daoudaImage from "../assets/daouda_image.jpg";
+import xemessImage from "../assets/Xemess_Profil.jpg";
 
 type PillarCardProps = {
 	icon: React.ComponentType<LucideProps>; // <- corrigé
@@ -58,21 +61,37 @@ const VOLUNTEERS = [
 	},
 	{
 		firstName: "Aly alias Dr Mbëgté",
-		role: "Responsable Logistique & Forages",
-		quote: "Donner de l'eau, c'est offrir la vie et la dignité aux villages.",
+		role: "Chef de projet digital",
+		quote: "Donner sans rien attendre en retour.",
 		image: alyImage,
 	},
 	{
-		firstName: "Mariama",
-		role: "Lead-Dev et membre de SAC",
-		quote: "SAC est plus qu'un projet pour moi....",
-		image: mariamaImage,
+		firstName: "Daouda alias Tipsé",
+		role: "Chef de projet SAC",
+		quote: "Chaque sourire d'un enfant est une victoire pour notre patrie.",
+		image: daoudaImage,
+	},
+
+	{
+		firstName: "Xemess",
+		role: "Chef Logistique",
+		quote:
+			"Mon plus grand souhait est de consacrer ma vie à aider le plus grand nombre, en partageant mes compétences et mon énergie pour faire une différence, chaque jour.",
+		image: xemessImage,
 	},
 	{
-		firstName: "Daouda",
-		role: "Bénévole Terrain & Médiateur",
-		quote: "Chaque sourire d'un enfant est une victoire pour notre patrie.",
-		image: oumarImage,
+		firstName: "Dialy",
+		role: "Responsable Santé",
+		quote: "La santé est un droit fondamental pour chaque communauté.",
+		// image Dialy à venir :,
+	},
+	{
+		firstName: "Mariama",
+		role: "Developpeuse & bénévole ",
+		quote:
+			"Mèttre compétences techniques au service de l’association @SAC c'est plus qu’un projet pour moi : c’est un engagement citoyen quotidien.",
+
+		image: mariamaImage,
 	},
 ];
 
@@ -145,7 +164,45 @@ const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 
 const AboutPage = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [selectedVolunteer] = useState(null);
 	const [scrollProgress, setScrollProgress] = useState(0);
+
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [itemsVisible, setItemsVisible] = useState(3);
+	const [isPaused, setIsPaused] = useState(false);
+
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth < 768) setItemsVisible(1);
+			else if (window.innerWidth < 1280) setItemsVisible(2);
+			else setItemsVisible(3);
+		};
+		handleResize();
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
+	// On mémorise les fonctions pour éviter de recréer l’intervalle inutilement
+	const handleNext = useCallback(() => {
+		setCurrentIndex((prev) => (prev + 1 >= VOLUNTEERS.length ? 0 : prev + 1));
+	}, []);
+
+	const handlePrev = useCallback(() => {
+		setCurrentIndex((prev) =>
+			prev - 1 < 0 ? VOLUNTEERS.length - 1 : prev - 1,
+		);
+	}, []);
+
+	// useEffect corrigé avec dépendances minimales
+	useEffect(() => {
+		if (isPaused || selectedVolunteer) return;
+
+		const interval = setInterval(() => {
+			handleNext();
+		}, 4500);
+
+		return () => clearInterval(interval);
+	}, [isPaused, selectedVolunteer, handleNext]);
 
 	// Calcul de la progression du scroll pour l'animation du trait
 	useEffect(() => {
@@ -330,48 +387,6 @@ const AboutPage = () => {
 					</div>
 				</section>
 
-				{/* --- NOS BÉNÉVOLES ENGAGÉS --- */}
-				<section className="mb-40 px-4 section-fade">
-					<div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
-						<div className="max-w-2xl">
-							<div className="inline-flex items-center gap-2 text-[#28a745] font-black uppercase text-xs tracking-widest mb-4">
-								<Star size={16} fill="currentColor" /> Le cœur de SAC
-							</div>
-							<h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
-								Visages de <span className="text-[#28a745]">l'engagement</span>
-							</h2>
-						</div>
-					</div>
-
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-						{VOLUNTEERS.map((volunteer) => (
-							<div
-								key={`${volunteer.firstName}-${volunteer.role}`} // Clé combinée
-								className="group bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-4"
-							>
-								<div className="relative w-48 h-60 mb-6 mx-auto">
-									<div className="absolute inset-0 bg-[#28a745]/10 rounded-3xl rotate-6 group-hover:rotate-12 transition-transform" />
-									{/* Utilise object-cover ou object-contain pour éviter la déformation */}
-									<img
-										src={volunteer.image}
-										alt={volunteer.firstName}
-										className="absolute inset-0 w-full h-full object-contain rounded-3xl border-2 border-white"
-									/>
-								</div>
-								<h3 className="text-xl font-black text-center text-slate-900 mb-1 group-hover:text-[#28a745]">
-									{volunteer.firstName}
-								</h3>
-								<p className="text-center text-[#28a745] font-bold text-[10px] uppercase mb-4">
-									{volunteer.role}
-								</p>
-								<p className="text-slate-500 italic text-sm text-center leading-relaxed">
-									"{volunteer.quote}"
-								</p>
-							</div>
-						))}
-					</div>
-				</section>
-
 				{/* --- SECTION MISSION FINALE --- */}
 				<section className="grid lg:grid-cols-2 gap-20 items-center mb-40 section-fade">
 					<div>
@@ -422,6 +437,103 @@ const AboutPage = () => {
 						</div>
 					</div>
 				</section>
+
+				{/* --- NOS BÉNÉVOLES ENGAGÉS --- */}
+
+				{/* SECTION BÉNÉVOLES - 3 CARTES AVEC DÉFILEMENT AUTO */}
+				<section
+					className="mb-40 px-4 section-fade overflow-hidden"
+					onMouseEnter={() => setIsPaused(true)}
+					onMouseLeave={() => setIsPaused(false)}
+				>
+					<div className="flex flex-col md:flex-row items-end justify-between mb-12 gap-6">
+						<div className="max-w-2xl">
+							<div className="inline-flex items-center gap-2 text-[#28a745] font-black uppercase text-xs tracking-widest mb-4">
+								<Star size={16} fill="currentColor" /> Le cœur de SAC
+							</div>
+							<h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+								Visages de <span className="text-[#28a745]">l'engagement</span>
+							</h2>
+						</div>
+						<div className="flex gap-4">
+							<button
+								type="button"
+								onClick={handlePrev}
+								className="p-4 rounded-full bg-white border border-slate-100 shadow-sm hover:bg-[#28a745] hover:text-white transition-all duration-300"
+							>
+								<ChevronLeft size={24} />
+							</button>
+							<button
+								type="button"
+								onClick={handleNext}
+								className="p-4 rounded-full bg-white border border-slate-100 shadow-sm hover:bg-[#28a745] hover:text-white transition-all duration-300"
+							>
+								<ChevronRight size={24} />
+							</button>
+						</div>
+					</div>
+
+					<div className="relative">
+						<div
+							className="flex transition-transform duration-1000 cubic-bezier(0.4, 0, 0.2, 1)"
+							style={{
+								transform: `translateX(-${currentIndex * (100 / itemsVisible)}%)`,
+								// Largeur dynamique basée sur le nombre total de volontaires
+								width: `${(VOLUNTEERS.length / itemsVisible) * 100}%`,
+							}}
+						>
+							{VOLUNTEERS.map((volunteer, idx) => (
+								<div
+									key={`${volunteer.firstName}-${idx}`}
+									style={{ width: `${100 / VOLUNTEERS.length}%` }}
+									className="px-4 flex-none"
+								>
+									<div className="group bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-4 h-full flex flex-col items-center">
+										<div className="relative w-48 h-60 mb-8 flex-none">
+											<div className="absolute inset-0 bg-[#28a745]/10 rounded-3xl rotate-6 group-hover:rotate-12 transition-transform duration-500" />
+											<img
+												src={volunteer.image}
+												alt={volunteer.firstName}
+												className="absolute inset-0 w-full h-full object-cover rounded-3xl border-2 border-white shadow-md"
+											/>
+										</div>
+										<h3 className="text-2xl font-black text-center text-slate-900 mb-1 group-hover:text-[#28a745] transition-colors">
+											{volunteer.firstName}
+										</h3>
+										<p className="text-center text-[#28a745] font-bold text-xs uppercase tracking-widest mb-6">
+											{volunteer.role}
+										</p>
+										<div className="relative">
+											<Quote
+												size={20}
+												className="absolute -top-4 -left-4 text-slate-100"
+											/>
+											<p className="text-slate-500 italic text-center leading-relaxed relative z-10">
+												"{volunteer.quote}"
+											</p>
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+
+					<div className="flex justify-center gap-3 mt-16">
+						{VOLUNTEERS.map((volunteer, i) => (
+							<button
+								type="button"
+								key={volunteer.firstName ?? `volunteer-${i}`}
+								onClick={() => setCurrentIndex(i)}
+								className={`h-2 rounded-full transition-all duration-500 ${
+									currentIndex === i
+										? "w-10 bg-[#28a745]"
+										: "w-2 bg-slate-200 hover:bg-slate-300"
+								}`}
+								aria-label={`Aller au profil ${i + 1}`}
+							/>
+						))}
+					</div>
+				</section>
 			</main>
 
 			<style>{`
@@ -432,15 +544,15 @@ const AboutPage = () => {
         .animate-scroll-infinite {
           animation: scroll-infinite 40s linear infinite;
         }
-
-        /* Animation d'apparition des sections au scroll */
         .section-fade {
           opacity: 1;
           transition: all 0.8s ease-out;
         }
-
         @media (max-width: 768px) {
            main { padding-left: 1.5rem !important; }
+        }
+        .cubic-bezier {
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         }
       `}</style>
 		</div>
