@@ -1,6 +1,5 @@
 // Page d'accueil – Simple Action Citoyenne
 
-import DrMbeteChatbot from "../components/DrMbeteChatbot";
 import GalerieImpact from "../components/GalerieImpact";
 import HeroSlider from "../components/HeroSlider";
 import { MissionSection } from "../components/MissionSection";
@@ -19,9 +18,6 @@ const Home = () => {
 			<section className="galerieImpact-section">
 				<GalerieImpact />
 			</section>
-
-			{/* 💬 Chatbot flottant en bas à droite */}
-			<DrMbeteChatbot />
 		</div>
 	);
 };
