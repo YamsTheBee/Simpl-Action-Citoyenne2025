@@ -16,7 +16,7 @@ const navItems: NavItem[] = [
 	{ label: "Accueil", href: "/" },
 	{ label: "À propos", href: "/about" },
 	{ label: "Notre Impact", href: "/impact" },
-	{ label: "Galerie", href: "/actions" },
+	{ label: "Nos Actions", href: "/actions" },
 	{ label: "Contact", href: "/contact" },
 
 	{
