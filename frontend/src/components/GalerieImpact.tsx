@@ -3,8 +3,8 @@ import {
 	ChevronDown,
 	ChevronLeft,
 	ChevronRight,
-	Hammer,
 	Heart,
+	Home,
 	Hourglass,
 	Leaf,
 	Map as MapIcon,
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import React, { useState, useMemo, useCallback } from "react";
 import puitImage from "../assets/Niinth.puit1.jpg";
+import { Link } from "react-router-dom";
 
 /* ----------------------------- 1. COULEURS & CONSTANTES ----------------------------- */
 interface Action {
@@ -42,24 +43,54 @@ const mockActions: Action[] = [
 		isCoupDeCoeur: true,
 		impact: "Renforcer l’employabilité des jeunes.",
 	},
+
 	{
 		id: "2",
-		title: "Forage & Eau Potable",
+		title: "ZERO ABRI PROVISOIRE",
 		description:
-			"Installation de systèmes de pompage d'eau pour les villages isolés.",
+			"Construction de salles de classe,Daaras et Mosquées aux normes partou au Sénégal.",
 		image: puitImage,
-		location: "Dakar",
-		date: "15/10/2025",
+		location: "Partout au Sénégal",
+		date: "01/11/2025",
 		isCoupDeCoeur: false,
 	},
 	{
 		id: "3",
-		title: "Potagers Solidaires",
+		title: "OASIS NJARIN ",
 		description:
-			"Création et entretien de potagers collectifs pour l'autonomie alimentaire locale.",
-		image:
-			"https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=1000&auto=format&fit=crop",
-		location: "Dakar",
+			"Installation Puits & Forage, des systèmes de pompage d'eau pour les villages isolés.",
+		image: puitImage,
+		location: "Partou au Sénégal",
+		date: "15/10/2025",
+		isCoupDeCoeur: false,
+	},
+	{
+		id: "4",
+		title: "JE VEUX ALLER A L’ECOLE",
+		description: "Campagne de distribution de plus de 5000 kits scolaires.",
+		image: puitImage,
+		location: "Partout au Sénégal",
+		date: "01/11/2025",
+		isCoupDeCoeur: false,
+	},
+
+	{
+		id: "5",
+		title: "SOCIAL",
+		description:
+			"Création de cagnottes, de campagnes de Crowfunding & distribution de denrées. ",
+		image: puitImage,
+		location: "Partout au Sénégal",
+		date: "01/11/2025",
+		isCoupDeCoeur: false,
+	},
+	{
+		id: "6",
+		title: "SANTÉ",
+		description:
+			"Rénovation de cases de santé et de maternités pour lutter contre la mortalité maternelle et infantile.",
+		image: puitImage,
+		location: "Partout au Sénégal",
 		date: "01/11/2025",
 		isCoupDeCoeur: false,
 	},
@@ -85,7 +116,9 @@ const ActionCard: React.FC<{ action: Action; onClick: () => void }> =
 			<img
 				src={action.image}
 				alt={action.title}
-				className="w-full h-56 object-cover transition duration-500 group-hover:opacity-85"
+				className={`w-full h-56 object-cover transition duration-500 group-hover:opacity-85
+        ${["2", "3", "4", "5", "6"].includes(action.id) ? "object-[center_15%] scale-110" : ""}
+    `}
 			/>
 
 			<div className="p-8 flex flex-col justify-between h-[calc(100%-14rem)]">
@@ -174,7 +207,7 @@ export default function App() {
 						</div>
 						<h2 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[0.9]">
 							Découvrez nos projets
-							<span className="text-[#28a745]"> phares.</span>
+							<span className="text-[#28a745]"> phares</span>
 						</h2>
 					</div>
 
@@ -185,9 +218,9 @@ export default function App() {
 
 							<div className="order-2 lg:order-1 relative z-10">
 								<h3 className="text-5xl md:text-5xl font-black text-slate-900 mb-8 tracking-tighter leading-[0.9] flex items-center gap-4">
-									<Hammer className="w-10 h-10 text-amber-500 animate-pulse" />
+									<Home className="w-12 h-12 text-[#28a745] animate-pulse " />
 									<span className="text-[#28a745]">Village l'Épopée </span>
-									<Hourglass className="w-10 h-10 text-amber-500 animate-pulse" />
+									<Hourglass className="w-10 h-10 text-amber-500 animate-pulse " />
 								</h3>
 								<p className="text-xl text-slate-600 mb-12 leading-relaxed font-medium">
 									{epopeeVerte.description}
@@ -208,14 +241,13 @@ export default function App() {
 									</div>
 								</div>
 
-								<button
-									type="button"
-									onClick={() => setPage("epopee")}
+								<Link
+									to="/epopee"
 									className="group inline-flex items-center px-6 py-6 bg-slate-700 text-white text-l font-black rounded-3xl shadow-xl transition-all hover:bg-[#28a745] duration-500"
 								>
 									En savoir plus
 									<Leaf className="ml-3 w-6 h-6" />
-								</button>
+								</Link>
 							</div>
 
 							<div className="order-1 lg:order-2 self-stretch flex items-center justify-center relative group">
@@ -234,7 +266,8 @@ export default function App() {
 						<div className="flex justify-between items-end mb-16">
 							<div>
 								<h3 className="text-4xl font-black text-slate-900 tracking-tight">
-									Explorer d'autres initiatives
+									Explorer d'autres
+									<span className="text-[#28a745]"> projets impactants</span>
 								</h3>
 								<div className="w-20 h-2 bg-[#28a745] mt-4 rounded-full" />
 							</div>
@@ -278,14 +311,13 @@ export default function App() {
 					</div>
 
 					<div className="text-center mt-32">
-						<button
-							type="button"
-							onClick={() => setPage("tous-les-projets")}
+						<Link
+							to="/actions"
 							className="inline-flex items-center px-12 py-6 bg-slate-700 text-white text-lg font-black rounded-[2rem] shadow-2xl transition-all duration-500 hover:bg-[#28a745] hover:scale-105"
 						>
 							Voir tous les projets
 							<ChevronDown className="ml-3 w-5 h-5" />
-						</button>
+						</Link>
 					</div>
 				</div>
 			</section>
