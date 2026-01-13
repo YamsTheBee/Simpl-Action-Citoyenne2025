@@ -10,8 +10,8 @@ import {
 	Map as MapIcon,
 	Sparkles,
 	Zap,
-	Link,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 import React, { useState, useMemo, useCallback } from "react";
 import puitImage from "../assets/Niinth.puit1.jpg";
 
