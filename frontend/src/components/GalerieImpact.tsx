@@ -10,10 +10,10 @@ import {
 	Map as MapIcon,
 	Sparkles,
 	Zap,
+	Link,
 } from "lucide-react";
 import React, { useState, useMemo, useCallback } from "react";
 import puitImage from "../assets/Niinth.puit1.jpg";
-import { Link } from "react-router-dom";
 
 /* ----------------------------- 1. COULEURS & CONSTANTES ----------------------------- */
 interface Action {
@@ -222,7 +222,7 @@ export default function App() {
 									<span className="text-[#28a745]">Village l'Épopée </span>
 									<Hourglass className="w-10 h-10 text-amber-500 animate-pulse " />
 								</h3>
-								<p className="text-xl text-slate-600 mb-12 leading-relaxed font-medium">
+								<p className="text-slate-700 mb-6 line-clamp-2 font-medium">
 									{epopeeVerte.description}
 								</p>
 
@@ -243,7 +243,7 @@ export default function App() {
 
 								<Link
 									to="/epopee"
-									className="group inline-flex items-center px-6 py-6 bg-slate-700 text-white text-l font-black rounded-3xl shadow-xl transition-all hover:bg-[#28a745] duration-500"
+									className="group w-fit flex items-center gap-2 bg-slate-700 text-white px-10 py-6 rounded-3xl font-black hover:bg-[#28a745] transition-all duration-500"
 								>
 									En savoir plus
 									<Leaf className="ml-3 w-6 h-6" />
@@ -277,17 +277,28 @@ export default function App() {
 									type="button"
 									onClick={handlePrev}
 									disabled={currentIndex === 0}
+									aria-label="Projet précédent"
 									className="p-5 rounded-2xl bg-white border border-slate-100 shadow-lg text-slate-900 hover:bg-slate-900 hover:text-white transition-all disabled:opacity-30"
 								>
-									<ChevronLeft className="w-6 h-6" />
+									<ChevronLeft
+										className="w-6 h-6"
+										aria-hidden="true"
+										focusable="false"
+									/>
 								</button>
+
 								<button
 									type="button"
 									onClick={handleNext}
 									disabled={currentIndex >= maxIndex}
+									aria-label="Projet suivant"
 									className="p-5 rounded-2xl bg-white border border-slate-100 shadow-lg text-slate-900 hover:bg-slate-900 hover:text-white transition-all disabled:opacity-30"
 								>
-									<ChevronRight className="w-6 h-6" />
+									<ChevronRight
+										className="w-6 h-6"
+										aria-hidden="true"
+										focusable="false"
+									/>
 								</button>
 							</div>
 						</div>
