@@ -2,6 +2,7 @@
 import { Home, Menu, X } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import MusicButton from "./MusicButton";
 
 // --- 1. INTERFACES TYPESCRIPT ---
 interface NavItem {
@@ -37,13 +38,17 @@ const NavBar: React.FC = () => {
 					{/* LOGO */}
 					<a
 						href="/"
+						aria-label="Retour à l'accueil"
 						className="text-2xl font-extrabold tracking-tight text-gray-900 transition duration-300 hover:text-green-600"
 					>
 						Simple Action Citoyenne
 					</a>
 
 					{/* MENU DESKTOP */}
-					<nav className="hidden md:flex items-center space-x-6">
+					<nav
+						className="hidden md:flex items-center space-x-6"
+						aria-label="Navigation principale"
+					>
 						{navItems.map((item) => (
 							<a
 								key={item.label}
@@ -54,10 +59,18 @@ const NavBar: React.FC = () => {
 										: "text-gray-700 hover:text-green-600"
 								}`}
 							>
-								{item.cta && <Home className="w-4 h-4 mr-2" />}
+								{item.cta && (
+									<Home
+										className="w-4 h-4 mr-2"
+										aria-hidden="true"
+										focusable="false"
+									/>
+								)}
 								{item.label}
 							</a>
 						))}
+						{/* 🎵 BOUTON MUSIQUE */}
+						<MusicButton />
 					</nav>
 
 					{/* BURGER MENU MOBILE */}
@@ -65,13 +78,19 @@ const NavBar: React.FC = () => {
 						<button
 							type="button"
 							onClick={() => setIsOpen(!isOpen)}
-							aria-label="Toggle navigation"
+							aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
+							aria-expanded={isOpen}
+							aria-controls="mobile-menu"
 							className="p-2 text-gray-700 rounded-lg hover:bg-gray-100 transition duration-150"
 						>
 							{isOpen ? (
-								<X className="w-6 h-6" />
+								<X className="w-6 h-6" aria-hidden="true" focusable="false" />
 							) : (
-								<Menu className="w-6 h-6" />
+								<Menu
+									className="w-6 h-6"
+									aria-hidden="true"
+									focusable="false"
+								/>
 							)}
 						</button>
 					</div>
@@ -80,8 +99,14 @@ const NavBar: React.FC = () => {
 
 			{/* MENU MOBILE */}
 			{isOpen && (
-				<div className="md:hidden absolute w-full bg-white shadow-xl border-t border-gray-100 animate-fade-in-down">
-					<nav className="px-4 pt-2 pb-4 space-y-2">
+				<div
+					id="mobile-menu"
+					className="md:hidden absolute w-full bg-white shadow-xl border-t border-gray-100 animate-fade-in-down"
+				>
+					<nav
+						className="px-4 pt-2 pb-4 space-y-2"
+						aria-label="Navigation mobile"
+					>
 						{navItems.map((item) => (
 							<a
 								key={item.label}
