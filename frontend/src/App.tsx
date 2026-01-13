@@ -11,6 +11,10 @@ import Impact from "./page/Impact";
 import ContactUs from "./page/ContactUs";
 import ActionsPage from "./page/Actions";
 import EpopeePage from "./page/EpopeePage";
+import DrMbeteChatbot from "./components/DrMbeteChatbot";
+import GoogleAnalytics from "./components/analytics/GoogleAnalytics";
+import AnalyticsPageView from "./components/analytics/AnalyticsPageView";
+import CookieBanner from "./components/CookieBanner";
 
 const App: React.FC = () => {
 	return (
@@ -20,6 +24,10 @@ const App: React.FC = () => {
 
 				{/* ScrollToTop doit être juste après le Router */}
 				<ScrollToTop />
+				{/* GA scripts et suivi des pages */}
+				<CookieBanner />
+				<GoogleAnalytics />
+				<AnalyticsPageView />
 
 				<main>
 					<Routes>
@@ -41,6 +49,8 @@ const App: React.FC = () => {
 						{/* Page Épopée */}
 						<Route path="/epopee" element={<EpopeePage />} />
 					</Routes>
+					{/* 💬 Chatbot affiché sur TOUTES les pages */}
+					<DrMbeteChatbot />
 				</main>
 
 				<Footer />
