@@ -24,7 +24,7 @@ const HeroSlider = () => {
 				<h1 className="animate-fadeSlide text-4xl font-extrabold text-white drop-shadow-xl sm:text-6xl lg:text-7xl">
 					L&apos;Action Simple,
 					<br className="sm:hidden" />
-					<span className="text-green-500"> L&apos;Impact Puissant.</span>
+					<span className="text-green-500 italic" > L&apos;Impact Puissant.</span>
 				</h1>
 
 				<p className="mt-4 max-w-2xl animate-fadeSlide delay-400 text-lg text-gray-200 drop-shadow-md sm:text-xl">
