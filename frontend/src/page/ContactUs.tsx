@@ -40,7 +40,9 @@ const ContactUs = () => {
 			{/* TITRE PRINCIPAL MASSIF */}
 			<div className="w-full max-w-6xl mb-12 text-left animate-in fade-in slide-in-from-left duration-700">
 				<h1 className="text-5xl md:text-7xl font-black tracking-tighter text-slate-900">
-					Contactez-nous<span className="text-[#28a745]"> . . .</span>
+					Contactez
+					<span className="text-[#28a745] "> - </span>
+					nous<span className="text-[#28a745]"> . . .</span>
 				</h1>
 				<p className="mt-4 text-slate-500 text-lg md:text-xl max-w-2xl font-medium">
 					Une question ? Un projet de partenariat ? Notre équipe est à votre
