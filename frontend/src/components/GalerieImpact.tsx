@@ -19,6 +19,7 @@ import {
 	MapPin,
 } from "lucide-react";
 import puitImg from "../assets/Niinth.puit1.jpg";
+import { Link } from "react-router-dom";
 
 /* ----------------------------- 1. TYPES & CONFIGURATION ----------------------------- */
 
@@ -188,7 +189,7 @@ const ActionCard = React.memo(({ action, onClick }: ActionCardProps) => {
 							<MapPin className="w-4 h-4 mr-2" style={{ color: SAC_GREEN }} />
 							{action.location}
 						</p>
-{/* 
+						{/* 
 						En attente des bonnes dates  */}
 						{/* <p className="flex items-center font-semibold">
 							<Calendar className="w-4 h-4 mr-2" style={{ color: SAC_GREEN }} />
@@ -259,7 +260,7 @@ export default function App() {
 						</div>
 						<h2 className="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[0.9]">
 							Découvrez nos projets
-							<span className="text-[#28a745]"> phares</span>
+							<span className="text-[#28a745] italic"> phares</span>
 						</h2>
 					</div>
 
@@ -295,14 +296,13 @@ export default function App() {
 									</div>
 								</div>
 
-								<button
-									type="button"
-									onClick={() => setPage(epopeeVerte.title)}
-									className="group w-fit flex items-center gap-2 bg-slate-700 text-white px-5 py-4 rounded-3xl font-black hover:bg-[#28a745] transition-all duration-500 shadow-xl"
+								<Link
+									to="/epopee"
+									className="group w-fit flex items-center gap-2 bg-slate-700 text-white px-6 py-4 rounded-3xl font-black hover:bg-[#28a745] transition-all duration-500 shadow-xl"
 								>
 									EN SAVOIR PLUS
 									<Leaf className="ml-3 w-6 h-6 transition-transform group-hover:rotate-12" />
-								</button>
+								</Link>
 							</div>
 
 							<div className="order-1 lg:order-2 self-stretch flex items-center justify-center relative">
@@ -322,7 +322,7 @@ export default function App() {
 							<div>
 								<h3 className="text-5xl font-black text-slate-900 tracking-tight">
 									Explorer d'autres
-									<span className="text-[#28a745]"> projets impactants</span>
+									<span className="text-[#28a745] "> projets impactants</span>
 								</h3>
 								<div className="w-20 h-2 bg-[#28a745] mt-4 rounded-full" />
 							</div>
@@ -367,14 +367,13 @@ export default function App() {
 					</div>
 
 					<div className="text-center mt-32">
-						<button
-							type="button"
-							onClick={() => setPage("Tous les projets")}
-							className="inline-flex items-center px-6 py-5 bg-slate-600 text-white text-lg font-black rounded-[2rem] shadow-2xl transition-all duration-500 hover:bg-[#28a745] hover:scale-105"
+						<Link
+							to="/actions"
+							className="inline-flex items-center px-6 py-5 bg-slate-700 text-white text-lg font-black rounded-[2rem] shadow-2xl transition-all duration-500 hover:bg-[#28a745] hover:scale-105"
 						>
 							VOIR TOUS LES PROJETS
 							<ChevronDown className="ml-3 w-5 h-5" />
-						</button>
+						</Link>
 					</div>
 				</div>
 			</section>
