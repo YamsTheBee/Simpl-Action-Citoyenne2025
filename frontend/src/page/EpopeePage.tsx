@@ -15,6 +15,7 @@ import {
 	BookOpen,
 	Accessibility,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const EpopeePage = () => {
 	const [hasLoaded, setHasLoaded] = useState(false);
@@ -147,7 +148,7 @@ const EpopeePage = () => {
 				>
 					<h1 className="flex items-center justify-center gap-4 text-5xl md:text-5xl lg:text-8xl font-black text-white mb-6 leading-tight tracking-tighter">
 						<Home className="w-16 h-16 md:w-20 md:h-20 text-[#28a745]" />
-						L'ÉPOPÉE <span className="text-[#28a745]">DAKAR</span>
+						L'ÉPOPÉE <span className="text-[#28a745] italic">DAKAR</span>
 					</h1>
 					<p className="text-xl md:text-xl text-blue-50 max-w-3xl mx-auto leading-relaxed font-light">
 						Une initiative de{" "}
@@ -266,7 +267,7 @@ const EpopeePage = () => {
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 						{gallery.map((img) => (
 							<div
-								key={img.url} // ✅ clé stable
+								key={img.url} 
 								className="relative group overflow-hidden rounded-[2.5rem] aspect-[4/5] bg-slate-200 shadow-xl"
 							>
 								<img
@@ -356,7 +357,7 @@ const EpopeePage = () => {
 										>
 											{f.icon}
 										</div>
-										<h4 className="text-lg font-black text-slate-900 mb-2">
+										<h4 className="text-xl font-black text-slate-900 mb-2">
 											{f.name}
 										</h4>
 										<p className="text-slate-500 text-xs leading-relaxed mb-6">
@@ -386,19 +387,19 @@ const EpopeePage = () => {
 						</h3>
 						<div className="space-y-6">
 							<div className="p-6 bg-emerald-50 rounded-2xl">
-								<h4 className="font-black text-emerald-900 text-sm mb-2">
+								<h4 className="font-black text-emerald-900 text-xl mb-2">
 									Modèle Économique
 								</h4>
-								<p className="text-xs text-emerald-700 leading-relaxed">
+								<p className="text-s text-emerald-700 leading-relaxed">
 									Frais solidaires, prestations d'ateliers et location
 									d'espaces.
 								</p>
 							</div>
 							<div className="p-6 bg-sky-50 rounded-2xl">
-								<h4 className="font-black text-sky-900 text-sm mb-2">
+								<h4 className="font-black  text-sky-900 text-xl mb-2">
 									Franchise Sociale
 								</h4>
-								<p className="text-xs text-sky-700 leading-relaxed">
+								<p className="text-s text-sky-700 leading-relaxed">
 									Modèle documenté et réplicable dans tout le Sénégal.
 								</p>
 							</div>
@@ -422,14 +423,14 @@ const EpopeePage = () => {
 									className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100"
 								>
 									<div className="w-2 h-2 bg-[#28a745] rounded-full" />
-									<span className="text-[10px] font-black text-slate-700 uppercase tracking-tight">
+									<span className="text-[12px] font-black text-slate-700 uppercase tracking-tight">
 										{p}
 									</span>
 								</div>
 							))}
 						</div>
 						<div className="mt-12 p-6 bg-amber-50 rounded-2xl border border-amber-100 text-center">
-							<p className="text-sm text-amber-800 italic font-medium">
+							<p className="text-l text-amber-800 italic font-medium">
 								"Réunir les forces vives pour un impact durable."
 							</p>
 						</div>
@@ -447,13 +448,13 @@ const EpopeePage = () => {
 							votre engagement est le moteur de cette transition sociale.
 						</p>
 						<div className="flex flex-col sm:flex-row justify-center gap-6">
-							<button
-								type="button"
+							<Link
+								to="/contact"
 								className="flex items-center justify-center bg-[#28a745] text-white font-black py-4 px-6 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 text-lg"
 							>
 								Nous Contacter{" "}
 								<ArrowRight className="ml-3 group-hover:translate-x-2 transition-transform" />
-							</button>
+							</Link>
 						</div>
 					</div>
 					<div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-50 rounded-full blur-[120px] -mr-64 -mt-64 opacity-50" />
