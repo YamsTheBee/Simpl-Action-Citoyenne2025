@@ -1,251 +1,421 @@
 import { useState, useEffect } from "react";
 import {
-	ArrowRight,
 	Calendar,
 	Heart,
 	MapPin,
 	Sparkles,
-	Filter,
+	X,
+	BookOpen,
+	Droplets,
+	Users,
+	Leaf,
+	Plus,
+	ArrowLeft,
 } from "lucide-react";
-import puitImage from "../assets/Niinth.puit1.jpg";
 
-// Configuration des catégories et des photos associées
+// --- TYPES & INTERFACES ---
+interface Project {
+	id: string;
+	title: string;
+	category: string;
+	icon: JSX.Element;
+	description: string;
+	fullDescription: string;
+	image: string;
+	gallery: string[];
+	location: string;
+	date: string;
+	isCoupDeCoeur: boolean;
+}
+
+interface ProjectModalProps {
+	project: Project;
+	onClose: () => void;
+}
+
+// --- CONFIGURATION DES DONNÉES ---
 const CATEGORIES = [
 	"Toutes",
-	"Solidarité",
-	"Écologie",
 	"Éducation",
+	"Solidarité",
 	"Social",
-	"Humanitaire",
+	"Santé",
+	"Écologie",
 ];
 
-const IMPACT_GALLERY = [
+const IMPACT_GALLERY: Project[] = [
 	{
 		id: "1",
-		title: "Village Épopée",
-		category: "Écologie",
+		title: "Village l'Épopée",
+		category: "Social",
+		icon: <Users size={20} />,
 		description:
-			"Collecte de déchets et sensibilisation massive sur les zones côtières pour préserver notre biodiversité.",
+			"Espace d'innovation sociale dédiée à la formation et au mentorat des jeunes au Sénégal.",
+		fullDescription:
+			"Le Village l'Épopée est un écosystème éducatif majeur. Il répond aux attentes d'une jeunesse en quête d'opportunités en proposant des programmes de formation digitale, de robotique et de leadership citoyen. C'est un levier de transformation qui favorise l'insertion professionnelle et l'entreprenariat.",
 		image:
 			"https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000",
-		location: "Dakar et ses côtes",
-		date: "Toute l'année",
+		gallery: [
+			"https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?q=80&w=1000",
+			"https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1000",
+		],
+		location: "Dakar, Sénégal",
+		date: "Projet Phare",
 		isCoupDeCoeur: true,
 	},
 	{
 		id: "2",
-		title: "Zero Abri Provisoire",
-		category: "Solidarité",
-		description:
-			"Soutien hebdomadaire aux familles nécessiteuses à travers la distribution de repas équilibrés.",
-		image:
-			"https://images.unsplash.com/photo-1559027615-cd26715e731c?auto=format&fit=crop&q=80&w=800",
-		location: "Banlieue de Dakar",
-		date: "Chaque samedi",
-		isCoupDeCoeur: false,
-	},
-	{
-		id: "3",
-		title: "Inclusion Numérique",
+		title: "Zéro Abri Provisoire",
 		category: "Éducation",
+		icon: <BookOpen size={20} />,
 		description:
-			"Ateliers d'accompagnement pour les seniors afin de briser l'isolement social grâce aux outils digitaux.",
+			"Remplacement des abris précaires par des salles de classe aux normes internationales.",
+		fullDescription:
+			"En collaboration avec des partenaires stratégiques comme la BOA, ce projet éradique la précarité scolaire. Nous construisons des salles de classe en dur, des Daaras modernes et des blocs sanitaires pour offrir aux enfants un environnement d'apprentissage digne et sécurisé.",
 		image:
-			"https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1000",
-		location: "Centre Communautaire",
+			"https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1000",
+		gallery: [
+			"https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=1000",
+			"https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1000",
+		],
+		location: "Sénégal (National)",
 		date: "En cours",
 		isCoupDeCoeur: false,
 	},
 	{
-		id: "4",
-		title: "Oasis njardin",
-		category: "Écologie",
+		id: "3",
+		title: "Je veux aller à l'école",
+		category: "Éducation",
+		icon: <BookOpen size={20} />,
 		description:
-			"Création de jardins partagés en zone urbaine pour favoriser l'autonomie alimentaire.",
+			"Distribution de plus de 5000 kits scolaires et prise en charge intégrale de la scolarité.",
+		fullDescription:
+			"Pour l'édition 2025, nous ciblons les classes de CI dans les régions reculées (Podor, Bignona, Bakel, Kolda). L'engagement est total : un suivi sur 6 ans pour garantir que chaque enfant termine son cycle primaire sans obstacle financier.",
 		image:
-			"https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=1000",
-		location: "Quartier Plateau",
-		date: "01 Novembre 2025",
+			"https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&q=80&w=800",
+		gallery: [
+			"https://images.unsplash.com/photo-1456735190827-d1262f71b8a3?q=80&w=1000",
+		],
+		location: "Zones Rurales",
+		date: "Rentrée Scolaire",
 		isCoupDeCoeur: true,
 	},
 	{
-		id: "5",
-		title: "Je veux aller à l'école",
-		category: "Éducation",
+		id: "4",
+		title: "Oasis Njarin",
+		category: "Écologie",
+		icon: <Leaf size={20} />,
 		description:
-			"Cours de renforcement pour les élèves en difficulté dans les zones rurales.",
+			"Reverdissement et autonomie alimentaire via le maraîchage et l'élevage moderne.",
+		fullDescription:
+			"Soutenu par la Fondation Sonatel, Oasis Njarin transforme les localités en zones productives. Par la maîtrise de l'eau et la formation aux techniques agricoles, nous créons des écosystèmes qui nourrissent et emploient les populations locales.",
 		image:
-			"https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&q=80&w=800",
-		location: "Écoles primaires",
-		date: "Septembre - Juin",
+			"https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=1000",
+		gallery: [
+			"https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=1000",
+		],
+		location: "Territoire National",
+		date: "Déploiement 2024",
+		isCoupDeCoeur: false,
+	},
+	{
+		id: "5",
+		title: "Forage & Eau Potable",
+		category: "Santé",
+		icon: <Droplets size={20} />,
+		description:
+			"Accès à l'eau potable pour réduire les maladies et le décrochage scolaire des filles.",
+		fullDescription:
+			"Depuis 2023, SAC a réalisé plus de 100 points d'eau (puits et forages). L'accès à l'eau propre transforme la vie des femmes en réduisant la pénibilité des tâches et permet aux jeunes filles de rester scolarisées plutôt que de chercher de l'eau.",
+		image:
+			"https://images.unsplash.com/photo-1538300342682-cf57afb97285?q=80&w=1000",
+		gallery: [
+			"https://images.unsplash.com/photo-1541252260730-0412e3e2108e?q=80&w=1000",
+		],
+		location: "Nord & Thiès",
+		date: "Impact Permanent",
 		isCoupDeCoeur: false,
 	},
 	{
 		id: "6",
-		title: "Forage & Eau Potable",
-		category: "Humanitaire",
+		title: "Solidarité Niintche",
+		category: "Solidarité",
+		icon: <Heart size={20} />,
 		description:
-			"Installation de systèmes de pompage d'eau pour les villages isolés.",
-		image: puitImage,
-		location: "Région de Thiès",
-		date: "Projet 2024",
+			"Cagnottes sociales et distribution d'urgence pour les familles les plus vulnérables.",
+		fullDescription:
+			"La Solidarité Niintche est le cœur battant de l'association. Par le biais du crowdfunding citoyen, nous finançons des opérations chirurgicales, distribuons des repas et accompagnons les familles en situation d'extrême précarité.",
+		image:
+			"https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1000",
+		gallery: [],
+		location: "Sénégal",
+		date: "Quotidien",
 		isCoupDeCoeur: false,
 	},
 ];
 
-const Actions: React.FC = () => {
+const Actions = () => {
 	const [activeFilter, setActiveFilter] = useState("Toutes");
-	const [isVisible, setIsVisible] = useState(false);
+	const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+	const [scrollProgress, setScrollProgress] = useState(0);
+	const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
+	// Gestion du scroll pour la barre latérale
 	useEffect(() => {
-		setIsVisible(true);
+		const handleScroll = () => {
+			const totalHeight =
+				document.documentElement.scrollHeight - window.innerHeight;
+			if (totalHeight > 0) {
+				setScrollProgress((window.scrollY / totalHeight) * 100);
+			}
+		};
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
 	const filteredActions =
 		activeFilter === "Toutes"
 			? IMPACT_GALLERY
-			: IMPACT_GALLERY.filter((action) => action.category === activeFilter);
+			: IMPACT_GALLERY.filter((a) => a.category === activeFilter);
+
+	// --- COMPOSANT MODALE ---
+	const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
+		if (!project) return null;
+		const allImages = [project.image, ...project.gallery];
+
+		return (
+			<div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 animate-in fade-in duration-300">
+				<button
+					type="button"
+					onClick={onClose}
+					aria-label="Fermer la modale"
+					className="absolute inset-0 bg-slate-900/95 backdrop-blur-xl cursor-default"
+				/>
+
+				<div className="relative bg-white w-full max-w-6xl max-h-[90vh] overflow-hidden rounded-[2.5rem] shadow-2xl flex flex-col md:flex-row animate-in zoom-in-95 duration-300">
+					{/* Bouton Fermer */}
+					<button
+						type="button"
+						onClick={onClose}
+						className="absolute top-6 right-6 z-50 p-3 bg-white/20 hover:bg-red-500 backdrop-blur-md rounded-full text-white transition-all shadow-lg"
+					>
+						<X size={24} />
+					</button>
+
+					{/* Galerie d'images (Gauche) */}
+					<div className="w-full md:w-1/2 h-72 md:h-auto relative bg-slate-900 overflow-hidden">
+						<img
+							src={allImages[currentImgIndex]}
+							alt={project.title}
+							className="w-full h-full object-cover animate-in fade-in duration-700"
+						/>
+
+						{/* Navigation Galerie */}
+						{allImages.length > 1 && (
+							<div className="absolute inset-x-0 bottom-8 flex justify-center gap-2">
+								{allImages.map((img, i) => (
+									<button
+										key={img} // clé stable
+										type="button"
+										onClick={() => setCurrentImgIndex(i)}
+										className={`h-2 rounded-full transition-all ${
+											i === currentImgIndex
+												? "bg-[#28a745] w-10"
+												: "bg-white/40 w-4 hover:bg-white/60"
+										}`}
+									/>
+								))}
+							</div>
+						)}
+
+						<div className="absolute top-8 left-8">
+							<span className="px-5 py-2 bg-[#28a745] text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-xl">
+								{project.category}
+							</span>
+						</div>
+					</div>
+
+					{/* Détails du Projet (Droite) */}
+					<div className="w-full md:w-1/2 p-10 md:p-16 overflow-y-auto flex flex-col bg-white">
+						<div className="flex items-center gap-3 text-[#28a745] mb-6">
+							<div className="w-12 h-12 rounded-2xl bg-green-50 flex items-center justify-center shadow-inner">
+								{project.icon}
+							</div>
+							<span className="font-black tracking-[0.2em] text-[10px] uppercase text-slate-400">
+								Mission Officielle
+							</span>
+						</div>
+
+						<h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-8 leading-[1.1]">
+							{project.title}
+						</h2>
+
+						<div className="space-y-6">
+							<p className="text-lg md:text-xl text-slate-600 leading-relaxed font-medium">
+								{project.fullDescription}
+							</p>
+						</div>
+
+						{/* Metadata */}
+						<div className="grid grid-cols-2 gap-8 pt-10 border-t border-slate-100 mt-12">
+							<div className="space-y-2">
+								<span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">
+									Localisation
+								</span>
+								<div className="flex items-center gap-3 text-slate-900 font-bold">
+									<div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-[#28a745]">
+										<MapPin size={16} />
+									</div>
+									{project.location}
+								</div>
+							</div>
+							<div className="space-y-2">
+								<span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">
+									Temporalité
+								</span>
+								<div className="flex items-center gap-3 text-slate-900 font-bold">
+									<div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-[#28a745]">
+										<Calendar size={16} />
+									</div>
+									{project.date}
+								</div>
+							</div>
+						</div>
+
+						<button
+							type="button"
+							onClick={onClose}
+							className="mt-12 w-full py-6 bg-slate-900 text-white font-black rounded-2xl hover:bg-[#28a745] transition-all flex items-center justify-center gap-4 group shadow-xl shadow-slate-900/10 hover:shadow-green-500/20"
+						>
+							RETOUR AUX ACTIONS
+							<ArrowLeft
+								size={20}
+								className="group-hover:-translate-x-1 transition-transform"
+							/>
+						</button>
+					</div>
+				</div>
+			</div>
+		);
+	};
 
 	return (
-		<div className="min-h-screen bg-[#f8fafc] font-sans text-slate-900 overflow-x-hidden">
-			{/* HEADER HERO */}
-			<header className="relative bg-slate-900 text-white py-32 px-6 overflow-hidden">
-				<div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 to-green-900/60 opacity-60" />
-				<div className="absolute top-0 right-0 w-96 h-96 bg-green-500/20 rounded-full blur-[120px] -mr-48 -mt-48 animate-pulse" />
-				<div className="absolute bottom-0 left-0 w-72 h-72 bg-blue-500/20 rounded-full blur-[100px] -ml-36 -mb-36" />
-
+		<div className="min-h-screen bg-[#f8fafc] font-sans antialiased text-slate-900 pb-20 relative selection:bg-green-100">
+			{/* Barre de progression verticale */}
+			<div className="fixed left-4 md:left-10 top-0 bottom-0 w-[2px] bg-slate-200 z-50 hidden md:block">
 				<div
-					className={`container mx-auto relative z-10 text-center transition-all duration-1000 transform ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
-				>
-					<div className="inline-flex items-center gap-2 px-5 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 mb-8">
-						<span className="flex items-center gap-2">
-							<Sparkles size={18} className="text-green-400" />
-							<span className="text-xs font-black tracking-widest uppercase">
-								Impact Réel & Engagement
-							</span>
+					className="w-full bg-[#28a745] transition-all duration-300 ease-out shadow-[0_0_15px_rgba(40,167,69,0.5)]"
+					style={{ height: `${scrollProgress}%` }}
+				/>
+				<div
+					className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-[#28a745] border-4 border-white rounded-full shadow-lg transition-all duration-300"
+					style={{ top: `${scrollProgress}%` }}
+				/>
+			</div>
+
+			{/* Hero Header */}
+			<header className="relative bg-slate-900 text-white py-32 px-6 overflow-hidden">
+				<div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900/20 to-[#28a745]/10" />
+				<div className="container mx-auto relative z-10 text-center">
+					<div className="inline-flex items-center gap-2 px-6 py-2 bg-white/5 backdrop-blur-md rounded-full border border-white/10 mb-10 animate-pulse">
+						<Sparkles size={18} className="text-[#28a745]" />
+						<span className="text-[10px] font-black tracking-[0.3em] uppercase">
+							Impact Citoyen 2025
 						</span>
 					</div>
-					<h1 className="text-5xl md:text-8xl font-black tracking-tighter mb-8">
-						Nos <span className="text-[#28a745] italic">Actions</span>
+					<h1 className="text-6xl md:text-[8rem] font-black tracking-tighter mb-8 leading-none">
+						NOS <span className="text-[#28a745] italic">ACTIONS</span>
 					</h1>
-					<p className="max-w-3xl mx-auto text-xl md:text-2xl text-slate-300 font-medium leading-relaxed">
-						Centralisant chaque sourire, chaque projet et chaque transformation
-						menée par l'association{" "}
-						<span className="text-white font-bold">Simple Action Citoyen</span>.
+					<p className="max-w-3xl mx-auto text-l md:text-1xl text-slate-300 font-medium leading-relaxed">
+						Chaque geste compte. Explorez les projets de{" "}
+						<span className="text-white font-bold underline decoration-[#28a745] underline-offset-[12px]">
+							Simple Action Citoyen
+						</span>{" "}
+						à travers le Sénégal.
 					</p>
 				</div>
 			</header>
 
-			{/* NAVIGATION FILTRES DYNAMIQUES */}
-			<div className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200 py-6">
-				<div className="container mx-auto px-6">
-					<div className="flex flex-col md:flex-row items-center justify-between gap-6">
-						<div className="flex items-center gap-3">
-							<Filter size={20} className="text-[#28a745]" />
-							<span className="font-black uppercase text-xs tracking-tighter text-slate-500">
-								Filtrer par mission :
-							</span>
-						</div>
-						<div className="flex flex-wrap justify-center gap-2">
-							{CATEGORIES.map((cat) => (
-								<button
-									type="button"
-									key={cat}
-									onClick={() => setActiveFilter(cat)}
-									className={`px-6 py-2.5 rounded-2xl text-sm font-bold transition-all duration-300 transform active:scale-95 ${
-										activeFilter === cat
-											? "bg-[#28a745] text-white shadow-lg shadow-green-500/30"
-											: "bg-white text-slate-600 border border-slate-200 hover:border-[#28a745] hover:text-[#28a745]"
-									}`}
-								>
-									{cat}
-								</button>
-							))}
-						</div>
-					</div>
+			{/* Navigation Filtres */}
+			<div className="sticky top-0 z-40 bg-white/80 backdrop-blur-2xl border-b border-slate-100 py-8">
+				<div className="container mx-auto px-6 flex flex-wrap justify-center gap-4">
+					{CATEGORIES.map((cat) => (
+						<button
+							key={cat}
+							type="button"
+							onClick={() => setActiveFilter(cat)}
+							className={`px-10 py-4 rounded-2xl text-xs font-black tracking-widest uppercase transition-all duration-500 ${
+								activeFilter === cat
+									? "bg-[#28a745] text-white shadow-2xl shadow-green-500/40 scale-110"
+									: "bg-slate-50 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+							}`}
+						>
+							{cat}
+						</button>
+					))}
 				</div>
 			</div>
 
-			{/* GRILLE DE LA GALERIE */}
-			<main className="container mx-auto px-6 py-16">
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+			{/* Grille des projets */}
+			<main className="container mx-auto px-6 py-24">
+				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
 					{filteredActions.map((action, idx) => (
 						<div
 							key={action.id}
-							className={
-								"group bg-white rounded-[2.5rem] shadow-sm hover:shadow-2xl transition-all duration-500 border border-slate-100 overflow-hidden flex flex-col hover:-translate-y-3 animate-in fade-in slide-in-from-bottom-10"
-							}
+							className="group bg-white rounded-[3.5rem] shadow-sm hover:shadow-2xl transition-all duration-700 border border-slate-50 overflow-hidden flex flex-col hover:-translate-y-5"
 							style={{ animationDelay: `${idx * 100}ms` }}
 						>
-							{/* IMAGE SECTION */}
-							<div className="relative h-80 overflow-hidden">
+							{/* Image Card */}
+							<div className="relative h-80 overflow-hidden bg-slate-100">
 								<img
 									src={action.image}
 									alt={action.title}
-									className="w-full h-full object-contain transition-transform duration-1000 group-hover:scale-110"
+									className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110"
 								/>
-
-								{/* Badge de catégorie fixe */}
-								<div className="absolute top-6 left-6 z-20">
-									<span className="px-4 py-2 bg-slate-700/80  backdrop-blur-md  text-white text-[10px] font-black uppercase tracking-widest rounded-xl">
+								<div className="absolute top-8 left-8 flex items-center gap-3 px-5 py-2.5 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl">
+									<span className="text-[#28a745]">{action.icon}</span>
+									<span className="text-[10px] font-black uppercase tracking-widest text-slate-800">
 										{action.category}
 									</span>
 								</div>
-
-								{/* Badge Coup de Coeur */}
 								{action.isCoupDeCoeur && (
-									<div className="absolute top-6 right-6 bg-white/95 backdrop-blur-md text-red-600 px-4 py-2 rounded-2xl shadow-lg flex items-center text-[10px] font-black uppercase tracking-tighter z-20 animate-bounce">
-										<Heart className="w-3 h-3 mr-1.5 fill-red-600" />
-										Coup de cœur
+									<div className="absolute top-8 right-8 bg-red-500 text-white p-3.5 rounded-2xl shadow-xl animate-bounce">
+										<Heart className="w-4 h-4 fill-white" />
 									</div>
 								)}
-
-								{/* Overlay au survol */}
-								<div className="absolute inset-0 bg-gradient-to-t from-[#28a745]/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-8">
-									<div className="text-white transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
-										<p className="font-bold italic text-sm">
-											Action citoyenne n°{action.id}
-										</p>
-									</div>
-								</div>
 							</div>
 
-							{/* CONTENT SECTION */}
-							<div className="p-10 flex flex-col flex-1">
-								<div className="mb-6">
-									<h2 className="text-3xl font-black text-slate-900 leading-tight group-hover:text-[#28a745] transition-colors duration-300">
-										{action.title}
-									</h2>
-									<p className="text-slate-500 mt-4 leading-relaxed font-medium">
-										{action.description}
-									</p>
-								</div>
+							{/* Contenu Card */}
+							<div className="p-6 flex flex-col flex-1">
+								<h2 className="text-3xl font-black text-slate-900 leading-tight mb-6 group-hover:text-[#28a745] transition-colors">
+									{action.title}
+								</h2>
+								<p className="text-slate-500 font-medium leading-relaxed mb-6text-lg line-clamp-3">
+									{action.description}
+								</p>
 
-								{/* DETAILS METADATA */}
-								<div className="mt-auto grid grid-cols-2 gap-4 pt-6 border-t border-slate-100">
-									<div className="flex items-center text-slate-600 font-bold text-xs uppercase tracking-tighter">
-										<div className="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center mr-3 text-[#28a745]">
-											<MapPin size={16} />
+								<div className="mt-auto">
+									<div className="flex items-center justify-between text-[11px] font-black uppercase text-slate-400 border-t border-slate-50 pt-8 mb-8">
+										<div className="flex items-center gap-2">
+											<MapPin size={14} className="text-[#28a745]" />{" "}
+											{action.location}
 										</div>
-										{action.location}
+										<div className="flex items-center gap-2">
+											<Calendar size={14} className="text-[#28a745]" />{" "}
+											{action.date}
+										</div>
 									</div>
 
-									<div className="flex items-center text-slate-600 font-bold text-xs uppercase tracking-tighter">
-										<div className="w-9 h-9 rounded-xl bg-green-50 flex items-center justify-center mr-3 text-[#28a745]">
-											<Calendar size={16} />
-										</div>
-										{action.date}
-									</div>
-								</div>
-
-								{/* CTA BUTTON */}
-								<div className="mt-10">
 									<button
 										type="button"
-										className="flex items-center justify-center w-full bg-slate-600 group-hover:bg-[#28a745] text-white font-black py-5 px-6 rounded-2xl shadow-xl shadow-slate-900/10 group-hover:shadow-green-500/20 transition-all duration-300 transform active:scale-95"
+										onClick={() => {
+											setSelectedProject(action);
+											setCurrentImgIndex(0);
+										}}
+										className="flex items-center justify-center w-full bg-slate-900 group-hover:bg-[#28a745] text-white font-black py-4 px- rounded-[2rem] shadow-2xl transition-all duration-500 group-active:scale-95"
 									>
-										Détails du projet
-										<ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-2" />
+										DÉCOUVRIR LE PROJET
+										<Plus className="ml-3 w-5 h-5 transition-transform group-hover:rotate-180 duration-500" />
 									</button>
 								</div>
 							</div>
@@ -253,6 +423,14 @@ const Actions: React.FC = () => {
 					))}
 				</div>
 			</main>
+
+			{/* Rendu de la Modale */}
+			{selectedProject && (
+				<ProjectModal
+					project={selectedProject}
+					onClose={() => setSelectedProject(null)}
+				/>
+			)}
 		</div>
 	);
 };
