@@ -1,5 +1,5 @@
 import type React from "react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import {
 	BookOpen,
 	Target,
@@ -12,27 +12,45 @@ import {
 	Droplets,
 	Star,
 	type LucideProps,
-	ChevronRight,
-	ChevronLeft,
+	Github,
+	Linkedin,
+	Code,
+	Briefcase,
 } from "lucide-react";
 
-// Images pour l'aperçu des logos partenaires, pr et hero
+// Images des logos partenaires et hero
 import logoBOA from "../assets/Logo-BOA.png";
 import logoFondationSonatel from "../assets/logo-fondation-Sonatel.png";
 import logoRecuplast from "../assets/logo-recuplast.png";
-import PresidentImage from "../assets/President.png";
+import logoSodefitex from "../assets/Logo_ODEFITEX-1.png";
+import logoBicis from "../assets/Logo_Bicis-bnp.svg.png";
 import parallaxBackground from "../assets/Child_smile_img1.png";
+import LogoAmbassadeFranceSngl from "../assets/ambassade_de_france_senegal.jpg";
+import logoForvisMazars from "../assets/forvis_mazars.jpg";
+import logoAxaAToutCoeur from "../assets/axa_a_tout_coeur.jpg";
+import logoFondationKebaMbaye from "../assets/fondation_keba_mbaye.jpg";
+import logoIndustrieDesBDS from "../assets/indiustrie_des_bds.jpg";
 
+// Images pour pr section président
+import PresidentImage from "../assets/President.png";
+
+// Images pour l'aperçu des bénévoles
 import maimounaImage from "../assets/Maïmouna_pp.jpg";
 import alyImage from "../assets/Profil.Aly.Mbegte.png";
 import mariamaImage from "../assets/PortraitYams.jpg";
 import daoudaImage from "../assets/daouda_image.jpg";
 import xemessImage from "../assets/Xemess_Profil.jpg";
+import elhadjiBadaraImage from "../assets/El_Hadji_Badara_poulon_pp.jpg";
+import bambaImage from "../assets/Bamba_pp.jpg";
+import mameAliouImage from "../assets/Mame_Aliou_pp.jpg";
 
 type PillarCardProps = {
-	icon: React.ComponentType<LucideProps>; // <- corrigé
+	icon: React.ComponentType<LucideProps>;
 	title: string;
 	desc: string;
+	iconColor: string;
+	bgColor: string;
+	hoverBg: string;
 };
 
 interface PresidentModalProps {
@@ -43,36 +61,58 @@ interface PresidentModalProps {
 const PARTNERS_INFINITE = [
 	{ name: "BOA", logoUrl: logoBOA },
 	{ name: "FondationSonatel", logoUrl: logoFondationSonatel },
+
+	{
+		name: "AXA",
+		logoUrl: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg",
+	},
+	{ name: "Bicis", logoUrl: logoBicis },
 	{ name: "Recuplast", logoUrl: logoRecuplast },
-	{ name: "Partenaire 4", logoUrl: logoBOA },
-	{ name: "Partenaire 5", logoUrl: logoFondationSonatel },
-	{ name: "Partenaire 6", logoUrl: logoRecuplast },
-	{ name: "BOA", logoUrl: logoBOA },
-	{ name: "FondationSonatel", logoUrl: logoFondationSonatel },
-	{ name: "Recuplast", logoUrl: logoRecuplast },
+	{
+		name: "Ambassade de France au Sénégal",
+		logoUrl: LogoAmbassadeFranceSngl,
+	},
+	{
+		name: "Sodefitex",
+		logoUrl: logoSodefitex,
+	},
+	{
+		name: "ForvisMazars",
+		logoUrl: logoForvisMazars,
+	},
+	{
+		name: "axaAToutCoeur",
+		logoUrl: logoAxaAToutCoeur,
+	},
+	{
+		name: "FondationKebaMbaye",
+		logoUrl: logoFondationKebaMbaye,
+	},
+	{
+		name: "Ibs",
+		logoUrl: logoIndustrieDesBDS,
+	},
 ];
+// 🔁 Liste doublée pour animation continue des partenaires
+const LOOPED_PARTNERS = [...PARTNERS_INFINITE, ...PARTNERS_INFINITE];
 
 const VOLUNTEERS = [
 	{
+		id: "maimouna-01",
 		firstName: "Maïmouna",
 		role: "Coordonnatrice Projets",
 		quote: "L'éducation est l'arme la plus puissante pour changer le monde.",
 		image: maimounaImage,
 	},
 	{
+		id: "aly-02",
 		firstName: "Aly alias Dr Mbëgté",
 		role: "Chef de projet digital",
 		quote: "Donner sans rien attendre en retour.",
 		image: alyImage,
 	},
 	{
-		firstName: "Daouda alias Tipsé",
-		role: "Chef de projet SAC",
-		quote: "Chaque sourire d'un enfant est une victoire pour notre patrie.",
-		image: daoudaImage,
-	},
-
-	{
+		id: "xemess-03",
 		firstName: "Xemess",
 		role: "Chef Logistique",
 		quote:
@@ -80,20 +120,68 @@ const VOLUNTEERS = [
 		image: xemessImage,
 	},
 	{
+		id: "bamba-04",
+		firstName: "Bamba",
+		role: " volontaire",
+		quote: "Action...",
+		image: bambaImage,
+	},
+	{
+		id: "dialy-05",
 		firstName: "Dialy",
 		role: "Responsable Santé",
 		quote: "La santé est un droit fondamental pour chaque communauté.",
 		// image Dialy à venir :,
 	},
 	{
-		firstName: "Mariama",
-		role: "Developpeuse & bénévole ",
-		quote:
-			"Mèttre compétences techniques au service de l’association @SAC c'est plus qu’un projet pour moi : c’est un engagement citoyen quotidien.",
+		id: "daouda-06",
+		firstName: "Daouda alias Tipsé",
+		role: "Chef de projet ",
+		quote: "Chaque sourire d'un enfant est une victoire pour notre patrie.",
+		image: daoudaImage,
+	},
 
+	{
+		id: "elhadji-badara-07",
+		firstName: "El Hadji Badara Alias Poulon",
+		role: "Maitre peintre & Formateur volontaire",
+		quote: "Don de soi…",
+		image: elhadjiBadaraImage,
+	},
+	{
+		id: "mariama-08",
+		firstName: "Mariama",
+		role: "Développeuse & bénévole SAC",
+		quote: "J’ai conçu et développé le site de SAC avec 💚",
 		image: mariamaImage,
+		since: "2021",
+		isDeveloper: true, // Marqueur pour afficher le bouton pro
+	},
+	{
+		id: "mame-aliou-09",
+		firstName: "Mame Aliou",
+		role: "Chef cuisinier & Formateur volontaire",
+		quote: "Passion…",
+		image: mameAliouImage,
 	},
 ];
+
+const LOOPED_VOLUNTEERS = [...VOLUNTEERS, ...VOLUNTEERS];
+
+const profilePro = {
+	skills: [
+		"React (TypeScript)",
+		"Node.js",
+		"MySQL",
+		"Express",
+		"Tailwind CSS",
+		"Figma",
+		"Git",
+	],
+	github: "https://github.com/YamsTheBee",
+	linkedin: "https://linkedin.com",
+	// image: modal mariamaImage à intégrer ici - Future amelioration en option
+};
 
 const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 	if (!isOpen) return null;
@@ -120,41 +208,68 @@ const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 				</div>
 				<div className="text-slate-600 space-y-5 relative z-10 leading-relaxed text-lg italic">
 					<p>
-						"Fondateur et président de Simple Action Citoyenne, M. Mamadou
-						Diakhaté est un enseignant sénégalais animé par une conviction
-						profonde."
-					</p>
-					<p>
-						"Son engagement est né du constat des difficultés rencontrées par
-						les populations des zones reculées, notamment l'accès limité à l'eau
-						potable."
+						<strong>Enseignant de vocation</strong> et{" "}
+						<strong>citoyen engagé</strong>, Mamadou Diakhaté (
+						<strong>NIINTCHE</strong>) a fondé
+						<strong> Simple Action Citoyenne (SAC)</strong> après avoir constaté
+						les réalités poignantes des <strong>zones reculées</strong>.
 					</p>
 
 					<p>
-						"Très tôt confronté aux réalités du terrain, il fonde l’association
-						Simple Action Citoyenne avec la volonté d’apporter des réponses
-						concrètes et durables aux besoins essentiels des communautés locales
-						partout au Sénégal."
+						Son engagement est né du constat des difficultés rencontrées par les
+						populations des zones reculées, notamment
+						<strong> l’accès limité à l’eau potable</strong>.
 					</p>
+
 					<p>
-						"Depuis 2023, son engagement s’est traduit par des réalisations
-						majeures, notamment la construction de puits et de forages, la
-						réalisation de salles de classe ainsi que la réhabilitation
-						d’infrastructures scolaires dans plusieurs localités, dont Bakao,
-						Fass Tiékène et d’autres zones rurales."
+						Très tôt confronté aux réalités du terrain, il fonde l’association
+						<strong> Simple Action Citoyenne</strong> avec la volonté d’apporter
+						des
+						<strong> réponses concrètes et durables</strong> aux besoins
+						essentiels des
+						<strong> communautés locales</strong> à travers tout le
+						<strong> Sénégal</strong>.
 					</p>
+
 					<p>
-						"À travers une démarche inclusive et participative, il a su
-						mobiliser les communautés bénéficiaires ainsi que des centaines de
-						volontaires autour d’un même idéal : améliorer durablement les
-						conditions de vie, favoriser l’accès à l’éducation et à l’eau
-						potable, et renforcer la résilience des territoires."
+						Son engagement s’est traduit par des{" "}
+						<strong>réalisations majeures</strong>, notamment la{" "}
+						<strong>construction de puits et de forages</strong>, la
+						<strong> création de salles de classe</strong> ainsi que la
+						<strong> réhabilitation d’infrastructures scolaires</strong> dans
+						plusieurs localités, dont <strong>Bakao</strong>,{" "}
+						<strong>Fass Tiékène</strong> et d’autres{" "}
+						<strong>zones rurales</strong>.
 					</p>
+
 					<p>
-						"Son action a également permis de créer des écosystèmes locaux
-						productifs, en favorisant le maraîchage et l’élevage, contribuant
-						ainsi au développement social et économique des communautés
-						accompagnées."
+						À travers une démarche <strong>inclusive</strong> et
+						<strong> participative</strong>, il a su mobiliser les
+						<strong> communautés bénéficiaires</strong> ainsi que
+						<strong> des centaines de volontaires</strong> autour d’un même
+						idéal : améliorer durablement les <strong>conditions de vie</strong>
+						, favoriser l’accès à <strong>l’éducation</strong> et à
+						<strong> l’eau potable</strong>, et renforcer la
+						<strong> résilience des territoires</strong>.
+					</p>
+
+					<p>
+						Son action a également permis de créer des
+						<strong> écosystèmes locaux productifs</strong>, en favorisant le
+						<strong> maraîchage</strong> et <strong> l’élevage</strong>,
+						contribuant ainsi au{" "}
+						<strong>développement social et économique</strong> des communautés
+						accompagnées.
+					</p>
+
+					<p>
+						Aujourd’hui, sa vision s’élargit avec le projet
+						<strong> Village L’Épopée</strong>, destiné à offrir à la jeunesse
+						les
+						<strong> clés de l’employabilité</strong> et du
+						<strong> numérique</strong>, tout en restant fidèle à la devise qui
+						guide son engagement :
+						<strong> « Un jour de mission pour la patrie. »</strong>
 					</p>
 				</div>
 			</div>
@@ -163,13 +278,17 @@ const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 };
 
 const AboutPage = () => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [selectedVolunteer] = useState(null);
-	const [scrollProgress, setScrollProgress] = useState(0);
+	// const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isPresidentModalOpen, setIsPresidentModalOpen] = useState(false);
+	const [isMariamaModalOpen, setIsMariamaModalOpen] = useState(false);
 
-	const [currentIndex, setCurrentIndex] = useState(0);
+	const [scrollProgress, setScrollProgress] = useState(0);
 	const [itemsVisible, setItemsVisible] = useState(3);
 	const [isPaused, setIsPaused] = useState(false);
+	const [offset, setOffset] = useState(0);
+	const [partnersOffset, setPartnersOffset] = useState(0);
+	const PARTNERS_SPEED = 0.02; // ⏩ vitesse du scroll partenaires
+	const SPEED = 0.02; // vitesse du scroll (ajustable)
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -182,27 +301,20 @@ const AboutPage = () => {
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
-	// On mémorise les fonctions pour éviter de recréer l’intervalle inutilement
-	const handleNext = useCallback(() => {
-		setCurrentIndex((prev) => (prev + 1 >= VOLUNTEERS.length ? 0 : prev + 1));
-	}, []);
-
-	const handlePrev = useCallback(() => {
-		setCurrentIndex((prev) =>
-			prev - 1 < 0 ? VOLUNTEERS.length - 1 : prev - 1,
-		);
-	}, []);
-
-	// useEffect corrigé avec dépendances minimales
+	// 🔄 Défilement automatique fluide et infini
 	useEffect(() => {
-		if (isPaused || selectedVolunteer) return;
+		if (isPaused) return;
 
 		const interval = setInterval(() => {
-			handleNext();
-		}, 4500);
+			setOffset((prev) => {
+				// Quand on atteint la moitié (liste doublée), on repart discrètement à 0
+				if (prev >= 100) return 0;
+				return prev + SPEED;
+			});
+		}, 16); // ~60 FPS (fluide)
 
 		return () => clearInterval(interval);
-	}, [isPaused, selectedVolunteer, handleNext]);
+	}, [isPaused]);
 
 	// Calcul de la progression du scroll pour l'animation du trait
 	useEffect(() => {
@@ -215,6 +327,19 @@ const AboutPage = () => {
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
+	// 🔄 Défilement continu des partenaires
+
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setPartnersOffset((prev) => {
+				// Quand on arrive à la moitié de la liste doublée → reset invisible
+				if (prev >= 50) return 0;
+				return prev + PARTNERS_SPEED;
+			});
+		}, 16); // ~60 FPS
+
+		return () => clearInterval(interval);
+	}, []);
 
 	return (
 		<div className="min-h-screen bg-[#f8fafc] font-sans antialiased text-slate-900 pb-20 relative">
@@ -224,7 +349,7 @@ const AboutPage = () => {
 					className="w-full bg-[#28a745] transition-all duration-300 ease-out shadow-[0_0_15px_rgba(40,167,69,0.5)]"
 					style={{ height: `${scrollProgress}%` }}
 				/>
-				{/* Petit point indicateur qui suit la ligne */}
+				{/* Point indicateur qui suit la ligne */}
 				<div
 					className="absolute left-1/2 -translate-x-1/2 w-4 h-4 bg-[#28a745] border-4 border-white rounded-full shadow-lg transition-all duration-300"
 					style={{ top: `${scrollProgress}%` }}
@@ -243,14 +368,17 @@ const AboutPage = () => {
 					</div>
 					<h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 leading-[0.9]">
 						À propos de <br />
-						<span className="text-[#28a745]"> Simple Action Citoyenne</span>
+						<span className="text-[#28a745] italic">
+							{" "}
+							Simple Action Citoyenne
+						</span>
 					</h1>
 				</div>
 			</header>
 
 			<PresidentModal
-				isOpen={isModalOpen}
-				onClose={() => setIsModalOpen(false)}
+				isOpen={isPresidentModalOpen}
+				onClose={() => setIsPresidentModalOpen(false)}
 			/>
 
 			<main className="container mx-auto px-6 md:pl-24">
@@ -260,19 +388,29 @@ const AboutPage = () => {
 						<h2 className="text-center text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-10">
 							Ils nous font confiance
 						</h2>
-						<div className="overflow-hidden whitespace-nowrap relative py-6">
+
+						<div className="overflow-hidden relative py-6">
+							{/* Fades gauche / droite */}
 							<div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
 							<div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
-							<div className="inline-block animate-scroll-infinite">
-								{PARTNERS_INFINITE.map((p) => (
+
+							<div
+								className="flex items-center will-change-transform"
+								style={{
+									transform: `translateX(-${partnersOffset}%)`,
+									width: `${LOOPED_PARTNERS.length * 20}%`,
+								}}
+							>
+								{LOOPED_PARTNERS.map((p, idx) => (
 									<div
-										key={`${p.name}-${p.logoUrl}`} // clé unique et stable
-										className="inline-flex items-center justify-center mx-12 h-32"
+										key={`${p.name}-${idx}`}
+										className="flex items-center justify-center mx-12 h-32 flex-none"
+										style={{ width: "200px" }}
 									>
 										<img
 											src={p.logoUrl}
 											alt={p.name}
-											className="max-h-20 object-contain"
+											className="max-h-20 object-contain opacity-80 hover:opacity-100 transition-opacity"
 										/>
 									</div>
 								))}
@@ -281,23 +419,27 @@ const AboutPage = () => {
 					</div>
 				</div>
 
-				{/* --- SECTION PARALLAX --- */}
+				{/* --- SECTION PARALLAX  --- */}
 				<section className="relative h-[500px] w-full overflow-hidden mb-32 rounded-[4rem] shadow-2xl section-fade">
 					<div
-						className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+						className="absolute inset-0 bg-no-repeat bg-center"
 						style={{
 							backgroundImage: `url(${parallaxBackground})`,
-							backgroundSize: "con",
+							backgroundSize: "80%", // dézoom
 							backgroundAttachment: "fixed",
 						}}
-					>
-						<div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 flex items-center justify-center">
-							<div className="text-center text-white p-8">
-								<h1 className="text-2xl light-black italic">
-									"construire pour l’avenir, creuser pour l’espoir, façonner des
-									vies"
-								</h1>
-							</div>
+					/>
+
+					<div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 flex items-center justify-center">
+						<div className="text-center text-white p-8">
+							<Quote
+								size={48}
+								className="mx-auto mb-6 text-emerald-400 opacity-50"
+							/>
+							<h2 className="text-3xl md:text-xl font-bold italic leading-relaxed">
+								"Construire pour l’avenir, creuser pour l’espoir, façonner des
+								vies."
+							</h2>
 						</div>
 					</div>
 				</section>
@@ -328,14 +470,13 @@ const AboutPage = () => {
 								M. Mamadou <span className="text-[#28a745]">DIAKHATE</span>
 							</h3>
 							<p className="text-lg text-slate-600 mb-8 leading-relaxed">
-								Fondateur et président de l’association{" "}
-								<strong>Simple Action Citoyenne (SAC)</strong>, Mamadou
-								Diakhaté, dit
-								<strong> « NIINTCHE »</strong>, s’engage depuis plusieurs années
-								à susciter des changements significatifs au sein des communautés
-								locales partout au Sénégal. À travers une démarche fondée sur{" "}
-								<strong>l’action concrète et l’engagement citoyen</strong>, il
-								œuvre activement pour améliorer les conditions de vie, notamment
+								Dit <strong> « NIINTCHE »</strong> est le fondateur de
+								l’association <strong>Simple Action Citoyenne (SAC)</strong>, il
+								s’engage depuis plusieurs années à susciter des changements
+								significatifs au sein des communautés locales partout au
+								Sénégal. À travers une démarche fondée sur{" "}
+								<strong>l’action concrète et l’engagement citoyen</strong>, son
+								engagement a permis d'améliorer les conditions de vie, notamment
 								par l’accès à l’eau potable et à l’éducation. Avec le soutien
 								des communautés bénéficiaires et de centaines de volontaires, il
 								a contribué à la réalisation de nombreux projets structurants,
@@ -344,7 +485,7 @@ const AboutPage = () => {
 
 							<button
 								type="button"
-								onClick={() => setIsModalOpen(true)}
+								onClick={() => setIsPresidentModalOpen(true)}
 								className="group w-fit flex items-center gap-2 bg-slate-700 text-white px-10 py-6 rounded-3xl font-black hover:bg-[#28a745] transition-all duration-500"
 							>
 								Découvrir son parcours{" "}
@@ -355,7 +496,7 @@ const AboutPage = () => {
 				</section>
 
 				{/* --- GRID PILIERS --- */}
-				<section className="mb-40 section-fade">
+				<section className="mb-40">
 					<div className="text-center mb-20">
 						<h2 className="text-5xl font-black text-slate-900 tracking-tight">
 							Nos piliers d'action
@@ -366,23 +507,34 @@ const AboutPage = () => {
 						<PillarCard
 							icon={BookOpen}
 							title="Éducation"
-							desc="Construction et rénovation d’écoles pour offrir un environnement scolaire sûr et adapté, ainsi que la distribution de kits scolaires."
+							desc="Construction et rénovation d’écoles pour offrir un environnement scolaire sûr et adapté."
+							iconColor="text-blue-600"
+							bgColor="bg-blue-50"
+							hoverBg="group-hover:bg-blue-600"
 						/>
 						<PillarCard
 							icon={Droplets}
-							title="Accès à l’eau potable"
-							desc="Construction de puits et de forages pour garantir l’accès à l’eau potable et améliorer durablement la santé des communautés."
+							title="Accès à l’eau"
+							desc="Construction de puits et de forages pour garantir l’accès à l’eau potable."
+							iconColor="text-sky-500"
+							bgColor="bg-sky-50"
+							hoverBg="group-hover:bg-sky-500"
 						/>
-
 						<PillarCard
 							icon={Heart}
 							title="Solidarité"
-							desc="Un engagement citoyen et bénévole fondé sur la solidarité, la participation et le développement communautaire."
+							desc="Un engagement citoyen et bénévole fondé sur la participation et le développement."
+							iconColor="text-red-500"
+							bgColor="bg-red-50"
+							hoverBg="group-hover:bg-red-500"
 						/>
 						<PillarCard
 							icon={Target}
 							title="Impact"
-							desc="Des actions concrètes mesurées par l’amélioration durable des conditions de vie des communautés bénéficiaires."
+							desc="Des actions concrètes mesurées par l’amélioration durable des conditions de vie."
+							iconColor="text-emerald-600"
+							bgColor="bg-emerald-50"
+							hoverBg="group-hover:bg-emerald-600"
 						/>
 					</div>
 				</section>
@@ -394,21 +546,44 @@ const AboutPage = () => {
 							Notre mission pour la{" "}
 							<span className="text-[#28a745]">patrie</span>
 						</h2>
-						<p className="text-lg text-slate-600 mb-10 leading-relaxed">
+						<p
+							className="text-lg text-slate-600 mb-10 leading-relaxed  text-justify 
+  max-w-3xl"
+						>
 							Notre mission est de susciter des changements significatifs au
-							sein des communautés locales, en mettant résolument l’accent sur
-							le bien-être des individus. Par le biais d’initiatives concrètes,
-							notre objectif premier est d’améliorer les conditions de vie en
-							garantissant un accès constant à l’eau potable. En construisant
-							des puits, des écoles, des daaras et des maternités, nous nous
-							efforçons d’éliminer les obstacles qui entravent le développement
-							des communautés et leur épanouissement général. Nous œuvrons
-							également à la construction d’installations sanitaires adéquates.
-							Ces efforts visent à créer des communautés saines et résilientes
-							et à intervenir dans des domaines essentiels tels que l’éducation
-							et la santé.
+							sein des communautés locales, en plaçant le bien-être des
+							personnes au centre de nos actions. Nous œuvrons pour qu’aucun
+							enfant ne soit contraint d’étudier sous un abri de paille et
+							qu’aucune femme n’ait à parcourir des kilomètres pour accéder à
+							une eau non potable. À travers des initiatives concrètes et
+							structurantes, notre objectif est d’améliorer durablement les
+							conditions de vie en garantissant un accès à l’eau potable. La
+							construction de puits, d’écoles, de daaras, de maternités et
+							d’infrastructures sanitaires adaptées nous permet de lever les
+							obstacles qui freinent le développement et l’épanouissement des
+							communautés.
 						</p>
-						<div className="flex gap-10">
+					</div>
+					<div className="bg-slate-900 rounded-[4rem] p-12 text-white relative overflow-hidden group">
+						<Quote size={60} className="text-[#28a745] mb-8 opacity-30" />
+						<p className="text-2xl font-bold leading-relaxed mb-8">
+							"Un jour de plus, un jour de moins, un jour de mission pour la
+							patrie 🇸🇳"
+						</p>
+						<div className="flex items-center gap-3 mb-10">
+							<div className="w-10 h-[4px] bg-[#28a745]" />
+							<span className="text-slate-400 text-xs font-bold uppercase">
+								Devise SAC
+							</span>
+						</div>
+
+						<div className="flex gap-10 opacity-80">
+							<div>
+								<p className="text-4xl font-black text-[#28a745]">50+</p>
+								<p className="text-xs font-bold text-slate-400 uppercase">
+									Écoles
+								</p>
+							</div>
 							<div>
 								<p className="text-4xl font-black text-[#28a745]">100+</p>
 								<p className="text-xs font-bold text-slate-400 uppercase">
@@ -416,31 +591,16 @@ const AboutPage = () => {
 								</p>
 							</div>
 							<div>
-								<p className="text-4xl font-black text-[#28a745]">2.5k ???</p>
+								<p className="text-4xl font-black text-[#28a745]">5000+</p>
 								<p className="text-xs font-bold text-slate-400 uppercase">
-									Écoles
+									Kits Scolaires
 								</p>
 							</div>
 						</div>
 					</div>
-					<div className="bg-slate-900 rounded-[4rem] p-12 text-white relative overflow-hidden group">
-						<Quote size={60} className="text-[#28a745] mb-8 opacity-20" />
-						<p className="text-2xl font-bold leading-relaxed mb-8">
-							"Un jour de plus, un jour de moins, un jour de mission pour la
-							patrie 🇸🇳"
-						</p>
-						<div className="flex items-center gap-3">
-							<div className="w-10 h-[2px] bg-[#28a745]" />
-							<span className="text-slate-400 text-xs font-bold uppercase">
-								Devise SAC
-							</span>
-						</div>
-					</div>
 				</section>
 
-				{/* --- NOS BÉNÉVOLES ENGAGÉS --- */}
-
-				{/* SECTION BÉNÉVOLES - 3 CARTES AVEC DÉFILEMENT AUTO */}
+				{/* SECTION  NOS BÉNÉVOLES ENGAGÉS  - 3 CARTES AVEC DÉFILEMENT continu */}
 				<section
 					className="mb-40 px-4 section-fade overflow-hidden"
 					onMouseEnter={() => setIsPaused(true)}
@@ -455,37 +615,20 @@ const AboutPage = () => {
 								Visages de <span className="text-[#28a745]">l'engagement</span>
 							</h2>
 						</div>
-						<div className="flex gap-4">
-							<button
-								type="button"
-								onClick={handlePrev}
-								className="p-4 rounded-full bg-white border border-slate-100 shadow-sm hover:bg-[#28a745] hover:text-white transition-all duration-300"
-							>
-								<ChevronLeft size={24} />
-							</button>
-							<button
-								type="button"
-								onClick={handleNext}
-								className="p-4 rounded-full bg-white border border-slate-100 shadow-sm hover:bg-[#28a745] hover:text-white transition-all duration-300"
-							>
-								<ChevronRight size={24} />
-							</button>
-						</div>
 					</div>
 
 					<div className="relative">
 						<div
-							className="flex transition-transform duration-1000 cubic-bezier(0.4, 0, 0.2, 1)"
+							className="flex will-change-transform"
 							style={{
-								transform: `translateX(-${currentIndex * (100 / itemsVisible)}%)`,
-								// Largeur dynamique basée sur le nombre total de volontaires
-								width: `${(VOLUNTEERS.length / itemsVisible) * 100}%`,
+								transform: `translateX(-${offset}%)`,
+								width: `${(LOOPED_VOLUNTEERS.length / itemsVisible) * 100}%`,
 							}}
 						>
-							{VOLUNTEERS.map((volunteer, idx) => (
+							{LOOPED_VOLUNTEERS.map((volunteer, idx) => (
 								<div
 									key={`${volunteer.firstName}-${idx}`}
-									style={{ width: `${100 / VOLUNTEERS.length}%` }}
+									style={{ width: `${100 / LOOPED_VOLUNTEERS.length}%` }}
 									className="px-4 flex-none"
 								>
 									<div className="group bg-white rounded-[3rem] p-10 border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-4 h-full flex flex-col items-center">
@@ -497,20 +640,42 @@ const AboutPage = () => {
 												className="absolute inset-0 w-full h-full object-cover rounded-3xl border-2 border-white shadow-md"
 											/>
 										</div>
+
 										<h3 className="text-2xl font-black text-center text-slate-900 mb-1 group-hover:text-[#28a745] transition-colors">
 											{volunteer.firstName}
 										</h3>
 										<p className="text-center text-[#28a745] font-bold text-xs uppercase tracking-widest mb-6">
 											{volunteer.role}
 										</p>
-										<div className="relative">
+										{/* <p className="text-gray-400 text-xs mb-4 text-center italic">
+											Membre depuis {volunteer.since}
+										</p> */}
+										{volunteer.since && (
+											<p className="text-gray-400 text-xs mb-4 text-center italic">
+												Membre depuis {volunteer.since}
+											</p>
+										)}
+
+										<div className="relative ">
 											<Quote
 												size={20}
-												className="absolute -top-4 -left-4 text-slate-100"
+												className="absolute -top-4 -left-4 text-slate-100 "
 											/>
 											<p className="text-slate-500 italic text-center leading-relaxed relative z-10">
 												"{volunteer.quote}"
 											</p>
+
+											{/* BOUTON PRO APPARAÎT UNIQUEMENT POUR MARIAMA */}
+											{volunteer.isDeveloper && (
+												<button
+													type="button"
+													onClick={() => setIsMariamaModalOpen(true)}
+													className="w-full mt-auto flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 px-4 rounded-xl font-semibold hover:bg-indigo-700 transition-colors shadow-md text-sm"
+												>
+													<Briefcase size={16} />
+													Collaboration & Contact Pro
+												</button>
+											)}
 										</div>
 									</div>
 								</div>
@@ -518,51 +683,202 @@ const AboutPage = () => {
 						</div>
 					</div>
 
-					<div className="flex justify-center gap-3 mt-16">
-						{VOLUNTEERS.map((volunteer, i) => (
-							<button
-								type="button"
-								key={volunteer.firstName ?? `volunteer-${i}`}
-								onClick={() => setCurrentIndex(i)}
-								className={`h-2 rounded-full transition-all duration-500 ${
-									currentIndex === i
-										? "w-10 bg-[#28a745]"
-										: "w-2 bg-slate-200 hover:bg-slate-300"
-								}`}
-								aria-label={`Aller au profil ${i + 1}`}
-							/>
-						))}
-					</div>
+					{/* MODAL PRO MARIAMA */}
+					{isMariamaModalOpen && (
+						<div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-xl">
+							<div className="relative bg-white w-full max-w-4xl rounded-[3rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+								{/* HEADER */}
+								<div className="flex justify-between items-center p-8 border-b">
+									<div className="flex items-center gap-3">
+										<div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
+											<Code size={24} />
+										</div>
+										<div>
+											<h2 className="text-xl font-bold text-gray-900">
+												Parcours & Expertise Pro
+											</h2>
+											<p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">
+												Mariama — Développeuse Web Full-Stack
+											</p>
+										</div>
+									</div>
+
+									<button
+										type="button"
+										onClick={() => setIsMariamaModalOpen(false)}
+										className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+									>
+										<X size={24} className="text-gray-500" />
+									</button>
+								</div>
+
+								{/* CONTENU */}
+								<div className="p-8 md:p-10 overflow-y-auto max-h-[80vh]">
+									<div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+										{/* COLONNE GAUCHE */}
+										<div className="lg:col-span-3">
+											<h4 className="text-lg font-bold mb-4 border-l-4 border-indigo-600 pl-3">
+												Résumé de mon travail
+											</h4>
+
+											{/*  TEXTE GLOBAL INTÉGRÉ */}
+											<div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+												<p>
+													Développeuse web <strong>full-stack</strong>{" "}
+													passionnée, je conçois et développe des applications
+													web modernes, utiles et centrées sur l’humain, avec
+													une attention particulière portée à l’
+													<strong>UX/UI</strong>, à l’
+													<strong>accessibilité</strong>
+													et à l’<strong>impact social</strong>.
+												</p>
+
+												<p>
+													Je travaille principalement avec{" "}
+													<strong>React (TypeScript)</strong> côté front-end et{" "}
+													<strong>Node.js / Express / MySQL</strong> côté
+													back-end. Je mets en place des fonctionnalités
+													complètes : CRUD, authentification, formulaires, APIs
+													REST, gestion des utilisateurs et premières briques de
+													sécurité (
+													<strong>RGPD, cookies, bonnes pratiques</strong>).
+												</p>
+
+												<p>
+													En parallèle, je développe plusieurs{" "}
+													<strong> projets concrets </strong> (portfolio, site
+													associatif, e-commerce, applications éducatives et
+													solidaires), en suivant une méthodologie
+													professionnelle :
+												</p>
+
+												<ul className="list-disc list-inside ml-2">
+													<li>
+														Conception (cahier des charges, wireframes, Figma)
+													</li>
+													<li>Développement structuré et maintenable</li>
+													<li>Versioning Git / GitHub</li>
+													<li>Attention portée à la qualité du code</li>
+												</ul>
+
+												<p>
+													Je m’intéresse également à l’
+													<strong>intelligence artificielle</strong> et à la
+													<strong> cybersécurité</strong>, avec la volonté
+													d’intégrer des outils IA de manière responsable pour
+													améliorer la productivité et la sécurité des
+													applications.
+												</p>
+
+												<p className="font-semibold text-slate-700">
+													🎯 Mon objectif : créer des solutions web{" "}
+													<strong>utiles, humaines et durables</strong>, en
+													alliant technique, créativité et engagement.
+												</p>
+											</div>
+
+											{/* SKILLS */}
+											<div className="flex flex-wrap gap-2 mt-6">
+												{profilePro.skills.map((skill) => (
+													<span
+														key={skill}
+														className="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-semibold border border-indigo-100"
+													>
+														{skill}
+													</span>
+												))}
+											</div>
+
+											{/*  INVITATION À CONTACTER */}
+											<div className="mt-8 p-5 rounded-2xl bg-slate-50 border border-slate-200">
+												<p className="text-sm text-slate-700 font-medium">
+													🤝{" "}
+													<strong>Envie d’échanger ou de collaborer ?</strong>
+												</p>
+												<p className="text-xs text-slate-600 mt-2">
+													Je suis ouverte aux échanges avec des{" "}
+													<strong>professionnels</strong>,
+													<strong> associations</strong> et{" "}
+													<strong>porteurs de projets </strong>
+													souhaitant créer des solutions web utiles, humaines et
+													durables. Chaque projet commence par une discussion.
+												</p>
+											</div>
+										</div>
+
+										{/* COLONNE DROITE */}
+										<div className="lg:col-span-2 space-y-6">
+											<div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+												<h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
+													Présence digitale
+												</h4>
+												<div className="flex flex-col gap-3">
+													<a
+														href={profilePro.github}
+														target="_blank"
+														rel="noreferrer"
+														className="flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-200 hover:border-indigo-500 transition-all group"
+													>
+														<Github
+															size={20}
+															className="text-gray-700 group-hover:text-indigo-600"
+														/>
+														<span className="font-medium text-sm">
+															GitHub – Projets & Code
+														</span>
+													</a>
+
+													<a
+														href={profilePro.linkedin}
+														target="_blank"
+														rel="noreferrer"
+														className="flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-200 hover:border-blue-500 transition-all group"
+													>
+														<Linkedin
+															size={20}
+															className="text-gray-700 group-hover:text-blue-600"
+														/>
+
+														<span className="font-medium text-sm">
+															LinkedIn
+														</span>
+													</a>
+												</div>
+											</div>
+
+											{/* CTA FINAL */}
+											<button
+												type="button"
+												className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-2xl font-bold hover:bg-indigo-700 transition-colors"
+											>
+												<Briefcase size={18} />
+												Discutons de votre projet
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					)}
 				</section>
 			</main>
-
-			<style>{`
-        @keyframes scroll-infinite {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .animate-scroll-infinite {
-          animation: scroll-infinite 40s linear infinite;
-        }
-        .section-fade {
-          opacity: 1;
-          transition: all 0.8s ease-out;
-        }
-        @media (max-width: 768px) {
-           main { padding-left: 1.5rem !important; }
-        }
-        .cubic-bezier {
-          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        }
-      `}</style>
 		</div>
 	);
 };
 
-const PillarCard: React.FC<PillarCardProps> = ({ icon: Icon, title, desc }) => (
-	<div className="bg-white p-10 rounded-[3rem] border border-slate-100 hover:border-[#28a745] transition-all duration-500 hover:shadow-2xl group">
-		<div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-[#28a745] mb-8 group-hover:bg-[#28a745] group-hover:text-white transition-all duration-500">
-			<Icon size={32} /> {/* JSX direct */}
+const PillarCard: React.FC<PillarCardProps> = ({
+	icon: Icon,
+	title,
+	desc,
+	iconColor,
+	bgColor,
+	hoverBg,
+}) => (
+	<div className="bg-white p-10 rounded-[3rem] border border-slate-100 hover:border-slate-200 transition-all duration-500 hover:shadow-2xl group flex flex-col items-start h-full">
+		<div
+			className={`w-16 h-16 ${bgColor} rounded-2xl flex items-center justify-center ${iconColor} mb-8 ${hoverBg} group-hover:text-white transition-all duration-500`}
+		>
+			<Icon size={32} />
 		</div>
 		<h3 className="text-2xl font-black text-slate-900 mb-4">{title}</h3>
 		<p className="text-slate-500 font-medium leading-relaxed">{desc}</p>
