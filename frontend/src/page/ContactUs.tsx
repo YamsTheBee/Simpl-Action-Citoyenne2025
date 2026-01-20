@@ -7,10 +7,11 @@ const ContactUs = () => {
 		email: "",
 		subject: "",
 		message: "",
+		website: "", // 👈 honeypot
 	});
 
-	const [statusMessage, setStatusMessage] = useState<string | null>(null);
-	const [isLoading, setIsLoading] = useState(false);
+const [statusMessage, setStatusMessage] = useState<string | null>(null);
+const [isLoading, setIsLoading] = useState(false);
 const [error, setError] = useState<string | null>(null);
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
@@ -24,6 +25,12 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 const handleSubmit = async (e: FormEvent) => {
 	e.preventDefault();
 
+// Honeypot anti-bot
+if (formData.website) {
+	// Bot détecté → on stoppe silencieusement
+	return;
+}
+
 	setError(null);
 	setStatusMessage(null);
 
@@ -34,7 +41,8 @@ const handleSubmit = async (e: FormEvent) => {
 		return;
 	}
 
-// (optionnel mais recommandé)
+// (optionnel mais recommandé : validations (email, champs requis)
+
 			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	if (!emailRegex.test(formData.email)) {
 		setError("Veuillez entrer une adresse email valide."); 
@@ -42,13 +50,15 @@ const handleSubmit = async (e: FormEvent) => {
 	}
 		setIsLoading(true);
 
+		const { website, ...safeFormData } = formData;
 try {
+
 const response = await fetch(`${API_URL}/api/contact`, {
 	method: "POST",
 	headers: {
 		"Content-Type": "application/json",
 	},
-	body: JSON.stringify(formData),
+	body: JSON.stringify(safeFormData),
 });
 
 
@@ -71,6 +81,7 @@ const response = await fetch(`${API_URL}/api/contact`, {
 			email: "",
 			subject: "",
 			message: "",
+			website: "", // 👈 honeypot
 		});
 
 	} catch (err) {
@@ -144,9 +155,7 @@ const response = await fetch(`${API_URL}/api/contact`, {
 		{statusMessage}
 	</p>
 )}
-
-
-								<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 									<div className="space-y-2">
 										<label
 											htmlFor="name"
@@ -236,6 +245,22 @@ const response = await fetch(`${API_URL}/api/contact`, {
 									/>
 								</div>
 
+{/* Honeypot anti-bot : champ invisible pour l’utilisateur,
+rempli automatiquement par les bots → blocage silencieux */}
+
+
+<div className="hidden">
+	<label htmlFor="website">Website</label>
+	<input
+		type="text"
+		name="website"
+		id="website"
+		value={formData.website}
+		onChange={handleChange}
+		autoComplete="off"
+		tabIndex={-1}
+	/>
+</div>
 								<div className="pt-4">
 									<button
 										type="submit"
