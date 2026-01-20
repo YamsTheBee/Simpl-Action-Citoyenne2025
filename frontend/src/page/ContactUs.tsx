@@ -308,7 +308,8 @@ const response = await fetch(`${API_URL}/api/contact`, {
 											Email
 										</p>
 										<p className="text-lg text-slate-700 font-bold">
-											simpleactioncitoyenne@gmail.com
+											yamsnglfr@gmail.com
+											{/* mail à remplacer après reception acces sécurité Google secretaire SAC simpleactioncitoyenne@gmail.com */}
 										</p>
 									</div>
 								</div>
