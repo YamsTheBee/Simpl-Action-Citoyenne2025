@@ -1,6 +1,7 @@
 // DrMbeteChatbot.tsx
-import { MessageSquare, Send, X, Zap } from "lucide-react";
+import { MessageSquare, Send, X } from "lucide-react";
 import { type FormEvent, useEffect, useRef, useState } from "react";
+import avatarDrMbete from "../assets/Pic1.Aly.Mbegte.jpg";
 
 const API_URL = `${import.meta.env.VITE_API_URL}/api/chatbot/message`;
 
@@ -18,7 +19,7 @@ interface MessageBubbleProps {
 }
 
 /* ======================
-   Message Bubble
+  Message Bubble
 ====================== */
 const MessageBubble = ({ sender, text }: MessageBubbleProps) => {
 	const isUser = sender === "user";
@@ -39,7 +40,7 @@ const MessageBubble = ({ sender, text }: MessageBubbleProps) => {
 };
 
 /* ======================
-   Chatbot
+    Chatbot
 ====================== */
 const DrMbeteChatbot = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -130,18 +131,19 @@ const DrMbeteChatbot = () => {
 					<div
 						className={`${COLOR_PRIMARY} text-white p-6 flex justify-between items-center`}
 					>
-						<div className="flex items-center gap-2">
-							<Zap className="rotate-45 text-yellow-300" />
-							<h3 className="text-xl font-extrabold">Dr. Mbëté</h3>
+						<div className="flex items-center gap-3">
+							<img
+								src={avatarDrMbete}
+								alt="Avatar de Dr. Mbëté"
+								className="w-10 h-10 rounded-full object-cover border-2 border-white"
+							/>
+							<div>
+								<h3 className="text-lg font-extrabold leading-tight">
+									Dr. Mbëté
+								</h3>
+								<p className="text-xs text-blue-200">Assistant citoyen</p>
+							</div>
 						</div>
-
-						<button
-							type="button"
-							onClick={() => setIsOpen(false)}
-							aria-label="Fermer"
-						>
-							<X />
-						</button>
 					</div>
 
 					{/* Messages */}
