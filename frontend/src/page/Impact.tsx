@@ -1,5 +1,15 @@
-// import { Globe, Heart, Users, Zap } from "lucide-react";
-import { useEffect, useRef } from "react";
+import {
+	BookOpen,
+	ChevronLeft,
+	ChevronRight,
+	Droplets,
+	HeartPulse,
+	Home,
+	X,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+
+import { useCallback, useEffect, useRef, useState } from "react";
 import puitImage from "../assets/Niinth.puit1.jpg";
 import solidaritéImage from "../assets/Maïmouna.ministre.jpg";
 import alyImage from "../assets/Pic1.Aly.Mbegte.jpg";
@@ -7,39 +17,37 @@ import heroImpactImage from "../assets/impact.Hero.jpg";
 
 const HERO_IMAGE_URL = heroImpactImage;
 
-const SOCIAL_IMAGE_URL =
-	"https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800";
-
 const IMPACT_PHOTOS = [
 	{
 		url: solidaritéImage,
-		caption: "Rencontre avec le ministre ",
-		category: "Partanariat",
+		caption: "Rencontre avec les partenaires ",
+		category: "Partenariat",
 	},
 	{
 		url: alyImage,
-		caption: "Travaux de rénovation de l'école....",
-		category: "Renovation école",
-	},
-	{
-		url: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=800",
-		caption: "Distribution de kits Scolaires",
+		caption: "Rénovation d'écoles ",
 		category: "Éducation",
 	},
 	{
-		url: SOCIAL_IMAGE_URL,
-		caption: "Distribution de kits Scolaires",
-		category: "Social",
+		url: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=800",
+		caption: "Distribution annuelle de 5000+ kits scolaires",
+		category: "Scolarité",
 	},
 	{
 		url: "https://images.unsplash.com/photo-1594708767771-a7502209ff51?auto=format&fit=crop&q=80&w=800",
-		caption: "Opération de nettoyage de quartier",
+		caption: "Opération Set-Setal dans les quartiers",
 		category: "Environnement",
 	},
+
 	{
 		url: puitImage,
-		caption: "Inauguration d'un nouveau puits",
-		category: "Humanitaire",
+		caption: "Plus de 100 puits creusés",
+		category: "Accès à l'eau",
+	},
+	{
+		url: "https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?auto=format&fit=crop&q=80&w=800",
+		caption: "Réhabilitation de maternités rurales",
+		category: "Santé",
 	},
 ];
 
@@ -114,10 +122,46 @@ const AnimatedStat: React.FC<AnimatedStatProps> = ({
 };
 
 const Impact = () => {
-	const primaryColor = "#007bff";
-	const successColor = "#28a745";
 	const warningColor = "#ffc107";
 	const lightBlueBg = "#e9f2ff";
+
+	// --- Gestion de la Lightbox ---
+	const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+	const handleNext = useCallback(() => {
+		setSelectedIndex((prev) =>
+			prev === null ? null : (prev + 1) % IMPACT_PHOTOS.length,
+		);
+	}, []);
+
+	const handlePrev = useCallback(() => {
+		setSelectedIndex((prev) =>
+			prev === null
+				? null
+				: (prev - 1 + IMPACT_PHOTOS.length) % IMPACT_PHOTOS.length,
+		);
+	}, []);
+
+	// Défilement automatique et gestion clavier
+	useEffect(() => {
+		if (selectedIndex === null) return;
+
+		// Auto-play toutes les 4 secondes
+		const timer = setInterval(handleNext, 4000);
+
+		// Gestion clavier
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "Escape") setSelectedIndex(null);
+			if (e.key === "ArrowRight") handleNext();
+			if (e.key === "ArrowLeft") handlePrev();
+		};
+		window.addEventListener("keydown", handleKeyDown);
+
+		return () => {
+			clearInterval(timer);
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [selectedIndex, handleNext, handlePrev]);
 
 	return (
 		<div className="text-gray-800 bg-gray-50 min-h-screen pb-16">
@@ -136,10 +180,11 @@ const Impact = () => {
 
 				<div className="relative z-10 flex items-center justify-center h-full text-white text-center p-4">
 					<div className="max-w-4xl mt-60">
-						<h1 className="text-7xl sm:text-Rxl font-extrabold mb-4 leading-tight">
+						<h1 className="text-5xl sm:text-7xl font-extrabold mb-2 leading-tight">
 							Chaque Geste
-							<span className="text-[#28a745]"> Compte.</span>
+							<span className="text-[#28a745] italic"> Compte.</span>
 						</h1>
+
 						<p className="text-xl sm:text-2xl font-light">
 							<span className="text-xs font-bold uppercase tracking-widest block mt-2 opacity-90">
 								Découvrez la force de notre communauté et l'impact réel des
@@ -149,31 +194,32 @@ const Impact = () => {
 					</div>
 				</div>
 			</div>
-
-			<div className="container mx-auto px-4 sm:px-8">
-				{/* STATISTIQUES */}
-				<section className="grid grid-cols-1 md:grid-cols-3 gap-6 my-12 -mt-20 relative z-20">
+			<div className="container mx-auto px-6">
+				{/* STATISTIQUES RÉELLES SAC */}
+				<section className="grid grid-cols-1 md:grid-cols-3 gap-8 -mt-24 relative z-20 mb-32">
 					<AnimatedStat
-						id="stat-engagement"
-						target={2500}
-						label="Citoyens Engagés"
-						description="Utilisateurs actifs sur les missions."
-						color={primaryColor}
-					/>
-					<AnimatedStat
-						id="stat-missions"
-						target={450}
-						label="Missions Accomplies"
-						description="Projets locaux menés à terme."
-						color={successColor}
+						id="stat-puit"
+						target={100}
+						label="Puits Creusés"
+						description="Accès direct à l'eau potable"
+						color="#28a745"
 						suffix="+"
 					/>
 					<AnimatedStat
-						id="stat-hours"
-						target={12345}
-						label="Heures de Bénévolat"
-						description="Temps total donné par les volontaires."
-						color={warningColor}
+						id="stat-kits"
+						target={5000}
+						label="Kits Scolaires"
+						description="Distribués chaque année"
+						color="#007bff"
+						suffix="+"
+					/>
+					<AnimatedStat
+						id="stat-volontaires"
+						target={250}
+						label="Bénévoles Actifs"
+						description="Engagés pour la patrie"
+						color="#ffc107"
+						suffix="+"
 					/>
 				</section>
 
@@ -194,57 +240,93 @@ const Impact = () => {
 								</span>
 							</h2>
 						</div>
-						{/* <p className="max-w-md text-slate-500 font-medium">
-							Découvrez comment vos dons et votre engagement transforment
-							concrètement le quotidien des communautés.
-						</p> */}
 					</div>
 
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 						{/* Education */}
-						<div className="group bg-slate-50 rounded-[2.5rem] p-8 hover:bg-white hover:shadow-xl transition-all duration-500 border border-transparent hover:border-slate-100">
-							<div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300 origin-left">
-								🏫
+						<div className="group bg-white rounded-[3rem] p-10 shadow-xl shadow-slate-200/50 border border-slate-50 hover:shadow-2xl transition-all duration-500">
+							<div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-8 group-hover:bg-blue-600 group-hover:text-white transition-all">
+								<BookOpen size={32} />
 							</div>
-							<h3 className="text-2xl font-black mb-4 text-slate-900">
-								Éducation Inclusive
-							</h3>
-							<p className="text-slate-600 leading-relaxed font-medium">
-								Grâce à la construction et la rénovation d'écoles pour garantir
-								un environnement scolaire dans le confort et la sécurité, ainsi
-								que la distribution de kits scolaires.
+							<h3 className="text-2xl font-black mb-4">Éducation</h3>
+							<p className="text-slate-500 leading-relaxed font-medium">
+								Nous luttons contre les abris provisoires en réhabilitant des
+								salles de classes. Chaque année, plus de{" "}
+								<strong>5000 enfants</strong> reçoivent le matériel nécessaire
+								pour réussir.
+							</p>
+						</div>
+
+						{/* Eau & Santé */}
+						<div className="group bg-white rounded-[3rem] p-10 shadow-xl shadow-slate-200/50 border border-slate-50 hover:shadow-2xl transition-all duration-500">
+							<div
+								className="
+      w-16 h-16
+      bg-sky-50
+      rounded-2xl
+      flex items-center justify-center
+      mb-8
+      transition-all
+      group-hover:bg-sky-500
+    "
+							>
+								<Droplets
+									size={32}
+									className="text-sky-500 group-hover:text-white transition-colors"
+								/>
+							</div>
+
+							<h3 className="text-2xl font-black mb-4">Accès à l’Eau</h3>
+
+							<p className="text-slate-500 leading-relaxed font-medium">
+								Avec <strong>100 puits</strong>, nous réduisons la pénibilité
+								pour les femmes et luttons contre les maladies hydriques, créant
+								ainsi des zones de maraîchage fertiles.
 							</p>
 						</div>
 
 						{/* Santé */}
 						<div className="group bg-slate-50 rounded-[2.5rem] p-8 hover:bg-white hover:shadow-xl transition-all duration-500 border border-transparent hover:border-slate-100">
-							<div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300 origin-left">
-								🪣
+							<div
+								className="
+      w-16 h-16
+      bg-red-50
+      rounded-2xl
+      flex items-center justify-center
+      mb-6
+      transition-all
+      group-hover:bg-red-500
+    "
+							>
+								<HeartPulse
+									size={32}
+									className="text-red-500 group-hover:text-white transition-colors"
+								/>
 							</div>
+
 							<h3 className="text-2xl font-black mb-4 text-slate-900">
 								La Santé
 							</h3>
+
 							<p className="text-slate-600 leading-relaxed font-medium">
-								Construction de puits et forages en zones prioritaires pour
-								réduire les inégalités et donner aux femmes garantes des foyers
-								de meilleures conditions de vie. Plus de{" "}
-								<strong>300 familles</strong> bénéficient désormais d'un accès
-								direct à l'eau potable.
+								Construction de structures sanitaires et amélioration de l’accès
+								aux soins en zones prioritaires pour réduire les inégalités et
+								offrir de meilleures conditions de vie aux populations. Plus de{" "}
+								<strong>300 familles</strong> bénéficient désormais de services
+								de santé de proximité.
 							</p>
 						</div>
 
-						{/* Bien-être (Ajouté) */}
-						<div className="group bg-slate-50 rounded-[2.5rem] p-8 hover:bg-white hover:shadow-xl transition-all duration-500 border border-transparent hover:border-slate-100">
-							<div className="text-5xl mb-6 transform group-hover:scale-110 transition-transform duration-300 origin-left">
-								🌱
+						{/* L'Epopée */}
+						<div className="group bg-white rounded-[3rem] p-10 shadow-xl shadow-slate-200/50 border border-slate-50 hover:shadow-2xl transition-all duration-500">
+							<div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-8 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+								<Home size={32} />
 							</div>
-							<h3 className="text-2xl font-black mb-4 text-slate-900">
-								Bien-être Social
-							</h3>
-							<p className="text-slate-600 leading-relaxed font-medium">
-								Mise en place d'espaces de rencontre et d'ateliers de
-								développement personnel pour favoriser l'épanouissement
-								individuel et renforcer la cohésion au sein des quartiers.
+							<h3 className="text-2xl font-black mb-4">L'Épopée Digitale</h3>
+							<p className="text-slate-500 leading-relaxed font-medium">
+								Notre nouveau projet vise l'<strong>inclusion numérique</strong>{" "}
+								et l'employabilité des jeunes via l'apprentissage professionnel
+								moderne et certifié.
 							</p>
 						</div>
 					</div>
@@ -258,10 +340,12 @@ const Impact = () => {
 					</h2>
 
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-						{IMPACT_PHOTOS.map((photo) => (
-							<div
+						{IMPACT_PHOTOS.map((photo, index) => (
+							<button
 								key={photo.url}
-								className="group relative overflow-hidden rounded-2xl shadow-md h-72"
+								type="button"
+								onClick={() => setSelectedIndex(index)}
+								className="group relative overflow-hidden rounded-2xl shadow-md h-72 cursor-pointer text-left"
 							>
 								<img
 									src={photo.url}
@@ -277,10 +361,65 @@ const Impact = () => {
 										{photo.caption}
 									</p>
 								</div>
-							</div>
+							</button>
 						))}
 					</div>
 				</section>
+
+				{/* MODAL LIGHTBOX (Diaporama) */}
+				{selectedIndex !== null && (
+					<div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 animate-in fade-in duration-300">
+						{/* Bouton Fermer */}
+						<button
+							type="button"
+							onClick={() => setSelectedIndex(null)}
+							className="absolute top-6 right-6 text-white/80 hover:text-yellow-500 transition-colors z-50"
+						>
+							<X size={40} />
+						</button>
+
+						{/* Flèche Gauche */}
+						<button
+							type="button"
+							onClick={(e) => {
+								e.stopPropagation();
+								handlePrev();
+							}}
+							className="absolute left-4 md:left-8 text-white/80 hover:text-yellow-500 transition-colors z-50 p-2"
+						>
+							<ChevronLeft size={56} />
+						</button>
+
+						{/* Image & Caption */}
+						<div className="relative w-full max-w-6xl h-[85vh] flex flex-col items-center justify-center">
+							<img
+								src={IMPACT_PHOTOS[selectedIndex].url}
+								alt={IMPACT_PHOTOS[selectedIndex].caption}
+								className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+							/>
+							<div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent pt-20 pb-8 px-6 text-center rounded-b-lg">
+								<span className="text-yellow-400 text-sm font-bold uppercase tracking-[0.2em] mb-2 block shadow-black drop-shadow-md">
+									{IMPACT_PHOTOS[selectedIndex].category}
+								</span>
+								<p className="text-white text-xl md:text-3xl font-medium drop-shadow-lg">
+									{IMPACT_PHOTOS[selectedIndex].caption}
+								</p>
+							</div>
+						</div>
+
+						{/* Flèche Droite */}
+						<button
+							type="button"
+							onClick={(e) => {
+								e.stopPropagation();
+								handleNext();
+							}}
+							className="absolute right-4 md:right-8 text-white/80 hover:text-yellow-500 transition-colors z-50 p-2"
+						>
+							<ChevronRight size={56} />
+						</button>
+					</div>
+				)}
 
 				{/* CALL TO ACTION */}
 				<section
@@ -294,41 +433,14 @@ const Impact = () => {
 						Votre engagement est la seule variable qui compte. Aidez-nous à
 						atteindre notre prochain objectif : 500 missions accomplies !
 					</p>
-					<a
-						href="/missions"
+					<Link
+						to="/actions"
 						className="inline-block text-gray-800 font-bold py-4 px-10 rounded-full shadow-lg transition duration-300 transform hover:scale-105 hover:shadow-xl active:scale-95"
 						style={{ backgroundColor: warningColor }}
 					>
 						Voir les Missions Actuelles
-					</a>
+					</Link>
 				</section>
-
-				{/* FOOTER STATS RAPIDES */}
-				{/* <section className="bg-slate-900 py-24 px-6 text-white text-center">
-					<div className="container mx-auto max-w-5xl">
-						<h2 className="text-4xl font-black mb-16 italic">
-							L'impact en chiffres
-						</h2>
-						<div className="grid grid-cols-2 md:grid-cols-4 gap-12">
-							{[
-								{ icon: <Users />, label: "Membres", val: "500+" },
-								{ icon: <Globe />, label: "Villes", val: "12" },
-								{ icon: <Zap />, label: "Actions", val: "150+" },
-								{ icon: <Heart />, label: "Sourires", val: "∞" },
-							].map((stat, i) => (
-								<div key={i} className="flex flex-col items-center">
-									<div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-4 text-green-400">
-										{stat.icon}
-									</div>
-									<div className="text-3xl font-black">{stat.val}</div>
-									<div className="text-slate-500 text-xs font-bold uppercase mt-1 tracking-widest">
-										{stat.label}
-									</div>
-								</div>
-							))}
-						</div>
-					</div>
-				</section> */}
 			</div>
 		</div>
 	);
