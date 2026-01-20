@@ -6,14 +6,15 @@ import { useLocation } from "react-router-dom";
  * Utilise useLayoutEffect pour éviter les sauts de scroll lors du rendu
  */
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+	const { pathname } = useLocation();
 
-  // Scroll en haut à chaque changement de route
-  useLayoutEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  }, [pathname]); // dépendance minimale
+	// Scroll en haut à chaque changement de route
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useLayoutEffect(() => {
+		window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+	}, [pathname]); // dépendance minimale
 
-  return null;
+	return null;
 };
 
 export default ScrollToTop;

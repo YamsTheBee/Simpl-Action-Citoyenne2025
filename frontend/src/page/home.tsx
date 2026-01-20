@@ -1,28 +1,27 @@
 // Page d'accueil – Simple Action Citoyenne
 
-import DrMbeteChatbot from "../components/DrMbeteChatbot";
 import GalerieImpact from "../components/GalerieImpact";
 import HeroSlider from "../components/HeroSlider";
 import { MissionSection } from "../components/MissionSection";
 
 const Home = () => {
 	return (
-		<div className="home-page">
+		<main className="home-page">
 			<section className="hero-section">
+				<h1 className="sr-only">Simple Action Citoyenne</h1>
 				<HeroSlider />
 			</section>
 
 			<section className="mission-section">
+				<h2 className="sr-only">Notre mission</h2>
 				<MissionSection />
 			</section>
 
 			<section className="galerieImpact-section">
+				<h2 className="sr-only">Notre impact</h2>
 				<GalerieImpact />
 			</section>
-
-			{/* 💬 Chatbot flottant en bas à droite */}
-			<DrMbeteChatbot />
-		</div>
+		</main>
 	);
 };
 
