@@ -28,7 +28,7 @@ const handleSubmit = async (e: FormEvent) => {
 	setStatusMessage(null);
 
 
-	// 🔎 Validation simple côté client
+	//  Validation simple côté client
 	if (!formData.name || !formData.email || !formData.message) {
 		setError("Veuillez remplir tous les champs obligatoires.");
 		return;
