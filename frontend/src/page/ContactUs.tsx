@@ -1,8 +1,6 @@
 import { Clock, Mail, MapPin, Phone, Send, User } from "lucide-react";
 import { type ChangeEvent, type FormEvent, useState } from "react";
 
-const SAC_GREEN = "#28a745";
-
 const ContactUs = () => {
 	const [formData, setFormData] = useState({
 		name: "",
@@ -12,6 +10,9 @@ const ContactUs = () => {
 	});
 
 	const [statusMessage, setStatusMessage] = useState<string | null>(null);
+	const [isLoading, setIsLoading] = useState(false);
+const [error, setError] = useState<string | null>(null);
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 	const handleChange = (
 		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -19,15 +20,72 @@ const ContactUs = () => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
-	const handleSubmit = (e: FormEvent) => {
-		e.preventDefault();
-		setStatusMessage("Votre message a été transmis avec succès !");
+	// debut de gestion handleSumit
+const handleSubmit = async (e: FormEvent) => {
+	e.preventDefault();
 
-		setTimeout(() => {
-			setFormData({ name: "", email: "", subject: "", message: "" });
-			setStatusMessage(null);
-		}, 4000);
-	};
+	setError(null);
+	setStatusMessage(null);
+
+
+	// 🔎 Validation simple côté client
+	if (!formData.name || !formData.email || !formData.message) {
+		setError("Veuillez remplir tous les champs obligatoires.");
+		return;
+	}
+
+// (optionnel mais recommandé)
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	if (!emailRegex.test(formData.email)) {
+		setError("Veuillez entrer une adresse email valide."); 
+		return;
+	}
+		setIsLoading(true);
+
+try {
+const response = await fetch(`${API_URL}/api/contact`, {
+	method: "POST",
+	headers: {
+		"Content-Type": "application/json",
+	},
+	body: JSON.stringify(formData),
+});
+
+
+
+	const data = await response.json();
+
+
+	if (!response.ok) {
+			throw new Error("Erreur lors de l'envoi du message.");
+		}
+				
+
+	// Succès (temporaire avant le fetch backend)
+		setStatusMessage(
+			data.message ?? "Votre message a été transmis avec succès. @SAC vous remercie 🙏 !",
+		);
+
+	setFormData({
+			name: "",
+			email: "",
+			subject: "",
+			message: "",
+		});
+
+	} catch (err) {
+		setError(
+			err instanceof Error
+				? err.message
+				: "Une erreur est survenue. Veuillez réessayer.",
+		);
+
+
+	} finally {
+		setIsLoading(false);
+	}
+};
+
 
 	return (
 		<div className="min-h-screen relative flex flex-col items-center p-4 sm:p-12 font-sans bg-[#f8fafc] text-slate-800">
@@ -74,6 +132,20 @@ const ContactUs = () => {
 							</div>
 						) : (
 							<form onSubmit={handleSubmit} className="space-y-6">
+	{/* Message d'erreur backend */}
+{error && (
+	<p className="text-red-600 text-sm font-medium mb-4">
+		{error}
+	</p>
+)}
+
+{statusMessage && (
+	<p className="text-green-600 text-sm font-medium mb-4">
+		{statusMessage}
+	</p>
+)}
+
+
 								<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 									<div className="space-y-2">
 										<label
@@ -167,10 +239,18 @@ const ContactUs = () => {
 								<div className="pt-4">
 									<button
 										type="submit"
-										className="w-full sm:w-fit px-12 py-4 rounded-2xl shadow-lg shadow-green-500/20 hover:shadow-green-500/40 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-3 font-black text-white text-lg uppercase tracking-wider"
-										style={{ backgroundColor: SAC_GREEN }}
-									>
-										Envoyer le message <Send size={20} />
+										disabled={isLoading}
+			
+										className={`w-full sm:w-fit px-12 py-4 rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center gap-3 font-black text-white text-lg uppercase tracking-wider ${
+		                isLoading
+	              		? "bg-gray-400 cursor-not-allowed"
+		             	: "bg-[#28a745] hover:-translate-y-1 hover:shadow-green-500/40"
+									
+      	}`}
+									
+								>
+                  	{isLoading ? "Envoi en cours..." : "Envoyer le message"}
+                  	<Send size={20} />
 									</button>
 								</div>
 							</form>
@@ -214,6 +294,7 @@ const ContactUs = () => {
 										</p>
 										<p className="text-lg text-slate-700 font-bold">
 											+221 33 800 00 00
+										
 										</p>
 									</div>
 								</div>
