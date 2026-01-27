@@ -31,8 +31,7 @@ type CheckoutFormProps = {
   onSuccess: () => void;
 };
 
-// --- Début SOUS-COMPOSANT : SYSTÈME DE DON (Intégré pour éviter les erreurs d'import) ---
-
+// --- Début SOUS-COMPOSANT : SYSTÈME DE DON  ---
 const MockCardInput = () => (
   <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
     <div className="flex items-center space-x-3 text-gray-400">
@@ -42,7 +41,6 @@ const MockCardInput = () => (
     <div className="text-gray-400 text-sm">MM/YY CVC</div>
   </div>
 );
-
 
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({
@@ -88,9 +86,26 @@ const DonationSystem = () => {
       <div className="mx-auto max-w-3xl px_8 text-center py-12 bg-white rounded-[3rem] border border-slate-100 shadow-sm">
         <h2 className="text-3xl font-black mb-4">Soutenez nos actions</h2>
         <p className="text-slate-500 mb-8 max-w-md mx-auto">Votre contribution directe permet de financer nos projets d'éducation et d'accès à l'eau.</p>
-        <button onClick={() => setIsOpen(true)} className="bg-green-600 text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 mx-auto hover:bg-green-700 transition-all shadow-lg shadow-green-200">
-          <Gift size={20} /> Faire un don maintenant
-        </button>
+				<button
+  onClick={() => setIsOpen(true)}
+  className="
+    bg-green-600 text-white
+    px-8 py-5
+    rounded-3xl
+    font-extrabold text-lg
+    flex items-center gap-3 mx-auto
+    hover:bg-green-700
+    hover:scale-105
+    active:scale-95
+    transition-all duration-200
+    shadow-lg shadow-green-300
+    focus:outline-none focus:ring-4 focus:ring-green-300
+  "
+>
+  <Gift size={22} />
+  Faire un don maintenant
+</button>
+
       </div>
     );
   }
@@ -142,10 +157,7 @@ const DonationSystem = () => {
   );
 };
 
-
-// --- FIN SOUS-COMPOSANT : SYSTÈME DE DON (Intégré pour éviter les erreurs d'import) --- 
-
-
+// --- FIN SOUS-COMPOSANT : SYSTÈME DE DON (--- 
 
 
 // Images des logos partenaires et hero
@@ -173,7 +185,6 @@ import xemessImage from "../assets/Xemess_Profil.jpg";
 import elhadjiBadaraImage from "../assets/El_Hadji_Badara_poulon_pp.jpg";
 import bambaImage from "../assets/Bamba_pp.jpg";
 import mameAliouImage from "../assets/Mame_Aliou_pp.jpg";
-// import DonationSystem from "../components/Donation/DonationSystem";
 
 type PillarCardProps = {
 	icon: React.ComponentType<LucideProps>;
@@ -286,7 +297,7 @@ const VOLUNTEERS = [
 		quote: "J’ai conçu et développé le site de SAC avec 💚",
 		image: mariamaImage,
 		since: "2021",
-		isDeveloper: true, // Marqueur pour afficher le bouton pro
+		isDeveloper: true, // Marqueur pour afficher le bouton 
 	},
 	{
 		id: "mame-aliou-09",
@@ -311,7 +322,6 @@ const profilePro = {
 	],
 	github: "https://github.com/YamsTheBee",
 	linkedin: "https://linkedin.com",
-	// image: modal mariamaImage à intégrer ici - Future amelioration en option
 };
 
 const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
@@ -409,7 +419,6 @@ const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 };
 
 const AboutPage = () => {
-	// const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isPresidentModalOpen, setIsPresidentModalOpen] = useState(false);
 	const [isMariamaModalOpen, setIsMariamaModalOpen] = useState(false);
 
@@ -438,7 +447,6 @@ const AboutPage = () => {
 
 		const interval = setInterval(() => {
 			setOffset((prev) => {
-				// Quand on atteint la moitié (liste doublée), on repart discrètement à 0
 				if (prev >= 100) return 0;
 				return prev + SPEED;
 			});
@@ -463,7 +471,6 @@ const AboutPage = () => {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			setPartnersOffset((prev) => {
-				// Quand on arrive à la moitié de la liste doublée → reset invisible
 				if (prev >= 50) return 0;
 				return prev + PARTNERS_SPEED;
 			});
@@ -679,7 +686,7 @@ const AboutPage = () => {
 						</h2>
 						<p
 							className="text-lg text-slate-600 mb-10 leading-relaxed  text-justify 
-  max-w-3xl"
+              max-w-3xl"
 						>
 							Notre mission est de susciter des changements significatifs au
 							sein des communautés locales, en plaçant le bien-être des
@@ -997,10 +1004,8 @@ const AboutPage = () => {
 
     {/* --- LE SYSTÈME DE DON INTÉGRÉ ICI --- */}
         <section className="mb-40">
-           <DonationSystem />
+	   <DonationSystem />
         </section>
-
-
 			</main>
 		</div>
 	);
