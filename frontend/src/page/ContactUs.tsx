@@ -1,5 +1,148 @@
-import { Clock, Mail, MapPin, Phone, Send, User } from "lucide-react";
+import { CheckCircle2, Clock, CreditCard, Gift, Globe, Loader2, Mail, MapPin, Phone, Send, Smartphone, User, X } from "lucide-react";
 import { type ChangeEvent, type FormEvent, useState } from "react";
+
+
+
+
+
+type CheckoutFormProps = {
+  amount: number;
+  currency: string;
+  onSuccess: () => void;
+};
+
+// --- Début SOUS-COMPOSANT : SYSTÈME DE DON ---
+
+const MockCardInput = () => (
+  <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
+    <div className="flex items-center space-x-3 text-gray-400">
+      <CreditCard className="w-5 h-5" />
+      <span>4242 4242 4242 4242</span>
+    </div>
+    <div className="text-gray-400 text-sm">MM/YY CVC</div>
+  </div>
+);
+
+
+
+const CheckoutForm: React.FC<CheckoutFormProps> = ({
+  amount,
+  currency,
+  onSuccess,
+}) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 1500));
+    setLoading(false);
+    onSuccess();
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="p-4 border border-gray-100 rounded-xl bg-gray-50">
+        <MockCardInput />
+      </div>
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full py-4 bg-green-600 text-white font-bold rounded-xl flex items-center justify-center hover:bg-green-700 transition-all"
+      >
+        {loading ? <Loader2 className="animate-spin" /> : `Donner ${amount} ${currency}`}
+      </button>
+    </form>
+  );
+};
+
+
+const DonationSystem = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [method, setMethod] = useState("local");
+  const [amount, setAmount] = useState(2000);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  if (!isOpen) {
+    return (
+      <div className="mx-auto max-w-3xl px-8 text-center py-12 bg-white rounded-[3rem] border border-slate-100 shadow-sm">
+        <h2 className="text-3xl font-black mb-4">Soutenez nos actions</h2>
+        <p className="text-slate-500 mb-8 max-w-md mx-auto">Votre contribution directe permet de financer nos projets d'éducation et d'accès à l'eau.</p>
+       <button
+  onClick={() => setIsOpen(true)}
+  className="
+    bg-green-600 text-white
+    px-8 py-5
+    rounded-3xl
+    font-extrabold text-lg
+    flex items-center gap-3 mx-auto
+    hover:bg-green-700
+    hover:scale-105
+    active:scale-95
+    transition-all duration-200
+    shadow-lg shadow-green-300
+    focus:outline-none focus:ring-4 focus:ring-green-300
+  "
+>
+  <Gift size={22} />
+  Faire un don maintenant
+</button>
+
+      </div>
+    );
+  }
+
+  return (
+    <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+      <div className="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl relative overflow-hidden p-8 animate-in zoom-in duration-300">
+        <button onClick={() => setIsOpen(false)} className="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-900 transition-colors"><X /></button>
+        
+        {isSuccess ? (
+          <div className="text-center py-8">
+            <CheckCircle2 size={64} className="text-green-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Merci pour votre don !</h2>
+            <p className="text-slate-500 mb-6">Un reçu vous sera envoyé par email.</p>
+            <button onClick={() => { setIsOpen(false); setIsSuccess(false); }} className="bg-slate-900 text-white px-6 py-2 rounded-lg">Fermer</button>
+          </div>
+        ) : (
+          <>
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-black">Finaliser mon don</h3>
+              <div className="flex justify-center gap-4 mt-6">
+                <button onClick={() => setMethod("local")} className={`flex-1 p-3 rounded-xl border-2 flex flex-col items-center gap-1 ${method === "local" ? "border-green-600 bg-green-50" : "border-slate-100"}`}>
+                  <Smartphone size={20} /> <span className="text-[10px] font-bold uppercase">Mobile Money</span>
+                </button>
+                <button onClick={() => setMethod("intl")} className={`flex-1 p-3 rounded-xl border-2 flex flex-col items-center gap-1 ${method === "intl" ? "border-green-600 bg-green-50" : "border-slate-100"}`}>
+                  <Globe size={20} /> <span className="text-[10px] font-bold uppercase">Carte Bancaire</span>
+                </button>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="grid grid-cols-4 gap-2">
+                {[1000, 2000, 5000, 10000].map(val => (
+                  <button key={val} onClick={() => setAmount(val)} className={`py-2 text-xs font-bold rounded-lg ${amount === val ? "bg-green-600 text-white" : "bg-slate-50 text-slate-500"}`}>{val}</button>
+                ))}
+              </div>
+              <input type="number" value={amount} onChange={(e) => setAmount(Number(e.target.value))} className="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-xl font-bold" />
+              
+              {method === "local" ? (
+                <button onClick={() => setIsSuccess(true)} className="w-full py-4 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition-all">Payer par Wave / Orange Money</button>
+              ) : (
+                <CheckoutForm amount={amount} currency="EUR" onSuccess={() => setIsSuccess(true)} />
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+
+// --- FIN SOUS-COMPOSANT : SYSTÈME DE DON --- 
+
+
 
 const ContactUs = () => {
 	const [formData, setFormData] = useState({
@@ -81,7 +224,7 @@ const response = await fetch(`${API_URL}/api/contact`, {
 			email: "",
 			subject: "",
 			message: "",
-			website: "", // 👈 honeypot
+			website: "", //honeypot
 		});
 
 	} catch (err) {
@@ -248,7 +391,6 @@ const response = await fetch(`${API_URL}/api/contact`, {
 {/* Honeypot anti-bot : champ invisible pour l’utilisateur,
 rempli automatiquement par les bots → blocage silencieux */}
 
-
 <div className="hidden">
 	<label htmlFor="website">Website</label>
 	<input
@@ -334,7 +476,7 @@ rempli automatiquement par les bots → blocage silencieux */}
 										</p>
 										<p className="text-lg text-slate-700 font-bold">
 											yamsnglfr@gmail.com
-											{/* mail à remplacer après reception acces sécurité Google secretaire SAC simpleactioncitoyenne@gmail.com */}
+											{/* mail à remplacer après reception acces sécurité  "Google" secretaire SAC simpleactioncitoyenne@gmail.com */}
 										</p>
 									</div>
 								</div>
@@ -398,6 +540,13 @@ rempli automatiquement par les bots → blocage silencieux */}
 					</div>
 				</div>
 			</div>
+
+			   {/* --- LE SYSTÈME DE DON INTÉGRÉ ICI --- */}
+        <section className="mb-40">
+           <DonationSystem />
+        </section>
+
+
 		</div>
 	);
 };
