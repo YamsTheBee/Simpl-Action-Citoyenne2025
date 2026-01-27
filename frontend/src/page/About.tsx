@@ -785,7 +785,7 @@ const AboutPage = () => {
 										<p className="text-center text-[#28a745] font-bold text-xs uppercase tracking-widest mb-6">
 											{volunteer.role}
 										</p>
-										{/* <p className="text-gray-400 text-xs mb-4 text-center italic">
+										{/* TODO <p className="text-gray-400 text-xs mb-4 text-center italic">
 											Membre depuis {volunteer.since} en option 
 										</p> */}
 										{volunteer.since && (

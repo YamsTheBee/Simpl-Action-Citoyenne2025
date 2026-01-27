@@ -27,7 +27,7 @@ type CheckoutFormProps = {
   onSuccess: () => void;
 };
 
-// --- Début SOUS-COMPOSANT : SYSTÈME DE DON (Intégré pour éviter les erreurs d'import) ---
+// --- Début SOUS-COMPOSANT : SYSTÈME DE DON  ---
 
 const MockCardInput = () => (
   <div className="bg-white p-4 rounded-lg border border-gray-200 flex items-center justify-between">
@@ -156,7 +156,7 @@ const DonationSystem = () => {
 };
 
 
-// --- FIN SOUS-COMPOSANT : SYSTÈME DE DON (Intégré pour éviter les erreurs d'import) --- 
+// --- FIN SOUS-COMPOSANT : SYSTÈME DE DON  --- 
 
 
 
