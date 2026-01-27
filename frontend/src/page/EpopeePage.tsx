@@ -188,11 +188,9 @@ const EpopeePage = () => {
 									l'apprentissage professionnel.
 								</p>
 								<p>
-									En parfait alignement avec la stratégie nationale{" "}
-									<span className="italic font-semibold text-blue-900">
-										Vision Sénégal 2050
-									</span>
-									, notre ambition est de bâtir un capital humain fort et
+									En parfait alignement avec la stratégie nationale,
+								
+				    		notre ambition est de bâtir un capital humain fort et
 									résilient.
 								</p>
 
