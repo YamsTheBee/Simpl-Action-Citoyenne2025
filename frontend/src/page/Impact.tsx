@@ -4,7 +4,6 @@ import {
 	ChevronRight,
 	Droplets,
 	HeartPulse,
-	Home,
 	X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -261,14 +260,14 @@ const Impact = () => {
 						<div className="group bg-white rounded-[3rem] p-10 shadow-xl shadow-slate-200/50 border border-slate-50 hover:shadow-2xl transition-all duration-500">
 							<div
 								className="
-      w-16 h-16
-      bg-sky-50
-      rounded-2xl
-      flex items-center justify-center
-      mb-8
-      transition-all
-      group-hover:bg-sky-500
-    "
+                w-16 h-16
+                bg-sky-50
+                rounded-2xl
+                flex items-center justify-center
+                mb-8
+                transition-all
+                group-hover:bg-sky-500
+                "
 							>
 								<Droplets
 									size={32}
@@ -289,14 +288,14 @@ const Impact = () => {
 						<div className="group bg-slate-50 rounded-[2.5rem] p-8 hover:bg-white hover:shadow-xl transition-all duration-500 border border-transparent hover:border-slate-100">
 							<div
 								className="
-      w-16 h-16
-      bg-red-50
-      rounded-2xl
-      flex items-center justify-center
-      mb-6
-      transition-all
-      group-hover:bg-red-500
-    "
+                  w-16 h-16
+                  bg-red-50
+                  rounded-2xl
+                  flex items-center justify-center
+                  mb-6
+                  transition-all
+                  group-hover:bg-red-500
+                  "
 							>
 								<HeartPulse
 									size={32}
@@ -316,20 +315,7 @@ const Impact = () => {
 								de santé de proximité.
 							</p>
 						</div>
-
-						{/* L'Epopée */}
-						<div className="group bg-white rounded-[3rem] p-10 shadow-xl shadow-slate-200/50 border border-slate-50 hover:shadow-2xl transition-all duration-500">
-							<div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-8 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-								<Home size={32} />
-							</div>
-							<h3 className="text-2xl font-black mb-4">L'Épopée Digitale</h3>
-							<p className="text-slate-500 leading-relaxed font-medium">
-								Notre nouveau projet vise l'<strong>inclusion numérique</strong>{" "}
-								et l'employabilité des jeunes via l'apprentissage professionnel
-								moderne et certifié.
-							</p>
 						</div>
-					</div>
 				</section>
 
 				{/* GALERIE D'IMPACT */}
