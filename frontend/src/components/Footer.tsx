@@ -193,7 +193,18 @@ const Footer = () => {
 						<span>Dakar, Sénégal</span>
 						<span className="hidden md:block">•</span>
 						<span>Tous droits réservés</span>
+ {/* LIEN ADMIN DISCRET */}
+            <Link 
+              to="/admin" 
+              className="hover:text-green-400 transition-colors opacity-40 hover:opacity-100"
+            >
+              Administration
+            </Link>
+						
 					</div>
+
+
+
 
 					<div className="flex items-center gap-2 text-xs text-gray-400 tracking-normal">
 						<span>Made with 💚 by MariamaD</span>
