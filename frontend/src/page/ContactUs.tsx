@@ -150,7 +150,7 @@ const ContactUs = () => {
 		email: "",
 		subject: "",
 		message: "",
-		website: "", // 👈 honeypot
+		website: "", // honeypot
 	});
 
 const [statusMessage, setStatusMessage] = useState<string | null>(null);
@@ -476,7 +476,7 @@ rempli automatiquement par les bots → blocage silencieux */}
 										</p>
 										<p className="text-lg text-slate-700 font-bold">
 											yamsnglfr@gmail.com
-											{/* mail à remplacer après reception acces sécurité  "Google" secretaire SAC simpleactioncitoyenne@gmail.com */}
+											{/* TODO mail à remplacer après reception acces sécurité  "Google" secretaire SAC simpleactioncitoyenne@gmail.com */}
 										</p>
 									</div>
 								</div>
