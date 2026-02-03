@@ -5,7 +5,7 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
  * Helper pour inclure le token JWT dans les headers
  */
 const getAuthHeaders = () => {
-  const token = localStorage.getItem('admin_token');
+  const token = localStorage.getItem('token');
   return {
     'Content-Type': 'application/json',
       ...(token && { Authorization: `Bearer ${token}` })
@@ -16,9 +16,8 @@ const getAuthHeaders = () => {
  * Gestion centralisée des erreurs de réponse
  */
 const handleResponse = async (response: Response) => {
-  
-    if (response.status === 401 || response.status === 403) {
-    localStorage.removeItem('admin_token');
+  if (response.status === 401 || response.status === 403) {
+    localStorage.removeItem('token');
     window.location.href = '/admin/login';
     return;
   }
@@ -27,8 +26,10 @@ const handleResponse = async (response: Response) => {
     const errorData = await response.json().catch(() => ({}));
     throw new Error(errorData.message || `Erreur serveur: ${response.status}`);
   }
+
   return response.json();
 };
+
 
 
 
@@ -57,6 +58,14 @@ export const adminServices = {
     });
     return handleResponse(response);
   },
+
+  // --- ACTIVITÉS RÉCENTES ---
+getRecentActivities: async () => {
+  const response = await fetch(`${API_BASE}/api/admin/activities`, {
+    headers: getAuthHeaders(),
+  });
+  return handleResponse(response);
+},
 
   // --- GESTION DE LA NEWSLETTER ---
   getNewsletterSubscribers: async () => {
