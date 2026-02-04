@@ -15,7 +15,7 @@ const ProtectedRoute: React.FC = () => {
 // Route guard:
   // - unauthenticated → redirect to login
   // - authenticated → render protected route via <Outlet />
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/admin/login" replace />;
 };
 
 export default ProtectedRoute;
