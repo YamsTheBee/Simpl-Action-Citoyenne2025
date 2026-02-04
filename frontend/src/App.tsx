@@ -31,7 +31,8 @@ const LayoutManager: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const location = useLocation();
   
   // Vérifie si nous sommes sur une route d'administration ou de connexion
-  const isAdminPage = location.pathname.startsWith('/admin') || location.pathname === '/login';
+ const isAdminPage = location.pathname.startsWith('/admin');
+
 
   return (
     <div className="min-h-screen font-sans antialiased text-gray-800 flex flex-col">
@@ -70,7 +71,8 @@ const App: React.FC = () => {
 
             {/* --- ROUTES ADMIN --- */}
             {/* Page de connexion accessible via le lien footer */}
-            <Route path="/login" element={<Login />} />
+        <Route path="/admin/login" element={<Login />} />
+
             
       
             <Route element={<ProtectedRoute />}>
