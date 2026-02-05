@@ -16,12 +16,7 @@ export const FaitesUnDon: React.FC = () => {
 	const handleDonation = (e: React.FormEvent) => {
 		e.preventDefault();
 
-		console.log(
-			`Simulation de don : ${amount}€ ${
-				isRecurring ? "par mois" : "unique"
-			}. Merci !`,
-		);
-
+   // Simulation visuelle uniquement (en attendant Stripe)
 		document.getElementById("donation-message")?.classList.remove("hidden");
 		setTimeout(
 			() =>
