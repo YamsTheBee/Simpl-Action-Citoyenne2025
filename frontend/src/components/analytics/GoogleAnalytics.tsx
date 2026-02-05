@@ -4,8 +4,11 @@ const GoogleAnalytics = () => {
   useEffect(() => {
     const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
+    // Google Analytics injected only after user consent (RGPD compliant)
     if (!GA_ID) {
-      console.warn("Google Analytics ID manquant dans le .env");
+      if (import.meta.env.DEV) {
+        console.warn("Google Analytics ID manquant dans le .env");
+      }
       return;
     }
 
