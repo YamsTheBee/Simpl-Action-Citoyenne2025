@@ -65,7 +65,7 @@ const mockActions: Action[] = [
 			"Le projet Village l’Épopée, porté et coordonné par l’Association Simple Action Citoyenne avec le soutien de L'ambassade de FRANCE, est une initiative phare visant à promouvoir l’inclusion sociale.",
 		image:
 			"https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop",
-		location: "Dakar.",
+		location: "Lancement Phase 1 à Dakar.",
 		date: "Phase initiale de 5 ans",
 		isCoupDeCoeur: true,
 		impact: "Renforcer l’employabilité des jeunes.",
@@ -278,20 +278,30 @@ export default function App() {
 									{epopeeVerte.description}
 								</p>
 
-								<div className="space-y-6 mb-12 border-l-4 border-[#28a745] pl-8">
-									<div className="flex items-center text-lg text-slate-800">
-										<Zap className="w-6 h-6 mr-4 text-[#28a745]" />
-										<span className="font-black mr-2">Impact :</span>
-										<span className="text-slate-600">{epopeeVerte.impact}</span>
-									</div>
-									<div className="flex items-center text-lg text-slate-800">
-										<MapIcon className="w-6 h-6 mr-4 text-[#28a745]" />
-										<span className="font-black mr-2">Zone :</span>
-										<span className="text-slate-600">
-											{epopeeVerte.location}
-										</span>
-									</div>
-								</div>
+							<div className="space-y-6 mb-12 border-l-4 border-[#28a745] pl-6 md:pl-8">
+  {/* IMPACT */}
+  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-slate-800">
+    <div className="flex items-center gap-3">
+      <Zap className="w-5 h-5 text-[#28a745] shrink-0" />
+      <span className="font-black text-base">Impact :</span>
+    </div>
+    <span className="text-slate-600 text-base sm:text-lg leading-relaxed">
+      {epopeeVerte.impact}
+    </span>
+  </div>
+
+  {/* ZONE */}
+  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-slate-800">
+    <div className="flex items-center gap-3">
+      <MapIcon className="w-5 h-5 text-[#28a745] shrink-0" />
+      <span className="font-black text-base">Zone :</span>
+    </div>
+    <span className="text-slate-600 text-base sm:text-lg">
+      {epopeeVerte.location}
+    </span>
+  </div>
+</div>
+
 
 								<Link
 									to="/epopee"
