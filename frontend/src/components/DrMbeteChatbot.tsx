@@ -48,7 +48,7 @@ const DrMbeteChatbot = () => {
 		{
 			id: crypto.randomUUID(),
 			sender: "bot",
-			text: "Salut ! Je suis Dr. Mbëté, votre assistant citoyen. Comment puis-je vous aider ? 😊",
+			text: "Salut ! Je suis Dr. Mbëcté, votre assistant citoyen. Comment puis-je vous aider ? 😊",
 		},
 	]);
 	const [input, setInput] = useState("");
