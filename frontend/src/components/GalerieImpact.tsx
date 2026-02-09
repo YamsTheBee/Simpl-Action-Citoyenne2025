@@ -127,6 +127,8 @@ const mockActions: Action[] = [
 
 const epopeeVerte = mockActions[0];
 const carouselActions = mockActions.slice(1);
+const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
 
 /* ------------------ 3. COMPOSANT DE CARTE (ACTION CARD) ------------------- */
 
@@ -152,18 +154,11 @@ const ActionCard = React.memo(({ action, onClick }: ActionCardProps) => {
 			)}
 
 			{/* Zone Image avec Icône Contextuelle */}
-			<div className="relative h-70 overflow-hidden">
+			<div className="relative h-72 overflow-hidden">
+				{/* ou h-[280px] */}
 				<div className="absolute top-4 left-4 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-2xl shadow-lg transform transition-transform duration-500 group-hover:scale-110 group-hover:bg-white">
 					<IconComponent size={20} className="text-[#28a745]" />
 				</div>
-
-				{/* <img
-					src={action.image}
-					alt={action.title}
-					className="w-full h-full object-cover transition duration-1000 group-hover:scale-110"
-				/>
-				<div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-			</div> */}
 
 				<img
 					src={action.image}
@@ -190,7 +185,7 @@ const ActionCard = React.memo(({ action, onClick }: ActionCardProps) => {
 							{action.location}
 						</p>
 						{/* 
-						En attente des bonnes dates  */}
+						TODO En attente des bonnes dates  */}
 						{/* <p className="flex items-center font-semibold">
 							<Calendar className="w-4 h-4 mr-2" style={{ color: SAC_GREEN }} />
 							{action.date}
@@ -215,7 +210,9 @@ const ActionCard = React.memo(({ action, onClick }: ActionCardProps) => {
 export default function App() {
 	const [page, setPage] = useState<string>("home");
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const itemsPerView = 3;
+	// const itemsPerView = 3;
+	const itemsPerView = isMobile ? 1 : 3;
+
 	const totalCarouselItems = carouselActions.length;
 	const maxIndex = Math.max(0, totalCarouselItems - itemsPerView);
 
@@ -327,7 +324,8 @@ export default function App() {
 								<div className="w-20 h-2 bg-[#28a745] mt-4 rounded-full" />
 							</div>
 
-							<div className="flex space-x-4">
+				       	<div className="hidden md:flex space-x-4">
+
 								<button
 									type="button"
 									onClick={handlePrev}
@@ -348,13 +346,21 @@ export default function App() {
 							</div>
 						</div>
 
-						<div className="relative overflow-hidden">
+                <div className={`relative ${isMobile ? "" : "overflow-hidden"}`}>
+					
 							<div
-								className="flex gap-8 transition-transform duration-1000 ease-in-out"
-								style={{
-									transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
-								}}
-							>
+              className={`flex gap-8 ${
+              isMobile
+                ? "overflow-x-auto snap-x snap-mandatory scroll-smooth px-6"
+                : "transition-transform duration-1000 ease-in-out"
+                }`}
+                style={
+                  isMobile
+                  ? undefined
+                : { transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }
+                  }
+                  >
+
 								{carouselActions.map((action) => (
 									<ActionCard
 										key={action.id}
