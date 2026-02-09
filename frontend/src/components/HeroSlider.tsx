@@ -29,7 +29,7 @@ const HeroSlider = () => {
 
 				<p className="mt-4 max-w-2xl animate-fadeSlide delay-400 text-lg text-gray-200 drop-shadow-md sm:text-xl">
 					<span className="text-xs font-bold uppercase tracking-widest">
-						Chaque geste compte. Transformons ensemble notre communauté.
+						Chaque geste compte. Ensemble, nous pouvons agir sur notre communauté.
 					</span>
 				</p>
 			</div>
