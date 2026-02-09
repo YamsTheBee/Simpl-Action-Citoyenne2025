@@ -134,14 +134,14 @@ const DrMbeteChatbot = () => {
 						<div className="flex items-center gap-3">
 							<img
 								src={avatarDrMbete}
-								alt="Avatar de Dr. Mbëté"
+								alt="Avatar de Dr. Mbëcté"
 								className="w-10 h-10 rounded-full object-cover border-2 border-white"
 							/>
 							<div>
 								<h3 className="text-lg font-extrabold leading-tight">
-									Dr. Mbëté
+									Dr. Mbëcté
 								</h3>
-								<p className="text-xs text-blue-200">Assistant citoyen</p>
+								<p className="text-xs text-blue-200"> Votre assistant citoyen</p>
 							</div>
 						</div>
 					</div>
