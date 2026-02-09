@@ -134,32 +134,40 @@ const EpopeePage = () => {
 	return (
 		<div className="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased">
 			{/* --- HERO SECTION --- */}
-			<section className="relative h-[600px] flex items-center justify-center overflow-hidden bg-[#0a192f]">
-				<div className="absolute inset-0 opacity-40">
-					<img
-						src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80"
-						alt="Collaboration et innovation"
-						className="w-full h-full object-cover"
-					/>
-				</div>
+		<section className="relative h-[70vh] min-h-[420px] md:h-[600px] flex items-center justify-center overflow-hidden bg-[#0a192f]">
+	<div className="absolute inset-0 opacity-40">
+		<img
+			src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80"
+			alt="Collaboration et innovation"
+			className="w-full h-full object-cover"
+		/>
+	</div>
 
-				<div
-					className={`relative z-10 px-6 text-center transition-all duration-1000 ${hasLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-				>
-					<h1 className="flex items-center justify-center gap-4 text-5xl md:text-5xl lg:text-8xl font-black text-white mb-6 leading-tight tracking-tighter">
-						<Home className="w-16 h-16 md:w-20 md:h-20 text-[#28a745]" />
-						L'ÉPOPÉE <span className="text-[#28a745] italic">DAKAR</span>
-					</h1>
-					<p className="text-xl md:text-xl text-blue-50 max-w-3xl mx-auto leading-relaxed font-light">
-						Une initiative de{" "}
-						<span className="font-bold text-white border-b-2 border-[#28a745]">
-							Simple Action Citoyenne
-						</span>{" "}
-						avec l’appui de l’Ambassade de France.
-					</p>
-				</div>
-				<div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-50 to-transparent" />
-			</section>
+	<div
+		className={`relative z-10 px-6 text-center transition-all duration-1000 ${
+			hasLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+		}`}
+	>
+		<h1 className="flex flex-col md:flex-row items-center justify-center gap-4
+		text-4xl sm:text-5xl md:text-6xl lg:text-8xl
+		font-black text-white mb-6 leading-tight tracking-tighter">
+			<Home className="w-12 h-12 sm:w-14 sm:h-14 md:w-20 md:h-20 text-[#28a745]" />
+			L'ÉPOPÉE <span className="text-[#28a745] italic">DAKAR</span>
+		</h1>
+
+		<p className="text-base sm:text-lg md:text-xl text-blue-50
+		max-w-xl md:max-w-3xl mx-auto leading-relaxed font-light px-2">
+			Une initiative de{" "}
+			<span className="font-bold text-white border-b-2 border-[#28a745]">
+				Simple Action Citoyenne
+			</span>{" "}
+			avec l’appui de l’Ambassade de France.
+		</p>
+	</div>
+
+	<div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-50 to-transparent" />
+</section>
+
 
 			{/* --- MAIN CONTENT CONTAINER --- */}
 			<div className="max-w-7xl mx-auto px-6 lg:px-8 -mt-16 relative z-20 space-y-48 pb-48">
