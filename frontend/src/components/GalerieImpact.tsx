@@ -279,16 +279,19 @@ export default function App() {
 								</p>
 
 							<div className="space-y-6 mb-12 border-l-4 border-[#28a745] pl-6 md:pl-8">
-  {/* IMPACT */}
-  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-slate-800">
-    <div className="flex items-center gap-3">
-      <Zap className="w-5 h-5 text-[#28a745] shrink-0" />
-      <span className="font-black text-base">Impact :</span>
-    </div>
-    <span className="text-slate-600 text-base sm:text-lg leading-relaxed">
-      {epopeeVerte.impact}
-    </span>
-  </div>
+ {/* IMPACT */}
+<div className="flex items-center gap-3 text-slate-800 flex-nowrap">
+  <Zap className="w-5 h-5 text-[#28a745] shrink-0" />
+
+  <span className="font-black text-base whitespace-nowrap">
+    Impact :
+  </span>
+
+  <span className="text-slate-600 text-base sm:text-lg truncate">
+    {epopeeVerte.impact}
+  </span>
+</div>
+
 
   {/* ZONE */}
   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-slate-800">
