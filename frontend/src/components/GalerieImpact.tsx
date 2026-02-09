@@ -72,7 +72,7 @@ const mockActions: Action[] = [
 	},
 	{
 		id: "2",
-		title: "Zéro abris provisoire",
+		title: "Zéro abri provisoire",
 		description:
 			"Construction de salles de classe, Daaras et Mosquées aux normes partout au Sénégal.",
 		image:
