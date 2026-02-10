@@ -17,6 +17,10 @@ interface NavItem {
 	cta?: boolean;
 }
 
+interface FooterProps {
+  onOpenMariamaModal: () => void;
+}
+
 const navItems: NavItem[] = [
 	{ label: "Accueil", href: "/" },
 	{ label: "À propos", href: "/about" },
@@ -29,7 +33,9 @@ const navItems: NavItem[] = [
 /**
  * Composant Footer principal avec la bande verte et les flèches de navigation
  */
-const Footer = () => {
+const Footer = ({ onOpenMariamaModal }: FooterProps) => {
+
+
 	return (
 		<footer
 			id="footer"
@@ -207,7 +213,14 @@ const Footer = () => {
 
 
 					<div className="flex items-center gap-2 text-xs text-gray-400 tracking-normal">
-						<span>Made with 💚 by MariamaD</span>
+<button
+  onClick={onOpenMariamaModal}
+  className="text-gray-400 hover:text-green-400 transition-colors underline-offset-4 hover:underline"
+>
+  Made with 💚 by Mariama
+</button>
+
+
 						<a
 							href="https://github.com/YamsTheBee"
 							target="_blank"

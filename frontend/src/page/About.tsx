@@ -12,10 +12,8 @@ import {
 	Droplets,
 	Star,
 	type LucideProps,
-	Github,
-	Linkedin,
-	Code,
-	Briefcase,
+
+	
 	Globe,
 	Smartphone,
 	CheckCircle2,
@@ -179,7 +177,7 @@ import PresidentImage from "../assets/President.png";
 // Images pour l'aperçu des bénévoles
 import maimounaImage from "../assets/Maïmouna_pp.jpg";
 import alyImage from "../assets/Profil.Aly.Mbegte.png";
-import mariamaImage from "../assets/PortraitYams.jpg";
+// import mariamaImage from "../assets/PortraitYams.jpg";
 import daoudaImage from "../assets/daouda_image.jpg";
 import xemessImage from "../assets/Xemess_Profil.jpg";
 import elhadjiBadaraImage from "../assets/El_Hadji_Badara_poulon_pp.jpg";
@@ -268,13 +266,13 @@ const VOLUNTEERS = [
 		quote: "Action...",
 		image: bambaImage,
 	},
-	{
-		id: "dialy-05",
-		firstName: "Dialy",
-		role: "Responsable Santé",
-		quote: "La santé est un droit fondamental pour chaque communauté.",
-		// image Dialy à venir :,
-	},
+	// TODO :EN ATTENTE IMG et info fonction Dialy ---ignore---
+	// 	// 	id: "dialy-05",
+	// 	firstName: "Dialy",
+	// 	role: "Responsable Santé",
+	// 	quote: "La santé est un droit fondamental pour chaque communauté.",
+	// 	// image Dialy à venir :,
+	// },
 	{
 		id: "daouda-06",
 		firstName: "Daouda alias Tipsé",
@@ -290,15 +288,15 @@ const VOLUNTEERS = [
 		quote: "Don de soi…",
 		image: elhadjiBadaraImage,
 	},
-	{
-		id: "mariama-08",
-		firstName: "Mariama",
-		role: "Développeuse & bénévole SAC",
-		quote: "J’ai conçu et développé le site de SAC avec 💚",
-		image: mariamaImage,
-		since: "2021",
-		isDeveloper: true, // Marqueur pour afficher le bouton 
-	},
+	// TODO : Ajouter Mariama en tant que bénévole développeuse avec un rôle de "Lead -Développeuse ", et une citation mettant en avant son engagement pour le développement de solutions numériques au service de la mission de SAC. (ex : "Créer des solutions numériques pour amplifier notre impact citoyen." ou "Le code au service du changement social.") --- IGNORE ---{
+	// 	id: "mariama-08",
+	// 	firstName: "Mariama",
+	// 	role: "Développeuse & bénévole SAC",
+	// 	quote: "J’ai conçu et développé le site de SAC avec 💚",
+	// 	image: mariamaImage,
+	// 	since: "2021",
+	// 	isDeveloper: true, // Marqueur pour afficher le bouton 
+	// },
 	{
 		id: "mame-aliou-09",
 		firstName: "Mame Aliou",
@@ -309,20 +307,6 @@ const VOLUNTEERS = [
 ];
 
 const LOOPED_VOLUNTEERS = [...VOLUNTEERS, ...VOLUNTEERS];
-
-const profilePro = {
-	skills: [
-		"React (TypeScript)",
-		"Node.js",
-		"MySQL",
-		"Express",
-		"Tailwind CSS",
-		"Figma",
-		"Git",
-	],
-	github: "https://github.com/YamsTheBee",
-	linkedin: "https://linkedin.com",
-};
 
 const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 	if (!isOpen) return null;
@@ -420,8 +404,6 @@ const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 
 const AboutPage = () => {
 	const [isPresidentModalOpen, setIsPresidentModalOpen] = useState(false);
-	const [isMariamaModalOpen, setIsMariamaModalOpen] = useState(false);
-
 	const [scrollProgress, setScrollProgress] = useState(0);
 	const [itemsVisible, setItemsVisible] = useState(3);
 	const [isPaused, setIsPaused] = useState(false);
@@ -778,7 +760,6 @@ const AboutPage = () => {
 												className="absolute inset-0 w-full h-full object-cover rounded-3xl border-2 border-white shadow-md"
 											/>
 										</div>
-
 										<h3 className="text-2xl font-black text-center text-slate-900 mb-1 group-hover:text-[#28a745] transition-colors">
 											{volunteer.firstName}
 										</h3>
@@ -788,12 +769,11 @@ const AboutPage = () => {
 										{/* TODO <p className="text-gray-400 text-xs mb-4 text-center italic">
 											Membre depuis {volunteer.since} en option 
 										</p> */}
-										{volunteer.since && (
+										{/* {volunteer.since && ( */}
 											<p className="text-gray-400 text-xs mb-4 text-center italic">
-												Membre depuis {volunteer.since}
+												{/* Membre depuis {volunteer.since} */}
 											</p>
-										)}
-
+										{/* )} */}
 										<div className="relative ">
 											<Quote
 												size={20}
@@ -802,209 +782,17 @@ const AboutPage = () => {
 											<p className="text-slate-500 italic text-center leading-relaxed relative z-10">
 												"{volunteer.quote}"
 											</p>
-
-											{/* BOUTON PRO APPARAÎT UNIQUEMENT POUR MARIAMA */}
-											{volunteer.isDeveloper && (
-												<button
-													type="button"
-													onClick={() => setIsMariamaModalOpen(true)}
-													className="w-full mt-auto flex items-center justify-center gap-2 bg-gray-900 text-white py-2.5 px-4 rounded-xl font-semibold hover:bg-indigo-700 transition-colors shadow-md text-sm"
-												>
-													<Briefcase size={16} />
-													Collaboration & Contact Pro
-												</button>
-											)}
 										</div>
 									</div>
 								</div>
 							))}
 						</div>
 					</div>
-
-					{/* MODAL PRO MARIAMA */}
-					{isMariamaModalOpen && (
-						<div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-xl">
-							<div className="relative bg-white w-full max-w-4xl rounded-[3rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
-								{/* HEADER */}
-								<div className="flex justify-between items-center p-8 border-b">
-									<div className="flex items-center gap-3">
-										<div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
-											<Code size={24} />
-										</div>
-										<div>
-											<h2 className="text-xl font-bold text-gray-900">
-												Parcours & Expertise Pro
-											</h2>
-											<p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">
-												Mariama — Développeuse Web Full-Stack
-											</p>
-										</div>
-									</div>
-
-									<button
-										type="button"
-										onClick={() => setIsMariamaModalOpen(false)}
-										className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-									>
-										<X size={24} className="text-gray-500" />
-									</button>
-								</div>
-
-								{/* CONTENU */}
-								<div className="p-8 md:p-10 overflow-y-auto max-h-[80vh]">
-									<div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-										{/* COLONNE GAUCHE */}
-										<div className="lg:col-span-3">
-											<h4 className="text-lg font-bold mb-4 border-l-4 border-indigo-600 pl-3">
-												Résumé de mon travail
-											</h4>
-
-											{/*  TEXTE GLOBAL INTÉGRÉ */}
-											<div className="space-y-4 text-slate-600 text-sm leading-relaxed">
-												<p>
-													Développeuse web <strong>full-stack</strong>{" "}
-													passionnée, je conçois et développe des applications
-													web modernes, utiles et centrées sur l’humain, avec
-													une attention particulière portée à l’
-													<strong>UX/UI</strong>, à l’
-													<strong>accessibilité</strong>
-													et à l’<strong>impact social</strong>.
-												</p>
-
-												<p>
-													Je travaille principalement avec{" "}
-													<strong>React (TypeScript)</strong> côté front-end et{" "}
-													<strong>Node.js / Express / MySQL</strong> côté
-													back-end. Je mets en place des fonctionnalités
-													complètes : CRUD, authentification, formulaires, APIs
-													REST, gestion des utilisateurs et premières briques de
-													sécurité (
-													<strong>RGPD, cookies, bonnes pratiques</strong>).
-												</p>
-
-												<p>
-													En parallèle, je développe plusieurs{" "}
-													<strong> projets concrets </strong> (portfolio, site
-													associatif, e-commerce, applications éducatives et
-													solidaires), en suivant une méthodologie
-													professionnelle :
-												</p>
-
-												<ul className="list-disc list-inside ml-2">
-													<li>
-														Conception (cahier des charges, wireframes, Figma)
-													</li>
-													<li>Développement structuré et maintenable</li>
-													<li>Versioning Git / GitHub</li>
-													<li>Attention portée à la qualité du code</li>
-												</ul>
-
-												<p>
-													Je m’intéresse également à l’
-													<strong>intelligence artificielle</strong> et à la
-													<strong> cybersécurité</strong>, avec la volonté
-													d’intégrer des outils IA de manière responsable pour
-													améliorer la productivité et la sécurité des
-													applications.
-												</p>
-
-												<p className="font-semibold text-slate-700">
-													🎯 Mon objectif : créer des solutions web{" "}
-													<strong>utiles, humaines et durables</strong>, en
-													alliant technique, créativité et engagement.
-												</p>
-											</div>
-
-											{/* SKILLS */}
-											<div className="flex flex-wrap gap-2 mt-6">
-												{profilePro.skills.map((skill) => (
-													<span
-														key={skill}
-														className="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-semibold border border-indigo-100"
-													>
-														{skill}
-													</span>
-												))}
-											</div>
-
-											{/*  INVITATION À CONTACTER */}
-											<div className="mt-8 p-5 rounded-2xl bg-slate-50 border border-slate-200">
-												<p className="text-sm text-slate-700 font-medium">
-													🤝{" "}
-													<strong>Envie d’échanger ou de collaborer ?</strong>
-												</p>
-												<p className="text-xs text-slate-600 mt-2">
-													Je suis ouverte aux échanges avec des{" "}
-													<strong>professionnels</strong>,
-													<strong> associations</strong> et{" "}
-													<strong>porteurs de projets </strong>
-													souhaitant créer des solutions web utiles, humaines et
-													durables. Chaque projet commence par une discussion.
-												</p>
-											</div>
-										</div>
-
-										{/* COLONNE DROITE */}
-										<div className="lg:col-span-2 space-y-6">
-											<div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
-												<h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
-													Présence digitale
-												</h4>
-												<div className="flex flex-col gap-3">
-													<a
-														href={profilePro.github}
-														target="_blank"
-														rel="noreferrer"
-														className="flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-200 hover:border-indigo-500 transition-all group"
-													>
-														<Github
-															size={20}
-															className="text-gray-700 group-hover:text-indigo-600"
-														/>
-														<span className="font-medium text-sm">
-															GitHub – Projets & Code
-														</span>
-													</a>
-
-													<a
-														href={profilePro.linkedin}
-														target="_blank"
-														rel="noreferrer"
-														className="flex items-center gap-3 p-3 rounded-xl bg-white border border-gray-200 hover:border-blue-500 transition-all group"
-													>
-														<Linkedin
-															size={20}
-															className="text-gray-700 group-hover:text-blue-600"
-														/>
-
-														<span className="font-medium text-sm">
-															LinkedIn
-														</span>
-													</a>
-												</div>
-											</div>
-
-											{/* CTA FINAL */}
-											<button
-												type="button"
-												className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-2xl font-bold hover:bg-indigo-700 transition-colors"
-											>
-												<Briefcase size={18} />
-												Discutons de votre projet
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					)}
 				</section>
-
-      
-
+    
     {/* --- LE SYSTÈME DE DON INTÉGRÉ ICI --- */}
         <section className="mb-40">
-	   <DonationSystem />
+	      <DonationSystem />
         </section>
 			</main>
 		</div>
