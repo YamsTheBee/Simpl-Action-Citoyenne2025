@@ -177,7 +177,6 @@ import PresidentImage from "../assets/President.png";
 // Images pour l'aperçu des bénévoles
 import maimounaImage from "../assets/Maïmouna_pp.jpg";
 import alyImage from "../assets/Profil.Aly.Mbegte.png";
-// import mariamaImage from "../assets/PortraitYams.jpg";
 import daoudaImage from "../assets/daouda_image.jpg";
 import xemessImage from "../assets/Xemess_Profil.jpg";
 import elhadjiBadaraImage from "../assets/El_Hadji_Badara_poulon_pp.jpg";
@@ -266,13 +265,7 @@ const VOLUNTEERS = [
 		quote: "Action...",
 		image: bambaImage,
 	},
-	// TODO :EN ATTENTE IMG et info fonction Dialy ---ignore---
-	// 	// 	id: "dialy-05",
-	// 	firstName: "Dialy",
-	// 	role: "Responsable Santé",
-	// 	quote: "La santé est un droit fondamental pour chaque communauté.",
-	// 	// image Dialy à venir :,
-	// },
+
 	{
 		id: "daouda-06",
 		firstName: "Daouda alias Tipsé",
@@ -288,15 +281,7 @@ const VOLUNTEERS = [
 		quote: "Don de soi…",
 		image: elhadjiBadaraImage,
 	},
-	// TODO : Ajouter Mariama en tant que bénévole développeuse avec un rôle de "Lead -Développeuse ", et une citation mettant en avant son engagement pour le développement de solutions numériques au service de la mission de SAC. (ex : "Créer des solutions numériques pour amplifier notre impact citoyen." ou "Le code au service du changement social.") --- IGNORE ---{
-	// 	id: "mariama-08",
-	// 	firstName: "Mariama",
-	// 	role: "Développeuse & bénévole SAC",
-	// 	quote: "J’ai conçu et développé le site de SAC avec 💚",
-	// 	image: mariamaImage,
-	// 	since: "2021",
-	// 	isDeveloper: true, // Marqueur pour afficher le bouton 
-	// },
+
 	{
 		id: "mame-aliou-09",
 		firstName: "Mame Aliou",
@@ -311,8 +296,18 @@ const LOOPED_VOLUNTEERS = [...VOLUNTEERS, ...VOLUNTEERS];
 const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 	if (!isOpen) return null;
 	return (
-		<div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-xl">
-			<div className="bg-white rounded-[3rem] shadow-2xl max-w-2xl w-full p-10 relative overflow-hidden animate-in fade-in zoom-in duration-300">
+	
+		<div
+    className="
+      fixed inset-0 z-[100] bg-slate-900/90 backdrop-blur-xl /* 👉 PERMET LE SCROLL VERTICAL EN MOBILE */ overflow-y-auto " >
+
+		  {/*  CONTENEUR FLEX RESPONSIVE */}
+    <div
+      className=" min-h-full flex /* MOBILE : alignement en haut */  items-start md:items-center justify-center p-4 " >
+		
+			{/*  CARD */}
+      <div
+        className="bg-white w-full max-w-2xl rounded-2xl md:rounded-[3rem] shadow-2xl relative /* Padding responsive */ p-6 md:p-10 animate-in fade-in zoom-in duration-300" >
 				<div className="absolute top-0 right-0 w-40 h-40 bg-green-50 rounded-full blur-3xl -mr-20 -mt-20" />
 				<div className="flex justify-between items-center mb-8 relative z-10">
 					<div>
@@ -397,6 +392,7 @@ const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
 						<strong> « Un jour de mission pour la patrie. »</strong>
 					</p>
 				</div>
+			</div>
 			</div>
 		</div>
 	);
