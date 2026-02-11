@@ -33,7 +33,7 @@ const navItems: NavItem[] = [
 /**
  * Composant Footer principal avec la bande verte et les flèches de navigation
  */
-const Footer = ({ onOpenMariamaModal }: FooterProps) => {
+const Footer: React.FC<FooterProps> = ({ onOpenMariamaModal }) => {
 
 
 	return (
@@ -138,55 +138,67 @@ const Footer = ({ onOpenMariamaModal }: FooterProps) => {
 								/>
 								<span className="text-sm">Dakar, Sénégal</span>
 							</li>
+{/* 🔥 PHRASE D’ACCROCHE RÉSEAUX SOCIAUX */}
+<li className="pt-4">
+  {/* 👉 Phrase ajoutée ici */}
+  <p className="text-2xl font-extrabold tracking-tight text-green-400 mb-4">
+    Suivez-nous sur les réseaux sociaux
+  </p>
 
-							{/* liens Réseaux Sociaux officiels de SAC */}
-							<li className="pt-2 flex flex-wrap gap-3">
-								<a
-									href="https://www.facebook.com/people/Simple-Action-Citoyenne-Sac/100063615429202/?mibextid=wwXIfr"
-									target="_blank"
-									rel="noopener noreferrer"
-									title="Facebook"
-									className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
-								>
-									<Facebook className="h-5 w-5 text-green-400" />
-								</a>
-								<a
-									href="https://www.instagram.com/simple_action_citoyenne/"
-									target="_blank"
-									rel="noopener noreferrer"
-									title="Instagram"
-									className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
-								>
-									<Instagram className="h-5 w-5 text-green-400" />
-								</a>
-								<a
-									href="https://x.com/simpleactioncit?s=21"
-									target="_blank"
-									rel="noopener noreferrer"
-									title="X (Twitter)"
-									className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
-								>
-									<Twitter className="h-5 w-5 text-green-400" />
-								</a>
-								<a
-									href="https://www.tiktok.com/@simple.action.cit"
-									target="_blank"
-									rel="noopener noreferrer"
-									title="TikTok"
-									className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
-								>
-									<Video className="h-5 w-5 text-green-400" />
-								</a>
-								<a
-									href="https://www.snapchat.com/@simpleactioncit"
-									target="_blank"
-									rel="noopener noreferrer"
-									title="Snapchat"
-									className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
-								>
-									<Ghost className="h-5 w-5 text-green-400" />
-								</a>
-							</li>
+
+  {/* 🔽 Icônes réseaux */}
+  <div className="flex flex-wrap gap-3">
+    <a
+      href="https://www.facebook.com/people/Simple-Action-Citoyenne-Sac/100063615429202/?mibextid=wwXIfr"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Facebook"
+      className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
+    >
+      <Facebook className="h-5 w-5 text-green-400" />
+    </a>
+
+    <a
+      href="https://www.instagram.com/simple_action_citoyenne/"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Instagram"
+      className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
+    >
+      <Instagram className="h-5 w-5 text-green-400" />
+    </a>
+
+    <a
+      href="https://x.com/simpleactioncit?s=21"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="X (Twitter)"
+      className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
+    >
+      <Twitter className="h-5 w-5 text-green-400" />
+    </a>
+
+    <a
+      href="https://www.tiktok.com/@simple.action.cit"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="TikTok"
+      className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
+    >
+      <Video className="h-5 w-5 text-green-400" />
+    </a>
+
+    <a
+      href="https://www.snapchat.com/@simpleactioncit"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Snapchat"
+      className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
+    >
+      <Ghost className="h-5 w-5 text-green-400" />
+    </a>
+  </div>
+</li>
 						</ul>
 					</address>
 				</div>
@@ -210,16 +222,14 @@ const Footer = ({ onOpenMariamaModal }: FooterProps) => {
 					</div>
 
 
-
-
 					<div className="flex items-center gap-2 text-xs text-gray-400 tracking-normal">
-<button
-  onClick={onOpenMariamaModal}
-  className="text-gray-400 hover:text-green-400 transition-colors underline-offset-4 hover:underline"
+					<button
+ onClick={onOpenMariamaModal}
+
+  className="hover:text-green-400 transition-colors underline-offset-4 hover:underline"
 >
   Made with 💚 by Mariama
 </button>
-
 
 						<a
 							href="https://github.com/YamsTheBee"
