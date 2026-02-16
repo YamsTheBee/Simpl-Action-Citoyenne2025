@@ -475,8 +475,9 @@ rempli automatiquement par les bots → blocage silencieux */}
 											Email
 										</p>
 										<p className="text-lg text-slate-700 font-bold">
-											yamsnglfr@gmail.com
-											{/* TODO mail à remplacer après reception acces sécurité  "Google" secretaire SAC simpleactioncitoyenne@gmail.com */}
+											{/* yamsnglfr@gmail.com */}
+											simpleactioncitoyenne@gmail.com
+											{/* TODO TEST  mail à remplacer après reception acces sécurité  "Google" secretaire SAC simpleactioncitoyenne@gmail.com */}
 										</p>
 									</div>
 								</div>
