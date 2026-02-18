@@ -460,7 +460,7 @@ rempli automatiquement par les bots → blocage silencieux */}
 											Téléphone
 										</p>
 										<p className="text-lg text-slate-700 font-bold">
-											+221 33 800 00 00
+											+221 77 254 38 69
 										
 										</p>
 									</div>
@@ -475,9 +475,7 @@ rempli automatiquement par les bots → blocage silencieux */}
 											Email
 										</p>
 										<p className="text-lg text-slate-700 font-bold">
-											{/* yamsnglfr@gmail.com */}
 											simpleactioncitoyenne@gmail.com
-											{/* TODO TEST  mail à remplacer après reception acces sécurité  "Google" secretaire SAC simpleactioncitoyenne@gmail.com */}
 										</p>
 									</div>
 								</div>
