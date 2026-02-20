@@ -1,4 +1,11 @@
-import { X, Github, Linkedin, Code, Briefcase } from "lucide-react";
+import { X, Github, Linkedin, } from "lucide-react";
+import photoMariama from "../assets/PortraitYams.jpg"; 
+
+
+
+// Utilisation d'icônes SVG intégrées pour garantir que l'aperçu fonctionne sans dépendances externes complexes
+const CodeIcon = ({ size = 24 }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>;
+const BriefcaseIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>;
 
 interface MariamaProModalProps {
   isOpen: boolean;
@@ -6,6 +13,7 @@ interface MariamaProModalProps {
 }
 
 const profilePro = {
+ email: "mariamadiaw.a@hotmail.fr", 
   skills: [
 // Frontend & Backend
     "React (TypeScript)",
@@ -60,20 +68,33 @@ const MariamaProModal = ({ isOpen, onClose }: MariamaProModalProps) => {
     >
       <div className="relative bg-white w-full max-w-4xl rounded-[3rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
 
-        {/* HEADER */}
-        <div className="flex justify-between items-center p-8 border-b">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-indigo-100 text-indigo-600 rounded-lg">
-              <Code size={24} />
+{/* HEADER AVEC DÉGRADÉ VIOLET -> GRIS */}
+        <div className="flex justify-between items-center p-8 border-b bg-gradient-to-r from-indigo-50 via-slate-50 to-slate-100">
+          <div className="flex items-center gap-6">
+            <div className="relative">
+              {/* Conteneur avec anneau blanc léger entre la bordure indigo et la photo */}
+              <div className="w-50 h-50 rounded-full border-2 border-indigo-500 p-1.5 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+                <img 
+                  src={photoMariama} 
+                  alt="Mariama"
+                  className="w-40 h-40 rounded-full object-cover scale-115"
+                  style={{ objectPosition: 'center 5%' }}
+                onError={(e) => {
+                    e.currentTarget.src = "https://ui-avatars.com/api/?name=Mariama&background=6366f1&color=fff&size=128";
+                  }}
+                />
+              </div>
+              {/* Badge icône métier */}
+              <div className="absolute bottom-1 right-1 p-2 bg-indigo-600 text-white rounded-xl border-2 border-white shadow-lg">
+                <CodeIcon size={16} />
+              </div>
             </div>
+
             <div>
-              <h2
-                id="mariama-pro-title"
-                className="text-xl font-bold text-gray-900"
-              >
+              <h2 className="text-2xl font-bold text-gray-900 leading-tight">
                 Parcours & Expertise Pro
               </h2>
-              <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold">
+              <p className="text-sm text-indigo-600 uppercase tracking-widest font-bold mt-1.5">
                 Mariama — Développeuse Web Full-Stack
               </p>
             </div>
@@ -131,7 +152,7 @@ const MariamaProModal = ({ isOpen, onClose }: MariamaProModalProps) => {
                   <li>Développement structuré, maintenable et orienté bonnes pratiques</li>
                   <li>Versioning et gestion de code avec Git / GitHub</li>
                   <li>Tests unitaires et d’intégration</li>
-                  <li>Déploiement d’applications web (Vercel)</li>
+                  <li>Déploiement d’applications web </li>
                   <li>Configuration d’environnements de production</li>
                   <li>Gestion et configuration de nom de domaine (DNS)</li>
                   <li>Optimisation SEO technique (balises meta, title, favicon)</li>
@@ -219,14 +240,14 @@ const MariamaProModal = ({ isOpen, onClose }: MariamaProModalProps) => {
                 </div>
               </div>
 
-              {/* CTA FINAL */}
-              <button
-                type="button"
-                className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white py-3 rounded-2xl font-bold hover:bg-indigo-700 transition-colors"
+            {/* CTA FINAL LIÉ À L'EMAIL */}
+              <a
+                href={`mailto:${profilePro.email}?subject=Collaboration%20Projet%20Web`}
+                className="w-full flex items-center justify-center gap-2 bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-indigo-700 hover:shadow-lg transition-all transform hover:-translate-y-0.5"
               >
-                <Briefcase size={18} />
+                <BriefcaseIcon />
                 Discutons de votre projet
-              </button>
+              </a>
             </div>
 
           </div>
