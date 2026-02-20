@@ -7,13 +7,42 @@ interface MariamaProModalProps {
 
 const profilePro = {
   skills: [
+// Frontend & Backend
     "React (TypeScript)",
     "Node.js",
-    "MySQL",
     "Express",
+    "MySQL",
     "Tailwind CSS",
+
+    // Production & Infrastructure
+    "Déploiement (Vercel)",
+    "Configuration DNS",
+    "Configuration d’environnements de production",
+    "SEO technique",
+
+    // Qualité & Sécurité
+    "Tests unitaires et d’intégration",
+    "Sécurité web",
+    "Bonnes pratiques RGPD",
+
+    // IA
+    "Prompt Engineering (IA générative)",
+    "Intégration d’outils IA",
+    "Google AI Essentials (certifiée)",
+
+    // Méthodologie
+    "Agile / Scrum",
+    "Gestion de projet (Trello, Notion)",
+  
+
+    // Outils complémentaires
     "Figma",
-    "Git",
+    "Git / GitHub",
+    "Outils collaboratifs (Slack, Google Workspace)",
+    "Canva"
+
+
+   
   ],
   github: "https://github.com/YamsTheBee",
   linkedin: "https://linkedin.com",
@@ -72,7 +101,7 @@ const MariamaProModal = ({ isOpen, onClose }: MariamaProModalProps) => {
 
               <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
                 <p>
-                  Développeuse web <strong>full-stack</strong> passionnée, je
+                  Développeuse web et web mobile <strong>full-stack</strong> passionnée, je
                   conçois et développe des applications web modernes, utiles et
                   centrées sur l’humain, avec une attention particulière portée à
                   l’<strong>UX/UI</strong>, à l’
@@ -80,15 +109,15 @@ const MariamaProModal = ({ isOpen, onClose }: MariamaProModalProps) => {
                   <strong>impact social</strong>.
                 </p>
 
-                <p>
-                  Je travaille principalement avec{" "}
-                  <strong>React (TypeScript)</strong> côté front-end et{" "}
-                  <strong>Node.js / Express / MySQL</strong> côté back-end. Je
-                  mets en place des fonctionnalités complètes : CRUD,
-                  authentification, formulaires, APIs REST, gestion des
-                  utilisateurs et premières briques de sécurité (
-                  <strong>RGPD, cookies, bonnes pratiques</strong>).
-                </p>
+            <p>
+                Je travaille principalement avec{" "}
+                <strong>React (TypeScript)</strong> côté front-end et{" "}
+                <strong>Node.js / Express / MySQL</strong> côté back-end. 
+                J’interviens de la conception jusqu’à la mise en production 
+                (déploiement, configuration DNS, optimisation SEO), 
+                avec une attention particulière portée à la stabilité, 
+                la performance et la sécurisation des applications.
+          </p>
 
                 <p>
                   En parallèle, je développe plusieurs{" "}
@@ -99,17 +128,23 @@ const MariamaProModal = ({ isOpen, onClose }: MariamaProModalProps) => {
 
                 <ul className="list-disc list-inside ml-2">
                   <li>Conception (cahier des charges, wireframes, Figma)</li>
-                  <li>Développement structuré et maintenable</li>
-                  <li>Versioning Git / GitHub</li>
-                  <li>Attention portée à la qualité du code</li>
-                </ul>
+                  <li>Développement structuré, maintenable et orienté bonnes pratiques</li>
+                  <li>Versioning et gestion de code avec Git / GitHub</li>
+                  <li>Tests unitaires et d’intégration</li>
+                  <li>Déploiement d’applications web (Vercel)</li>
+                  <li>Configuration d’environnements de production</li>
+                  <li>Gestion et configuration de nom de domaine (DNS)</li>
+                  <li>Optimisation SEO technique (balises meta, title, favicon)</li>
+                  <li>Attention portée à la qualité, la performance et l’accessibilité</li>
+                  </ul>
 
-                <p>
-                  Je m’intéresse également à l’
-                  <strong> intelligence artificielle</strong> et à la
-                  <strong> cybersécurité</strong>, avec la volonté d’intégrer des
-                  outils IA de manière responsable pour améliorer la
-                  productivité et la sécurité des applications.
+              <p>
+                Certifiée <strong>Google AI Essentials</strong>, j’intègre des outils 
+                d’<strong>intelligence artificielle générative</strong> dans mes projets 
+                grâce à des techniques de <strong>prompt engineering</strong> structurées, 
+                tout en veillant à une utilisation responsable et sécurisée. 
+                Je m’intéresse également à la <strong>cybersécurité</strong> afin de renforcer 
+                la fiabilité et la protection des applications que je développe.
                 </p>
 
                 <p className="font-semibold text-slate-700">
