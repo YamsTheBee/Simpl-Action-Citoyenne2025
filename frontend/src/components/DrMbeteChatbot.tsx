@@ -33,7 +33,7 @@ const MessageBubble = ({ sender, text }: MessageBubbleProps) => {
             : "mr-auto rounded-tl-none bg-gray-100 text-gray-800"
         }`}
       >
-        {text}
+        {String(text)}
       </div>
     </div>
   );
@@ -82,32 +82,40 @@ const DrMbeteChatbot = () => {
         body: JSON.stringify({ message: userMessage }),
       });
 
+      if (!response.ok) {
+        throw new Error("Erreur serveur");
+      }
+
       const data = await response.json();
+
+      const safeText =
+        typeof data?.response === "string"
+          ? data.response
+          : "Je n’ai pas pu traiter votre demande 💚";
 
       setMessages((prev) => [
         ...prev,
         {
           id: crypto.randomUUID(),
           sender: "bot",
-          text:
-            data.response ??
-            "Désolé, pouvez-vous reformuler votre question ? 😊",
+          text: safeText,
         },
       ]);
-    } catch {
+    } catch (error) {
+      console.error("Erreur frontend chatbot:", error);
+
       setMessages((prev) => [
         ...prev,
         {
           id: crypto.randomUUID(),
           sender: "bot",
-          text: "Oups, un souci technique est survenu ⚡ Réessayez plus tard.",
+          text: "Un petit souci technique est survenu ⚡",
         },
       ]);
     } finally {
       setIsLoading(false);
     }
   };
-
   const COLOR_PRIMARY = "bg-blue-800";
 
   return (
