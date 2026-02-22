@@ -48,7 +48,7 @@ const DrMbeteChatbot = () => {
 		{
 			id: crypto.randomUUID(),
 			sender: "bot",
-			text: "Salut ! Je suis Dr. Mbëcté, votre assistant citoyen. Comment puis-je vous aider ? 😊",
+			text: "Salut ! Je suis Dr. Mbegté, votre assistant citoyen. Comment puis-je vous aider ? 😊",
 		},
 	]);
 	const [input, setInput] = useState("");
@@ -134,12 +134,12 @@ const DrMbeteChatbot = () => {
 						<div className="flex items-center gap-3">
 							<img
 								src={avatarDrMbete}
-								alt="Avatar de Dr. Mbëcté"
+								alt="Avatar de Dr. Mbegté"
 								className="w-10 h-10 rounded-full object-cover border-2 border-white"
 							/>
 							<div>
 								<h3 className="text-lg font-extrabold leading-tight">
-									Dr. Mbëcté
+									Dr. Mbegté
 								</h3>
 								<p className="text-xs text-blue-200"> Votre assistant citoyen</p>
 							</div>
