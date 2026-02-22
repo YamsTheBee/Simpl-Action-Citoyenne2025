@@ -8,6 +8,8 @@ import {
   MapPin,
   Twitter,
   Video,
+  Code,
+  ArrowRight,
 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -243,23 +245,23 @@ const Footer: React.FC<FooterProps> = ({ onOpenMariamaModal }) => {
               Administration
             </Link>
           </div>
-
-          <div className="flex items-center gap-2 text-xs text-gray-400 tracking-normal">
+          <div className="flex items-center gap-3 text-xs text-gray-400">
             <button
               onClick={onOpenMariamaModal}
-              className="hover:text-green-400 transition-colors underline-offset-4 hover:underline"
+              className="group inline-flex items-center gap-1 font-semibold hover:text-green-400 transition-colors cursor-pointer"
             >
-              With 💚 Mariama
+              <Code className="h-4 w-4 text-green-400 group-hover:scale-110 transition-transform" />
+              Developed by MariamaD
             </button>
 
             <a
               href="https://github.com/YamsTheBee"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-semibold text-gray-300 transition hover:text-green-400"
+              className="group inline-flex items-center gap-2 font-semibold text-gray-300 transition hover:text-green-400"
             >
-              <Github className="h-3 w-3 text-green-400" aria-hidden="true" />
-              YamsTheBee
+              <ArrowRight className="h-3 w-3 opacity-70 group-hover:translate-x-1 transition-transform" />
+              <Github className="h-4 w-4 text-green-400 group-hover:scale-110 transition-transform" />
             </a>
           </div>
         </div>
