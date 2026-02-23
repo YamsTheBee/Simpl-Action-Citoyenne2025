@@ -136,7 +136,7 @@ interface ActionCardProps {
   onClick: () => void;
 }
 
-const ActionCard = React.memo(({ action, onClick }: ActionCardProps) => {
+const ActionCard = React.memo(({ action }: ActionCardProps) => {
   const IconComponent = getProjectIcon(action.title);
 
   return (
@@ -191,13 +191,13 @@ const ActionCard = React.memo(({ action, onClick }: ActionCardProps) => {
 						</p> */}
           </div>
 
-          <button
-            type="button"
-            onClick={onClick}
+          <Link
+            to="/actions"
+            state={{ projectId: action.id }}
             className="text-[#28a745] font-black uppercase tracking-wider text-sm flex items-center hover:translate-x-2 transition-transform"
           >
             Découvrir <ChevronRight className="w-5 h-5 ml-1" />
-          </button>
+          </Link>
         </div>
       </div>
     </div>
