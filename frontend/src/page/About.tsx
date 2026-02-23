@@ -757,8 +757,7 @@ const AboutPage = () => {
                 Devise SAC
               </span>
             </div>
-
-            <div className="flex gap-10 opacity-80">
+            <div className="flex flex-wrap justify-between gap-6 opacity-80">
               <div>
                 <p className="text-4xl font-black text-[#28a745]">50+</p>
                 <p className="text-xs font-bold text-slate-400 uppercase">
