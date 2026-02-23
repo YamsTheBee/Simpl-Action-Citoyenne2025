@@ -90,17 +90,19 @@ const MariamaProModal = ({ isOpen, onClose }: MariamaProModalProps) => {
       aria-modal="true"
       aria-labelledby="mariama-pro-title"
     >
-      <div className="relative bg-white w-full max-w-4xl rounded-[3rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+      <div className="relative bg-white w-full max-w-4xl rounded-[3rem] shadow-2xl animate-in fade-in zoom-in duration-300 max-h-[90vh] flex flex-col">
+        
         {/* HEADER AVEC DÉGRADÉ VIOLET -> GRIS */}
         <div className="flex justify-between items-center p-8 border-b bg-gradient-to-r from-indigo-50 via-slate-50 to-slate-100">
           <div className="flex items-center gap-6">
             <div className="relative">
+
               {/* Conteneur avec anneau blanc léger entre la bordure indigo et la photo */}
-              <div className="w-50 h-50 rounded-full border-2 border-indigo-500 p-1.5 bg-white shadow-sm flex items-center justify-center overflow-hidden">
+              <div className="w-40 h-40 rounded-full border-2 border-indigo-500 p-1.5 bg-white shadow-sm flex items-center justify-center overflow-hidden">
                 <img
                   src={photoMariama}
                   alt="Mariama"
-                  className="w-40 h-40 rounded-full object-cover scale-115"
+                  className="w-30 h-30 rounded-full object-cover scale-115"
                   style={{ objectPosition: "center 5%" }}
                   onError={(e) => {
                     e.currentTarget.src =
@@ -113,6 +115,7 @@ const MariamaProModal = ({ isOpen, onClose }: MariamaProModalProps) => {
                   #OpenToWork
                 </div>
               </div>
+
               {/* Badge icône métier */}
               <div className="absolute bottom-1 right-1 p-2 bg-indigo-600 text-white rounded-xl border-2 border-white shadow-lg">
                 <CodeIcon size={16} />
@@ -140,8 +143,9 @@ const MariamaProModal = ({ isOpen, onClose }: MariamaProModalProps) => {
         </div>
 
         {/* CONTENU */}
-        <div className="p-8 md:p-10 overflow-y-auto max-h-[80vh]">
+        <div className="p-6 md:p-10 overflow-y-auto flex-1">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+
             {/* COLONNE GAUCHE */}
             <div className="lg:col-span-3">
               <h4 className="text-lg font-bold mb-4 border-l-4 border-indigo-600 pl-3">
