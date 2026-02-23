@@ -48,9 +48,9 @@ const Footer: React.FC<FooterProps> = ({ onOpenMariamaModal }) => {
       aria-label="Pied de page"
     >
       <div className="container mx-auto px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 border-b border-gray-700 pb-8 md:grid-cols-5">
+        <div className="grid grid-cols-1 gap-y-16 border-b border-gray-700 pb-12 md:grid-cols-2 lg:grid-cols-5 lg:gap-x-12">
           {/* Identité */}
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <h4 className="text-2xl font-extrabold text-green-400 tracking-tight">
                 Simple Action Citoyenne
@@ -85,147 +85,110 @@ const Footer: React.FC<FooterProps> = ({ onOpenMariamaModal }) => {
             </div>
           </div>
 
-          {/* Navigation avec flèches vertes */}
-          <nav aria-label="Navigation principale">
-            <h5 className="mb-4 text-lg font-semibold uppercase tracking-wider text-gray-100">
-              Navigation
-            </h5>
-            <ul className="space-y-2 text-gray-400">
-              {navItems.map(({ label, href }) => (
-                <li key={href}>
-                  <Link
-                    to={href}
-                    className="group transition-colors hover:text-green-400 inline-flex items-center gap-2"
-                  >
-                    <span className="text-green-500 font-bold opacity-70 group-hover:opacity-100 transition-opacity">
-                      ›
-                    </span>
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="col-span-1 md:col-span-2 lg:col-span-2">
+            <div className="grid grid-cols-2 gap-10">
+              {/* Navigation  */}
+              <nav aria-label="Navigation principale">
+                <h5 className="mb-4 text-lg font-semibold uppercase tracking-wider text-gray-100">
+                  Navigation
+                </h5>
+                <ul className="space-y-2 text-gray-400">
+                  {navItems.map(({ label, href }) => (
+                    <li key={href}>
+                      <Link
+                        to={href}
+                        className="group transition-colors hover:text-green-400 inline-flex items-center gap-2"
+                      >
+                        <span className="text-green-500 font-bold opacity-70 group-hover:opacity-100 transition-opacity">
+                          ›
+                        </span>
+                        {label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
 
-          {/* Ressources avec flèches discrètes */}
-          <nav aria-label="Ressources">
-            <h5 className="mb-4 text-lg font-semibold uppercase tracking-wider text-gray-100">
-              Ressources
-            </h5>
-            <ul className="space-y-2 text-gray-400">
-              <li className="flex items-center gap-2">
-                <span className="text-green-500/50">›</span>
-                <span className="cursor-not-allowed opacity-50 hover:text-gray-300 transition-colors">
-                  Charte éthique
-                </span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-green-500/50">›</span>
-                <span className="cursor-not-allowed opacity-50 hover:text-gray-300 transition-colors">
-                  Témoignages
-                </span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-green-500/50">›</span>
-                <span className="cursor-not-allowed opacity-50 hover:text-gray-300 transition-colors">
-                  Presse
-                </span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-green-500/50">›</span>
-                <span className="cursor-not-allowed opacity-50 hover:text-gray-300 transition-colors">
-                  Mentions légales
-                </span>
-              </li>
-            </ul>
-          </nav>
+              {/* Ressources */}
+              <nav aria-label="Ressources">
+                <h5 className="mb-4 text-lg font-semibold uppercase tracking-wider text-gray-100">
+                  Ressources
+                </h5>
+                <ul className="space-y-2 text-gray-400">
+                  <li className="flex items-center gap-2">
+                    <span className="text-green-500/50">›</span>
+                    <span className="cursor-not-allowed opacity-50 hover:text-gray-300 transition-colors">
+                      Charte éthique
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-green-500/50">›</span>
+                    <span className="cursor-not-allowed opacity-50 hover:text-gray-300 transition-colors">
+                      Témoignages
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-green-500/50">›</span>
+                    <span className="cursor-not-allowed opacity-50 hover:text-gray-300 transition-colors">
+                      Presse
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-green-500/50">›</span>
+                    <span className="cursor-not-allowed opacity-50 hover:text-gray-300 transition-colors">
+                      Mentions légales
+                    </span>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
 
           {/* Contact & Réseaux */}
-          <address className="not-italic">
-            <h5 className="mb-4 text-lg font-semibold uppercase tracking-wider text-gray-100">
-              Contact & réseaux
+          <address className="not-italic w-full text-left lg:pl-10">
+            <h5 className="mb-6 text-lg font-semibold uppercase tracking-wider text-gray-100 whitespace-nowrap">
+              Contact & Réseaux
             </h5>
-            <ul className="space-y-4 text-gray-400">
-              <li className="flex items-center group">
-                <Mail
-                  className="mr-3 h-5 w-5 text-green-400 transition-transform group-hover:scale-110"
-                  aria-hidden="true"
-                />
-                <a
-                  href="mailto:simpleactioncitoyenne@gmail.com"
-                  className="hover:text-green-400 transition-colors break-all sm:break-normal text-sm"
-                >
-                  simpleactioncitoyenne@gmail.com
-                </a>
-              </li>
 
-              <li className="flex items-center">
-                <MapPin
-                  className="mr-3 h-5 w-5 text-green-400"
-                  aria-hidden="true"
-                />
-                <span className="text-sm">Dakar, Sénégal</span>
-              </li>
-              {/*RÉSEAUX SOCIAUX */}
-              <li className="pt-4">
-                <p className="text-l font-extrabold tracking-tight text-green-400 mb-4">
-                  Suivez-nous sur les réseaux sociaux
-                </p>
+            {/* Email */}
+            <div className="flex items-center gap-3 text-gray-400 mb-3">
+              <Mail className="h-4 w-4 text-green-400 shrink-0" />
+              <a
+                href="mailto:simpleactioncitoyenne@gmail.com"
+                className="hover:text-green-400 transition-colors text-sm break-words"
+              >
+                simpleactioncitoyenne@gmail.com
+              </a>
+            </div>
 
-                {/* 🔽 Icônes réseaux */}
-                <div className="flex flex-wrap gap-3">
-                  <a
-                    href="https://www.facebook.com/people/Simple-Action-Citoyenne-Sac/100063615429202/?mibextid=wwXIfr"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Facebook"
-                    className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
-                  >
-                    <Facebook className="h-5 w-5 text-green-400" />
-                  </a>
+            {/* Localisation */}
+            <div className="flex items-center gap-3 text-gray-400 mb-6">
+              <MapPin className="h-4 w-4 text-green-400" />
+              <span className="text-sm">Dakar, Sénégal</span>
+            </div>
 
-                  <a
-                    href="https://www.instagram.com/simple_action_citoyenne/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Instagram"
-                    className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
-                  >
-                    <Instagram className="h-5 w-5 text-green-400" />
-                  </a>
+            {/* Réseaux */}
+            <div className="border-t border-gray-700 pt-6">
+              <p className="text-green-400 font-bold text-sm tracking-wide mb-4 whitespace-nowrap">
+                Suivez-nous sur les réseaux sociaux
+              </p>
 
-                  <a
-                    href="https://x.com/simpleactioncit?s=21"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="X (Twitter)"
-                    className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
-                  >
-                    <Twitter className="h-5 w-5 text-green-400" />
-                  </a>
-
-                  <a
-                    href="https://www.tiktok.com/@simple.action.cit"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="TikTok"
-                    className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
-                  >
-                    <Video className="h-5 w-5 text-green-400" />
-                  </a>
-
-                  <a
-                    href="https://www.snapchat.com/@simpleactioncit"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title="Snapchat"
-                    className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1"
-                  >
-                    <Ghost className="h-5 w-5 text-green-400" />
-                  </a>
-                </div>
-              </li>
-            </ul>
+              <div className="flex gap-4">
+                {[Facebook, Instagram, Twitter, Video, Ghost].map(
+                  (Icon, index) => (
+                    <a
+                      key={index}
+                      href="#"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-gray-800 rounded-full hover:bg-green-500 hover:text-white transition-all"
+                    >
+                      <Icon className="h-5 w-5 text-green-400" />
+                    </a>
+                  ),
+                )}
+              </div>
+            </div>
           </address>
         </div>
 
