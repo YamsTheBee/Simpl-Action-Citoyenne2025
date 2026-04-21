@@ -110,7 +110,7 @@ const DonationSystem = () => {
   }
 
   return (
-    <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-150 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
       <div className="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl relative overflow-hidden p-8 animate-in zoom-in duration-300">
         <button
           onClick={() => setIsOpen(false)}
@@ -217,6 +217,7 @@ import logoForvisMazars from "../assets/forvis_mazars.jpg";
 import logoAxaAToutCoeur from "../assets/axa_a_tout_coeur.jpg";
 import logoFondationKebaMbaye from "../assets/fondation_keba_mbaye.jpg";
 import logoIndustrieDesBDS from "../assets/indiustrie_des_bds.jpg";
+import logoEpopee from "../assets/logoEpopee.jpg";
 
 // Images pour pr section président
 import PresidentImage from "../assets/President.png";
@@ -253,6 +254,8 @@ const PARTNERS_INFINITE = [
     logoUrl: "https://upload.wikimedia.org/wikipedia/commons/9/94/AXA_Logo.svg",
     height: "h-24",
   },
+
+  { name: "Epopee", logoUrl: logoEpopee, height: "h-24" },
   { name: "Bicis", logoUrl: logoBicis, height: "h-30" },
   { name: "Recuplast", logoUrl: logoRecuplast, height: "h-24" },
   {
@@ -350,7 +353,7 @@ const PresidentModal: React.FC<PresidentModalProps> = ({ isOpen, onClose }) => {
   return (
     <div
       className="
-      fixed inset-0 z-[100] bg-slate-900/90 backdrop-blur-xl /* 👉 PERMET LE SCROLL VERTICAL EN MOBILE */ overflow-y-auto "
+      fixed inset-0 z-100 bg-slate-900/90 backdrop-blur-xl /* 👉 PERMET LE SCROLL VERTICAL EN MOBILE */ overflow-y-auto "
     >
       {/*  CONTENEUR FLEX RESPONSIVE */}
       <div className=" min-h-full flex /* MOBILE : alignement en haut */  items-start md:items-center justify-center p-4 ">
@@ -527,7 +530,7 @@ const AboutPage = () => {
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans antialiased text-slate-900 pb-20 relative">
       {/* --- LIGNE DE DÉMARCATION ANIMÉE (SCROLL PROGRESS) --- */}
-      <div className="fixed left-4 md:left-10 top-0 bottom-0 w-[2px] bg-slate-200 z-50 hidden md:block">
+      <div className="fixed left-4 md:left-10 top-0 bottom-0 w-0.5 bg-slate-200 z-50 hidden md:block">
         <div
           className="w-full bg-[#28a745] transition-all duration-300 ease-out shadow-[0_0_15px_rgba(40,167,69,0.5)]"
           style={{ height: `${scrollProgress}%` }}
@@ -574,8 +577,8 @@ const AboutPage = () => {
 
             <div className="overflow-hidden relative py-6">
               {/* Fades gauche / droite */}
-              <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
-              <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
+              <div className="absolute inset-y-0 left-0 w-20 bg-linear-to-r from-white to-transparent z-10" />
+              <div className="absolute inset-y-0 right-0 w-20 bg-linear-to-l from-white to-transparent z-10" />
 
               <div
                 className="flex items-center will-change-transform"
@@ -586,7 +589,7 @@ const AboutPage = () => {
                 {LOOPED_PARTNERS.map((p, idx) => (
                   <div
                     key={`${p.name}-${idx}`}
-                    className="flex items-center justify-center mx-12 h-32 w-[220px] flex-none"
+                    className="flex items-center justify-center mx-12 h-32 w-55 flex-none"
                   >
                     <img
                       src={p.logoUrl}
@@ -601,7 +604,7 @@ const AboutPage = () => {
         </div>
 
         {/* --- SECTION PARALLAX  --- */}
-        <section className="relative h-[500px] w-full overflow-hidden mb-32 rounded-[4rem] shadow-2xl section-fade">
+        <section className="relative h-125 w-full overflow-hidden mb-32 rounded-[4rem] shadow-2xl section-fade">
           <div
             className="absolute inset-0 bg-no-repeat bg-center"
             style={{
@@ -611,7 +614,7 @@ const AboutPage = () => {
             }}
           />
 
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40 flex items-center justify-center">
+          <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/40 flex items-center justify-center">
             <div className="text-center text-white p-8">
               <Quote
                 size={48}
@@ -629,7 +632,7 @@ const AboutPage = () => {
         <section className="mb-40 relative section-fade">
           <div className="absolute inset-0 bg-green-50/50 rounded-[5rem] -rotate-1 scale-105 -z-10" />
           <div className="flex flex-col lg:flex-row items-stretch bg-white rounded-[4rem] shadow-2xl overflow-hidden border border-white">
-            <div className="lg:w-2/5 relative min-h-[400px] flex items-center justify-center p-10 bg-slate-50">
+            <div className="lg:w-2/5 relative min-h-100 flex items-center justify-center p-10 bg-slate-50">
               <div className="relative w-full max-w-[80%] h-fit">
                 <img
                   src={PresidentImage}
@@ -752,7 +755,7 @@ const AboutPage = () => {
               patrie 🇸🇳"
             </p>
             <div className="flex items-center gap-3 mb-10">
-              <div className="w-10 h-[4px] bg-[#28a745]" />
+              <div className="w-10 h-1 bg-[#28a745]" />
               <span className="text-slate-400 text-xs font-bold uppercase">
                 Devise SAC
               </span>
