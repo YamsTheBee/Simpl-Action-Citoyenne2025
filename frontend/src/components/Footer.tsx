@@ -155,7 +155,7 @@ const Footer: React.FC<FooterProps> = ({ onOpenMariamaModal }) => {
               <Mail className="h-4 w-4 text-green-400 shrink-0" />
               <a
                 href="mailto:simpleactioncitoyenne@gmail.com"
-                className="hover:text-green-400 transition-colors text-sm break-words"
+                className="hover:text-green-400 transition-colors text-sm wrap-break-word"
               >
                 simpleactioncitoyenne@gmail.com
               </a>
@@ -232,8 +232,8 @@ const Footer: React.FC<FooterProps> = ({ onOpenMariamaModal }) => {
 
       {/* Modal de don - Correction : isModalOpen au lieu de setIsModalOpen */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white rounded-[2rem] p-8 max-w-md w-full relative shadow-2xl text-gray-900 animate-in zoom-in duration-300">
+        <div className="fixed inset-0 z-999 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white rounded-4xl p-8 max-w-md w-full relative shadow-2xl text-gray-900 animate-in zoom-in duration-300">
             <button
               onClick={() => setIsModalOpen(false)}
               className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"

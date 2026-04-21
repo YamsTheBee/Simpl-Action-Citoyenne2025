@@ -141,8 +141,8 @@ const ActionCard = React.memo(({ action }: ActionCardProps) => {
 
   return (
     <div
-      className="bg-white rounded-[2rem] shadow-lg overflow-hidden group transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] relative
-          min-w-[300px] w-full sm:min-w-[45%] lg:min-w-[calc(33.333%-20px)] snap-center border border-slate-100 flex flex-col"
+      className="bg-white rounded-4xl shadow-lg overflow-hidden group transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] relative
+          min-w-75 w-full sm:min-w-[45%] lg:min-w-[calc(33.333%-20px)] snap-center border border-slate-100 flex flex-col"
     >
       {/* Badge Coup de Coeur */}
       {action.isCoupDeCoeur && (
@@ -167,7 +167,7 @@ const ActionCard = React.memo(({ action }: ActionCardProps) => {
   `}
         />
       </div>
-      <div className="p-8 flex flex-col justify-between flex-grow">
+      <div className="p-8 flex flex-col justify-between grow">
         <div>
           <h3 className="text-2xl font-black text-slate-900 mb-3 transition-colors duration-300 group-hover:text-[#28a745]">
             {action.title}
@@ -316,7 +316,7 @@ export default function App() {
                 <img
                   src={epopeeVerte.image}
                   alt={epopeeVerte.title}
-                  className="relative w-full lg:h-full lg:max-h-[550px] object-cover rounded-[3.5rem] shadow-2xl transition duration-700 group-hover/main:scale-[1.02]"
+                  className="relative w-full lg:h-full lg:max-h-137.5 object-cover rounded-[3.5rem] shadow-2xl transition duration-700 group-hover/main:scale-[1.02]"
                 />
               </div>
             </div>
@@ -383,7 +383,7 @@ export default function App() {
           <div className="text-center mt-32">
             <Link
               to="/actions"
-              className="inline-flex items-center px-6 py-5 bg-slate-700 text-white text-lg font-black rounded-[2rem] shadow-2xl transition-all duration-500 hover:bg-[#28a745] hover:scale-105"
+              className="inline-flex items-center px-6 py-5 bg-slate-700 text-white text-lg font-black rounded-4xl shadow-2xl transition-all duration-500 hover:bg-[#28a745] hover:scale-105"
             >
               VOIR TOUS LES PROJETS
               <ChevronDown className="ml-3 w-5 h-5" />
