@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { useLocation } from "react-router-dom";
+import AdhesionForm from "../components/AdhesionForm";
 
 // --- TYPES & INTERFACES ---
 interface Project {
@@ -161,6 +162,7 @@ const Actions = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const [openAdhesion, setOpenAdhesion] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -421,14 +423,13 @@ const Actions = () => {
                       {action.date}
                     </div>
                   </div>
-
                   <button
                     type="button"
                     onClick={() => {
                       setSelectedProject(action);
                       setCurrentImgIndex(0);
                     }}
-                    className="flex items-center justify-center w-full bg-slate-900 group-hover:bg-[#28a745] text-white font-black py-4 px- rounded-[2rem] shadow-2xl transition-all duration-500 group-active:scale-95"
+                    className="flex items-center justify-center w-full bg-[#28a745] hover:bg-slate-900 text-white font-black py-4 rounded-[2rem] shadow-2xl transition-all duration-500 active:scale-95"
                   >
                     DÉCOUVRIR LE PROJET
                     <Plus className="ml-3 w-5 h-5 transition-transform group-hover:rotate-180 duration-500" />
@@ -440,12 +441,72 @@ const Actions = () => {
         </div>
       </main>
 
+      {/* SECTION ENGAGEMENT */}
+      <section className="container mx-auto px-6 pb-24">
+        <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-[#28a745]/20 text-white rounded-[3rem] p-16 text-center relative overflow-hidden shadow-2xl">
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-xl" />
+
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-6 py-2 bg-white/10 rounded-full mb-8">
+              <Users size={18} className="text-[#28a745]" />
+              <span className="text-xs font-black tracking-widest uppercase">
+                Formulaire d'Adhésion
+              </span>
+            </div>
+
+            <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
+              Vous souhaitez nous{" "}
+              <span className="text-[#28a745] italic">rejoindre</span> ?
+            </h2>
+
+            <p className="text-slate-300 text-lg md:text-xl mb-12 leading-relaxed">
+              Merci de remplir le formulaire d’adhésion pour rejoindre notre
+              communauté engagée et participer activement aux transformations
+              sociales et éducatives au Sénégal. Les informations recueillies
+              seront utilisées exclusivement pour la gestion de votre adhésion
+              et ne seront jamais partagées avec des tiers. Nous sommes
+              impatients de vous accueillir au sein de Simple Action Citoyenne.
+            </p>
+
+            <button
+              onClick={() => setOpenAdhesion(true)}
+              className="bg-[#28a745] hover:bg-green-600 text-white px-12 py-6 rounded-2xl font-black tracking-widest uppercase shadow-2xl hover:scale-105 transition-all duration-300"
+            >
+              Rejoindre l’association
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Rendu de la Modale */}
       {selectedProject && (
         <ProjectModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
         />
+      )}
+
+      {/* MODAL ADHÉSION */}
+      {openAdhesion && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 animate-in fade-in duration-300">
+          {/* Overlay */}
+          <button
+            onClick={() => setOpenAdhesion(false)}
+            className="absolute inset-0 bg-slate-900/95 backdrop-blur-xl"
+          />
+
+          {/* Contenu */}
+          <div className="relative bg-white w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-[2.5rem] shadow-2xl animate-in zoom-in-95 duration-300">
+            <button
+              onClick={() => setOpenAdhesion(false)}
+              className="absolute top-6 right-6 p-3 bg-slate-900 text-white rounded-full hover:bg-red-500 transition-all"
+            >
+              <X size={20} />
+            </button>
+
+            <AdhesionForm />
+          </div>
+        </div>
       )}
     </div>
   );
