@@ -30,12 +30,15 @@ import Login from "./page/admin/Login";
 import Dashboard from "./page/admin/Dashboard";
 
 import MariamaProModal from "./components/MariamaProModal";
+import DonSuccessPage from "./page/DonSuccessPage";
 
 /**
  * LayoutManager
  * Gère l'affichage conditionnel Nav / Footer / Modals
  */
-const LayoutManager: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const LayoutManager: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
 
@@ -51,7 +54,7 @@ const LayoutManager: React.FC<{ children: React.ReactNode }> = ({ children }) =>
       <GoogleAnalytics />
       <AnalyticsPageView />
 
-      <main className="flex-grow">
+      <main className="grow">
         {children}
         {!isAdminPage && <DrMbeteChatbot />}
       </main>
@@ -84,6 +87,7 @@ const App: React.FC = () => {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/actions" element={<ActionsPage />} />
             <Route path="/epopee" element={<EpopeePage />} />
+            <Route path="/don-success" element={<DonSuccessPage />} />
 
             {/* --- AUTH ADMIN --- */}
             <Route path="/admin/login" element={<Login />} />
