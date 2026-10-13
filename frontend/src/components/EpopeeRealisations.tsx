@@ -12,6 +12,7 @@ import formationAtelier from "../assets/epopee-soudure-atelier.jpeg";
 import formationGeste from "../assets/epopee-soudure-geste-technique.jpeg";
 import formationGroupe from "../assets/epopee-soudure-groupe.jpeg";
 import momentFort1 from "../assets/epoppe/MaietNintheeEpp.png";
+import momentFort2 from "../assets/epoppe/MomentFort2.png";
 import ceremony1 from "../assets/epoppe/DiscourAmbassadrice.jpg";
 import ceremony2 from "../assets/epoppe/DiscourEpp1.png";
 import ceremony3 from "../assets/epoppe/DiscourEpp3.png";
@@ -177,6 +178,12 @@ const fallbackPhotos: GalleryPhoto[] = [
   },
   {
     src: momentFort1,
+    alt: "Les bénéficiaires réunis avec Mme Christine Fages",
+    caption: "Les bénéficiaires réunis avec Mme Christine Fages.",
+    category: "moments",
+  },
+    {
+    src: momentFort2,
     alt: "Les bénéficiaires réunis avec Mme Christine Fages",
     caption: "Les bénéficiaires réunis avec Mme Christine Fages.",
     category: "moments",
