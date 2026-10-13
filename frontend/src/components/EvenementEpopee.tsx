@@ -15,13 +15,13 @@ import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-import invitationEpopee from "../assets/epoppe/InvitationLancementEpopee.jpg";
+import invitationEpopee from "../assets/epoppe/InvitationLancementEpopee22Oct.jpg";
 
 const INVITATION_ALT =
-  "Invitation de Simple Action Citoyenne et de l'Ambassade de France au Sénégal à la soirée de lancement officiel de la campagne de levée de fonds pour le projet Épopée, le 15 octobre 2026 à partir de 19 h, à la Résidence de France. Infoline : 77 254 38 69 / 77 587 90 57.";
+  "Invitation de Simple Action Citoyenne et de l'Ambassade de France au Sénégal à la soirée de lancement officiel de la campagne de levée de fonds pour le projet Épopée, le jeudi 22 octobre 2026 à partir de 19 h, à la Résidence de France. Infoline : 77 254 38 69 / 77 587 90 57.";
 
 // Date de l'événement (heure de Dakar, UTC+0) : sert uniquement au compte à rebours.
-const EVENT_DATE = new Date("2026-10-15T19:00:00Z");
+const EVENT_DATE = new Date("2026-10-22T19:00:00Z");
 
 interface EventDetail {
   label: string;
@@ -31,29 +31,27 @@ interface EventDetail {
 }
 
 const eventDetails: EventDetail[] = [
-  { label: "Date", icon: Calendar, content: "Jeudi 15 octobre 2026" },
+  { label: "Date", icon: Calendar, content: "Jeudi 22 octobre 2026" },
   { label: "Heure", icon: Clock, content: "À partir de 19 h" },
-  { label: "Lieu", icon: MapPin, content: "Résidence de France", wide: true },
+  { label: "Lieu", icon: MapPin, content: "Résidence de France" },
   {
     label: "Contacts",
     icon: Phone,
-    wide: true,
     content: (
-      <>
+      <span className="flex flex-col">
         <a
           href="tel:+221772543869"
           className="underline-offset-4 hover:text-green-600 hover:underline"
         >
           77 254 38 69
         </a>
-        {" / "}
         <a
           href="tel:+221775879057"
           className="underline-offset-4 hover:text-green-600 hover:underline"
         >
           77 587 90 57
         </a>
-      </>
+      </span>
     ),
   },
 ];
@@ -159,10 +157,10 @@ export const EvenementEpopee: React.FC = () => {
       />
 
       <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-14">
           {/* ---------------- Visuel de l'invitation ---------------- */}
           <figure
-            className={`m-0 mx-auto w-full max-w-md sm:max-w-lg lg:col-span-5 lg:max-w-none ${revealBase} ${
+            className={`m-0 mx-auto w-full max-w-xl lg:col-span-7 lg:-ml-4 lg:max-w-none xl:-ml-10 ${revealBase} ${
               visible
                 ? "translate-x-0 rotate-0 opacity-100"
                 : "-translate-x-12 -rotate-6 opacity-0"
@@ -208,7 +206,10 @@ export const EvenementEpopee: React.FC = () => {
                     visible ? "scale-100 opacity-100" : "scale-50 opacity-0"
                   }`}
                 >
-                  <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
+                  <span
+                    className="relative flex h-2.5 w-2.5"
+                    aria-hidden="true"
+                  >
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75 motion-reduce:animate-none" />
                     <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-600" />
                   </span>
@@ -224,10 +225,12 @@ export const EvenementEpopee: React.FC = () => {
           </figure>
 
           {/* ---------------- Informations ---------------- */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-5">
             <p
-              className={`mb-4 inline-flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-green-600 ${revealBase} ${
-                visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              className={`mb-3 inline-flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-green-600 ${revealBase} ${
+                visible
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-6 opacity-0"
               }`}
               style={delay(150)}
             >
@@ -242,8 +245,10 @@ export const EvenementEpopee: React.FC = () => {
 
             <h2
               id="evenement-epopee-title"
-              className={`text-3xl font-extrabold leading-tight text-gray-900 md:text-4xl lg:text-5xl ${revealBase} ${
-                visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              className={`text-2xl font-extrabold leading-tight text-gray-900 md:text-3xl lg:text-[2rem] ${revealBase} ${
+                visible
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-6 opacity-0"
               }`}
               style={delay(250)}
             >
@@ -251,27 +256,27 @@ export const EvenementEpopee: React.FC = () => {
               <span className="text-green-600 italic">Épopée</span>
             </h2>
 
-            <dl className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <dl className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:gap-2.5">
               {eventDetails.map((detail, index) => (
                 <div
                   key={detail.label}
-                  className={`group flex items-start gap-4 rounded-xl ${
+                  className={`group flex items-center gap-3 rounded-xl ${
                     detail.wide ? "sm:col-span-2" : ""
-                  } border border-gray-100 bg-white p-4 shadow-sm hover:-translate-y-1 hover:shadow-lg ${revealBase} ${
+                  } border border-gray-100 bg-white px-3.5 py-3 shadow-sm hover:-translate-y-1 hover:shadow-lg ${revealBase} ${
                     visible
                       ? "translate-y-0 opacity-100"
                       : "translate-y-8 opacity-0"
                   }`}
                   style={delay(400 + index * 120)}
                 >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-green-600 text-white transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
-                    <detail.icon className="h-5 w-5" aria-hidden={true} />
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-green-600 text-white transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
+                    <detail.icon className="h-4 w-4" aria-hidden={true} />
                   </span>
                   <div className="min-w-0">
-                    <dt className="text-xs font-bold uppercase tracking-wider text-gray-500">
+                    <dt className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
                       {detail.label}
                     </dt>
-                    <dd className="mt-0.5 text-lg font-semibold text-gray-900">
+                    <dd className="text-[15px] font-semibold leading-snug text-gray-900">
                       {detail.content}
                     </dd>
                   </div>
@@ -281,13 +286,15 @@ export const EvenementEpopee: React.FC = () => {
 
             <div
               className={`${revealBase} ${
-                visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+                visible
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-6 opacity-0"
               }`}
               style={delay(950)}
             >
               <Link
                 to="/epopee"
-                className="group mt-10 inline-flex items-center justify-center gap-3 rounded-full bg-green-600 px-7 py-4 text-lg font-bold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-green-700 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
+                className="group mt-8 inline-flex items-center justify-center gap-3 rounded-full bg-green-600 px-6 py-3 text-base font-bold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-green-700 hover:shadow-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
               >
                 Découvrir le projet Épopée
                 <ArrowRight
