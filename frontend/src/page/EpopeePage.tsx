@@ -77,7 +77,7 @@ const EpopeePage = () => {
   const cibles = [
     {
       tag: "Jeunesse",
-      title: "Adolescents",
+      title: "Jeunes",
       desc: "Accompagnement spécifique pour les jeunes en déperdition scolaire afin de les réintégrer via des métiers pratiques.",
       icon: <Users className="w-8 h-8" />,
       color: "text-blue-600",
