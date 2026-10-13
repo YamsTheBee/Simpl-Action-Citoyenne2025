@@ -16,6 +16,10 @@ import {
   Accessibility,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import EpopeeRealisations from "../components/EpopeeRealisations";
+import soudureGeste from "../assets/epopee-soudure-geste-technique.jpeg";
+// import soudureAtelier from "../assets/epopee-soudure-atelier.jpeg";
+// import soudureGroupe from "../assets/epopee-soudure-groupe.jpeg";
 
 const EpopeePage = () => {
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -120,7 +124,7 @@ const EpopeePage = () => {
       category: "Robotique & Fintech",
     },
     {
-      url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2000&auto=format&fit=crop",
+      url: soudureGeste,
       title: "Artisanat de Précision",
       category: "BTP & Maçonnerie",
     },
@@ -172,6 +176,7 @@ const EpopeePage = () => {
         <div className="absolute bottom-0 left-0 w-full h-32 bg-linear-to-t from-slate-50 to-transparent" />
       </section>
 
+      {/* --- 3. CIBLES --- */}
       {/* --- MAIN CONTENT CONTAINER --- */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8 -mt-16 relative z-20 space-y-48 pb-48">
         {/* --- 1. CONTEXTE --- */}
@@ -260,7 +265,7 @@ const EpopeePage = () => {
             </div>
           </div>
         </section>
-
+        <EpopeeRealisations />
         {/* --- 2. GALERIE --- */}
         <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto">
@@ -332,6 +337,7 @@ const EpopeePage = () => {
           </div>
         </section>
 
+        {/* --- 3. CIBLES --- */}
         {/* --- 4. FILIÈRES --- */}
         <section>
           <div className="bg-[#0a192f] rounded-[3.5rem] p-8 md:p-16 overflow-hidden relative shadow-2xl">
