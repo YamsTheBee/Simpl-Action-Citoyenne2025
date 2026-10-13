@@ -339,7 +339,7 @@ const Impact = () => {
 									className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
 								/>
 								{/* Overlay fixe (toujours visible) */}
-								<div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-6">
+								<div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-6">
 									<span className="text-yellow-400 text-xs font-bold uppercase tracking-wider mb-1">
 										{photo.category}
 									</span>
@@ -354,7 +354,7 @@ const Impact = () => {
 
 				{/* MODAL LIGHTBOX (Diaporama) */}
 				{selectedIndex !== null && (
-					<div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 animate-in fade-in duration-300">
+					<div className="fixed inset-0 z-100 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 animate-in fade-in duration-300">
 						{/* Bouton Fermer */}
 						<button
 							type="button"
@@ -383,7 +383,7 @@ const Impact = () => {
 								alt={IMPACT_PHOTOS[selectedIndex].caption}
 								className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
 							/>
-							<div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent pt-20 pb-8 px-6 text-center rounded-b-lg">
+							<div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 via-black/50 to-transparent pt-20 pb-8 px-6 text-center rounded-b-lg">
 								<span className="text-yellow-400 text-sm font-bold uppercase tracking-[0.2em] mb-2 block shadow-black drop-shadow-md">
 									{IMPACT_PHOTOS[selectedIndex].category}
 								</span>
