@@ -19,6 +19,12 @@ interface MessageBubbleProps {
 }
 
 /* ======================
+  Utils sécurité
+====================== */
+const sanitizeText = (text: string) =>
+  text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/* ======================
   Message Bubble
 ====================== */
 const MessageBubble = ({ sender, text }: MessageBubbleProps) => {
@@ -33,7 +39,7 @@ const MessageBubble = ({ sender, text }: MessageBubbleProps) => {
             : "mr-auto rounded-tl-none bg-gray-100 text-gray-800"
         }`}
       >
-        {String(text)}
+        {sanitizeText(text)}
       </div>
     </div>
   );
@@ -48,27 +54,43 @@ const DrMbeteChatbot = () => {
     {
       id: crypto.randomUUID(),
       sender: "bot",
-      text: "Salam 👋🏾 Je suis votre ambassadeur de la joie et de l’engagement 😊 Comment puis-je vous aider aujourd’hui ?",
+      text: "Salam 👋🏾 Je suis votre assistant citoyen 😊 Comment puis-je vous aider aujourd’hui ?",
     },
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Scroll automatique quand un message est ajouté
+  /* ======================
+    Scroll auto
+  ====================== */
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  });
+  }, [messages]);
 
+  /* ======================
+    Focus input à l'ouverture
+  ====================== */
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen]);
+
+  /* ======================
+    Envoi message
+  ====================== */
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
     const userMessage = input.trim();
 
+    // Ajout message user
     setMessages((prev) => [
-      ...prev,
+      ...prev.slice(-50),
       { id: crypto.randomUUID(), sender: "user", text: userMessage },
     ]);
 
@@ -76,11 +98,18 @@ const DrMbeteChatbot = () => {
     setIsLoading(true);
 
     try {
+      // Timeout sécurité
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessage }),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeout);
 
       if (!response.ok) {
         throw new Error("Erreur serveur");
@@ -91,10 +120,11 @@ const DrMbeteChatbot = () => {
       const safeText =
         typeof data?.response === "string"
           ? data.response
-          : "Je n’ai pas pu traiter votre demande 💚";
+          : "Je n’ai pas bien compris 🤔 Peux-tu reformuler ?";
 
+      // Ajout réponse bot
       setMessages((prev) => [
-        ...prev,
+        ...prev.slice(-50),
         {
           id: crypto.randomUUID(),
           sender: "bot",
@@ -105,17 +135,18 @@ const DrMbeteChatbot = () => {
       console.error("Erreur frontend chatbot:", error);
 
       setMessages((prev) => [
-        ...prev,
+        ...prev.slice(-50),
         {
           id: crypto.randomUUID(),
           sender: "bot",
-          text: "Un petit souci technique est survenu ⚡",
+          text: "Un petit souci technique est survenu ⚡ Réessaie dans quelques instants.",
         },
       ]);
     } finally {
       setIsLoading(false);
     }
   };
+
   const COLOR_PRIMARY = "bg-blue-800";
 
   return (
@@ -132,28 +163,23 @@ const DrMbeteChatbot = () => {
         {isOpen ? <X /> : <MessageSquare />}
       </button>
 
-      {/* Fenêtre du chatbot */}
+      {/* Fenêtre chatbot */}
       {isOpen && (
-        <div className="absolute bottom-20 right-0 w-[90vw] max-w-sm h-[500px] bg-white rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden border border-slate-100">
+        <div className="absolute bottom-20 right-0 w-[90vw] max-w-sm h-125 bg-white rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden border border-slate-100">
           {/* Header */}
           <div
-            className={`${COLOR_PRIMARY} text-white p-6 flex justify-between items-center`}
+            className={`${COLOR_PRIMARY} text-white p-6 flex items-center gap-3`}
           >
-            <div className="flex items-center gap-3">
-              <img
-                src={avatarDrMbete}
-                alt="Avatar de Dr. Mbegté"
-                className="w-10 h-10 rounded-full object-cover border-2 border-white"
-              />
-              <div>
-                <h3 className="text-lg font-extrabold leading-tight">
-                  Dr. Mbegté
-                </h3>
-                <p className="text-xs text-blue-200">
-                  {" "}
-                  Votre assistant citoyen
-                </p>
-              </div>
+            <img
+              src={avatarDrMbete}
+              alt="Avatar de Dr. Mbegté"
+              className="w-10 h-10 rounded-full object-cover border-2 border-white"
+            />
+            <div>
+              <h3 className="text-lg font-extrabold leading-tight">
+                Dr. Mbegté
+              </h3>
+              <p className="text-xs text-blue-200">Votre assistant citoyen</p>
             </div>
           </div>
 
@@ -162,15 +188,18 @@ const DrMbeteChatbot = () => {
             className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50"
             role="log"
             aria-live="polite"
+            aria-busy={isLoading}
           >
             {messages.map((msg) => (
               <MessageBubble key={msg.id} sender={msg.sender} text={msg.text} />
             ))}
+
             {isLoading && (
-              <div className="rounded-xl bg-gray-100 p-3 text-sm">
+              <div className="rounded-xl bg-gray-100 p-3 text-sm animate-pulse">
                 Dr. Mbegté écrit…
               </div>
             )}
+
             <div ref={messagesEndRef} />
           </section>
 
@@ -180,12 +209,13 @@ const DrMbeteChatbot = () => {
             className="flex border-t bg-white p-3"
           >
             <input
+              ref={inputRef}
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value.slice(0, 500))}
               placeholder="Écrivez votre message…"
               aria-label="Message"
-              className="flex-1 rounded-l-lg border p-3 focus:ring-2 focus:ring-blue-500"
+              className="flex-1 rounded-l-lg border p-3 focus:ring-2 focus:ring-blue-500 outline-none"
               disabled={isLoading}
             />
 
@@ -193,7 +223,7 @@ const DrMbeteChatbot = () => {
               type="submit"
               disabled={isLoading}
               aria-label="Envoyer"
-              className="flex w-12 items-center justify-center rounded-r-lg bg-blue-800 text-white transition hover:bg-blue-700"
+              className="flex w-12 items-center justify-center rounded-r-lg bg-blue-800 text-white transition hover:bg-blue-700 disabled:opacity-50"
             >
               <Send size={18} />
             </button>

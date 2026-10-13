@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import puitImg from "../assets/Niinth.puit1.jpg";
 import { Link } from "react-router-dom";
+import FormationSoudure from "../assets/epopee-soudure-atelier.jpeg";
 
 /* ----------------------------- 1. TYPES & CONFIGURATION ----------------------------- */
 
@@ -62,9 +63,9 @@ const mockActions: Action[] = [
     id: "1",
     title: "Village l'Épopée Dakar",
     description:
-      "Le projet Village l’Épopée, porté et coordonné par l’Association Simple Action Citoyenne avec le soutien de L'ambassade de FRANCE, est une initiative phare visant à promouvoir l’inclusion sociale.",
-    image:
-      "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop",
+      "Le Village Épopée Sénégal est un projet d'innovation sociale, d'éducation numérique et d'autonomisation des jeunes et des femmes. " +
+      "Il favorise l'insertion professionnelle, le leadership citoyen et l'acquisition de compétences directement utiles sur le marché du travail.",
+    image: FormationSoudure,
     location: "Lancement phase 1 à Dakar.",
     date: "Phase initiale de 5 ans",
     isCoupDeCoeur: true,
