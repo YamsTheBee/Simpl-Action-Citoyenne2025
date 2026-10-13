@@ -15,10 +15,12 @@ import discours4 from "../assets/epoppe/DiscourEpp4.jpg";
 import momentFort1 from "../assets/epoppe/MaietNintheeEpp.png";
 import momentFort2 from "../assets/epoppe/MomentFort2.png";
 import momentFort3 from "../assets/epoppe/Ambassadrice2.png";
+import momentFort4 from "../assets/epoppe/MomentFort4.png";
 import ceremony1 from "../assets/epoppe/DiscourAmbassadrice.jpg";
 import Diplome1 from "../assets/epoppe/Diplome1.png";
 import Diplome2 from "../assets/epoppe/Diplome2.png";
 import Diplome3 from "../assets/epoppe/Diplome3.png";
+import Diplome4 from "../assets/epoppe/Diplome4.png";
 import ceremony2 from "../assets/epoppe/DiscourEpp1.png";
 import ceremony3 from "../assets/epoppe/DiscourEpp3.png";
 import portrait1 from "../assets/epoppe/PortraitEpp1.png";
@@ -26,6 +28,8 @@ import portrait2 from "../assets/epoppe/PortraitEpp2.png";
 import portrait3 from "../assets/epoppe/PortraitEpp3.png";
 import portrait4 from "../assets/epoppe/PortraitEpp4.png";
 import portrait5 from "../assets/epoppe/PortraitEpp5.png";
+// import FormationCom1 from "../assets/FormationCom/FormationCom1.png";
+import FormationCom2 from "../assets/FormationCom/FormationCom2.png";
 
 /* ------------------------------------------------------------------
  * CONTENU À COMPLÉTER
@@ -40,8 +44,7 @@ const NB_BENEFICIAIRES_CERTIFIES: number | null = null;
 const AUTEUR_CITATION: string | null = null;
 
 // TODO : remplacer par une vraie photo du parcours "Communication et relation client".
-const communicationImage =
-  "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1600&q=85";
+const communicationImage = FormationCom2;
 
 /* ------------------------------------------------------------------
  * TYPES
@@ -194,6 +197,12 @@ const fallbackPhotos: GalleryPhoto[] = [
     category: "certificats",
   },
   {
+    src: Diplome4,
+    alt: "",
+    caption: "",
+    category: "certificats",
+  },
+  {
     src: portrait5,
     alt: "",
     caption: "",
@@ -219,6 +228,12 @@ const fallbackPhotos: GalleryPhoto[] = [
   },
   {
     src: momentFort3,
+    alt: "",
+    caption: "",
+    category: "moments",
+  },
+  {
+    src: momentFort4,
     alt: "",
     caption: "",
     category: "moments",
