@@ -1,6 +1,6 @@
 // Page d'accueil – Simple Action Citoyenne
 
-import { EvenementEpopee } from "../components/EvenementEpopee";
+// import { EvenementEpopee } from "../components/EvenementEpopee";
 import GalerieImpact from "../components/GalerieImpact";
 import HeroSlider from "../components/HeroSlider";
 import { MissionSection } from "../components/MissionSection";
@@ -17,7 +17,7 @@ const Home = () => {
         <h2 className="sr-only">Notre mission</h2>
         <MissionSection />
       </section>
-      <EvenementEpopee />
+      {/* <EvenementEpopee /> */}
 
       <section className="galerieImpact-section">
         <h2 className="sr-only">Notre impact</h2>
