@@ -11,9 +11,14 @@ import {
 import formationAtelier from "../assets/epopee-soudure-atelier.jpeg";
 import formationGeste from "../assets/epopee-soudure-geste-technique.jpeg";
 import formationGroupe from "../assets/epopee-soudure-groupe.jpeg";
+import discours4 from "../assets/epoppe/DiscourEpp4.jpg";
 import momentFort1 from "../assets/epoppe/MaietNintheeEpp.png";
 import momentFort2 from "../assets/epoppe/MomentFort2.png";
+import momentFort3 from "../assets/epoppe/Ambassadrice2.png";
 import ceremony1 from "../assets/epoppe/DiscourAmbassadrice.jpg";
+import Diplome1 from "../assets/epoppe/Diplome1.png";
+import Diplome2 from "../assets/epoppe/Diplome2.png";
+import Diplome3 from "../assets/epoppe/Diplome3.png";
 import ceremony2 from "../assets/epoppe/DiscourEpp1.png";
 import ceremony3 from "../assets/epoppe/DiscourEpp3.png";
 import portrait1 from "../assets/epoppe/PortraitEpp1.png";
@@ -135,57 +140,87 @@ const fallbackPhotos: GalleryPhoto[] = [
     category: "certificats",
   },
   {
+    src: Diplome1,
+    alt: "",
+    caption: "",
+    category: "certificats",
+  },
+  {
     src: ceremony2,
     alt: "Remise des certificats aux bénéficiaires",
-    caption: "Remise des certificats aux bénéficiaires.",
+    caption: "",
+    category: "certificats",
+  },
+  {
+    src: discours4,
+    alt: "",
+    caption: "",
+    category: "certificats",
+  },
+  {
+    src: Diplome2,
+    alt: "",
+    caption: "",
     category: "certificats",
   },
   {
     src: ceremony3,
-    alt: ".",
-    caption: ".",
+    alt: "",
+    caption: "",
     category: "certificats",
   },
   {
     src: portrait1,
     alt: "",
-    caption: "Les bénéficiaires réunis avec Mme Christine Fages.",
+    caption: "",
     category: "certificats",
   },
   {
     src: portrait2,
     alt: "",
-    caption: "Les bénéficiaires réunis avec Mme Christine Fages.",
+    caption: "",
     category: "certificats",
   },
   {
     src: portrait3,
     alt: "",
-    caption: "Les bénéficiaires réunis avec Mme Christine Fages.",
+    caption: "",
     category: "certificats",
   },
   {
     src: portrait4,
     alt: "",
-    caption: "Les bénéficiaires réunis avec Mme Christine Fages.",
+    caption: "",
     category: "certificats",
   },
   {
     src: portrait5,
     alt: "",
-    caption: "Les bénéficiaires réunis avec Mme Christine Fages.",
+    caption: "",
     category: "certificats",
   },
   {
     src: momentFort1,
-    alt: "Les bénéficiaires réunis avec Mme Christine Fages",
-    caption: "Les bénéficiaires réunis avec Mme Christine Fages.",
+    alt: "",
+    caption: "",
     category: "moments",
   },
-    {
+  {
+    src: Diplome3,
+    alt: "",
+    caption: "",
+    category: "certificats",
+  },
+  {
     src: momentFort2,
-    alt: "Les bénéficiaires réunis avec Mme Christine Fages",
-    caption: "Les bénéficiaires réunis avec Mme Christine Fages.",
+    alt: "",
+    caption: "",
+    category: "moments",
+  },
+  {
+    src: momentFort3,
+    alt: "",
+    caption: "",
     category: "moments",
   },
 ];
