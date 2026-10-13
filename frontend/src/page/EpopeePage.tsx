@@ -17,7 +17,8 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import EpopeeRealisations from "../components/EpopeeRealisations";
-import soudureGeste from "../assets/epopee-soudure-geste-technique.jpeg";
+import PartenariatEpopee from "../components/PartenariatEpopee";
+// import soudureGeste from "../assets/epopee-soudure-geste-technique.jpeg";
 // import soudureAtelier from "../assets/epopee-soudure-atelier.jpeg";
 // import soudureGroupe from "../assets/epopee-soudure-groupe.jpeg";
 
@@ -117,23 +118,23 @@ const EpopeePage = () => {
     },
   ];
 
-  const gallery = [
-    {
-      url: "https://images.unsplash.com/photo-1581092916357-5896ebc48073?q=80&w=2000&auto=format&fit=crop",
-      title: "Innovation Technologique",
-      category: "Robotique & Fintech",
-    },
-    {
-      url: soudureGeste,
-      title: "Artisanat de Précision",
-      category: "BTP & Maçonnerie",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2000&auto=format&fit=crop",
-      title: "Collaboration Créative",
-      category: "Communication Digitale",
-    },
-  ];
+  // const gallery = [
+  //   {
+  //     url: "https://images.unsplash.com/photo-1581092916357-5896ebc48073?q=80&w=2000&auto=format&fit=crop",
+  //     title: "Innovation Technologique",
+  //     category: "Robotique & Fintech",
+  //   },
+  //   {
+  //     url: soudureGeste,
+  //     title: "Artisanat de Précision",
+  //     category: "BTP & Maçonnerie",
+  //   },
+  //   {
+  //     url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2000&auto=format&fit=crop",
+  //     title: "Collaboration Créative",
+  //     category: "Communication Digitale",
+  //   },
+  // ];
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased">
@@ -266,8 +267,12 @@ const EpopeePage = () => {
           </div>
         </section>
         <EpopeeRealisations />
+
+        {/* --- APPEL À PARTENARIAT (à la place de l'ancienne galerie) --- */}
+        <PartenariatEpopee />
+
         {/* --- 2. GALERIE --- */}
-        <section className="space-y-16">
+        {/* <section className="space-y-16">
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-sm font-bold tracking-[0.3em] text-[#28a745] uppercase mb-4">
               Aperçu du Village
@@ -296,7 +301,7 @@ const EpopeePage = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         {/* --- 3. CIBLES (CORRIGÉ AVEC COULEURS DYNAMIQUES) --- */}
         <section className="pt-10">
